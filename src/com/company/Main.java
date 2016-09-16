@@ -2,7 +2,7 @@ package com.company;
 
 public class Main {
 
-    public static int main(String[] args) {
+    public static void main(String[] args) {
         UserInput Input = new UserInput();
 
         UserManager UM = new UserManager();
@@ -18,22 +18,22 @@ public class Main {
 
         //Вот тут должен вызываться менеджер
         if (0 != 0) {
-            return 0;
+            System.exit(0);
         }
 
         switch (UM.FindUser(Input))
         {
-            case 1: {return 1;}
-            case 2: {return 2;}
+            case 1: {System.exit(1);}
+            case 2: {System.exit(2);}
             case 0: {break;}
         }
 
         switch(RM.GetResource(Input))
         {
-            case 1: {return 4;}
-            case 2: {return 3;}
+            case 1: {System.exit(4);}
+            case 2: {System.exit(3);}
             case 0: {break;}
         }
-        return 0;
+        System.exit(0);
     }
 }

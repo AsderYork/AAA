@@ -7,7 +7,12 @@ import java.util.HashMap;
  */
 
 public class UserManager {
-    HashMap<String, UserData> Map;//Name is the Key!
+   HashMap<String, UserData> Map;//Name is the Key!
+
+    public UserManager()
+    {
+        Map = new HashMap<String, UserData>();
+    }
 
     public int FindUser(UserInput User) {
         UserData Data = Map.get(User.UserName);
