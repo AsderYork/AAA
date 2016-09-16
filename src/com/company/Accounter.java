@@ -10,7 +10,7 @@ import java.util.Calendar;
  * Created by York on 16.09.2016.
  */
 public class Accounter {
-    public static TreeMap<String,AccountMessage> Log;
+    public static TreeMap<String,AccountMessage> Log = new TreeMap<String,AccountMessage>();
 
     public static void Login(UserData Data)
     {

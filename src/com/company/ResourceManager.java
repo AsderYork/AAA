@@ -8,6 +8,11 @@ import java.util.TreeMap;
 public class ResourceManager {
     public TreeMap<String,ResourceData> Resources;
 
+    public ResourceManager()
+    {
+       Resources = new  TreeMap<String,ResourceData>();
+    }
+
     public void AddResource(String PATH, int Role, int USERID)
     {
         ResourceData Data = new ResourceData();
