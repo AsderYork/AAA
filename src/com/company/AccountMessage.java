@@ -7,7 +7,7 @@ public class AccountMessage {
     int USERID;
     String Date;
     String Action; //Login/AccessGranted/AccessRejected
-    String Role;
+    int Role;
     String PATH;
     int Value;
     String DateStart;

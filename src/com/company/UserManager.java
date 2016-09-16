@@ -12,12 +12,15 @@ public class UserManager {
     public int FindUser(UserInput User) {
         UserData Data = Map.get(User.UserName);
         if (Data == null) {
+            System.out.println("Wrong username");
             return 1;
         }//Если пользователя с таким именем нет, сообщаем об этом
         if (Hasher.Hash(User.Password, Data.Salt) != Data.HashedPassword) {
+            System.out.println("Wrong password");
             return 2;/*Пользователь найден, но пароль нневерен*/
         }
         User.USERID = Data.ID;
+        System.out.println("Welcome "+Data.Name);
         return 0;
     }
 
