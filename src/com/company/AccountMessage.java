@@ -1,8 +1,5 @@
 package com.company;
 
-/**
- * Created by York on 16.09.2016.
- */
 public class AccountMessage {
     int USERID;
     String Date;

@@ -2,29 +2,26 @@ package com.company;
 
 import java.util.TreeMap;
 
-/**
- * Created by Asder on 16.09.2016.
- */
-public class ResourceManager {
-    public TreeMap<String,ResourceData> Resources;
 
-    public ResourceManager()
-    {
-       Resources = new  TreeMap<String,ResourceData>();
+public class ResourceManager {
+    public TreeMap<String, ResourceData> Resources;
+
+    public ResourceManager() {
+        Resources = new TreeMap<String, ResourceData>();
     }
 
-    public void AddResource(String PATH, int Role, int USERID)
-    {
+    public void AddResource(String PATH, int Role, int USERID) {
         ResourceData Data = new ResourceData();
         Data.UserID = USERID;
         Data.Access = Role;
-        Resources.put(PATH,Data);
+        Resources.put(PATH, Data);
     }
 
     public int GetResource(UserInput Input)//0-OK; 1-FORBIDDEN 2-WRONG_ROLE
     {
-        if((Input.Role < 1)||(Input.Role > 3))
-        {return 2;}
+        if ((Input.Role < 1) || (Input.Role > 3)) {
+            return 2;
+        }
 
 
         String PartPath = new String();
@@ -33,14 +30,11 @@ public class ResourceManager {
         ResourceData Data;
 
 
-        for (int i = 0; i < tokens.length; i++)
-        {
+        for (int i = 0; i < tokens.length; i++) {
             PartPath += tokens[i];
             Data = Resources.get(PartPath);
-            if(Data != null)
-            {
-                if((Data.UserID == Input.USERID)&&(Data.Access == Input.Role))
-                {
+            if (Data != null) {
+                if ((Data.UserID == Input.USERID) && (Data.Access == Input.Role)) {
                     Accounter.AccessGranted(Input);
                     System.out.println("Access Granted");
                     return 0;//Требуемая запись о ресурсе найдена. Предоставляем

@@ -1,8 +1,5 @@
 package com.company;
 
-/**
- * Created by York on 16.09.2016.
- */
 public class UserInput {
     String UserName;//Имя пользователя
     String Password;//Пароль

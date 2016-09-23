@@ -1,19 +1,14 @@
 package com.company;
 
-import java.util.TreeMap;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
+import java.util.TreeMap;
 
-/**
- * Created by York on 16.09.2016.
- */
 public class Accounter {
-    public static TreeMap<String,AccountMessage> Log = new TreeMap<String,AccountMessage>();
+    public static TreeMap<String, AccountMessage> Log = new TreeMap<String, AccountMessage>();
 
-    public static void Login(UserData Data)
-    {
+    public static void Login(UserData Data) {
         AccountMessage MSG = new AccountMessage();
 
         MSG.Action = "Login";
@@ -27,8 +22,7 @@ public class Accounter {
 
     }
 
-    public static void AccessGranted(UserInput Input)
-    {
+    public static void AccessGranted(UserInput Input) {
         AccountMessage MSG = new AccountMessage();
 
         MSG.Action = "AccessGranted";
@@ -41,14 +35,11 @@ public class Accounter {
         MSG.DateFinished = Input.EndDate;
         MSG.DateStart = Input.StartDate;
         MSG.Value = Input.UsageValue;
-
         Log.put(String.valueOf(Log.size()), MSG);
     }
 
-    public static void AccessRejected(UserInput Input)
-    {
+    public static void AccessRejected(UserInput Input) {
         AccountMessage MSG = new AccountMessage();
-
         MSG.Action = "AccessRejected";
         MSG.USERID = Input.USERID;
         MSG.PATH = Input.PATH;
@@ -59,7 +50,6 @@ public class Accounter {
         MSG.DateFinished = Input.EndDate;
         MSG.DateStart = Input.StartDate;
         MSG.Value = Input.UsageValue;
-
         Log.put(String.valueOf(Log.size()), MSG);
     }
 
