@@ -14,7 +14,7 @@ public class Main {
         RM.AddResource("a",1,0);
         RM.AddResource("a.b",2,0);
         RM.AddResource("a.b.c",3,1);
-        RM.AddResource("a.bc",3,0);
+        RM.AddResource("a.bc", 3, 0);
 
         //Вот тут должен вызываться менеджер
         if (0 != 0) {

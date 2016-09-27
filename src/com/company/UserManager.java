@@ -2,15 +2,10 @@ package com.company;
 
 import java.util.HashMap;
 
-/**
- * Created by York on 16.09.2016.
- */
-
 public class UserManager {
-   HashMap<String, UserData> Map;//Name is the Key!
+    HashMap<String, UserData> Map;//Name is the Key!
 
-    public UserManager()
-    {
+    public UserManager() {
         Map = new HashMap<String, UserData>();
     }
 
@@ -25,18 +20,17 @@ public class UserManager {
             return 2;/*Пользователь найден, но пароль нневерен*/
         }
         User.USERID = Data.ID;
-        System.out.println("Welcome "+Data.Name);
+        System.out.println("Welcome " + Data.Name);
         return 0;
     }
 
-    public void addUser(String Username, String Name, String Password, String Salt)
-    {
+    public void addUser(String Username, String Name, String Password, String Salt) {
         UserData Data = new UserData();
         Data.Username = Username;
-        Data.HashedPassword = Hasher.Hash(Password,Salt);
+        Data.HashedPassword = Hasher.Hash(Password, Salt);
         Data.Salt = Salt;
         Data.Name = Name;
-        Map.put(Username,Data);
+        Map.put(Username, Data);
         Data.ID = Map.size();
 
     }
