@@ -18,32 +18,25 @@ public class Main {
         RM.AddResource("a.bc", 3, 0);
 
         //Вот тут должен вызываться менеджер
-        if (0 != 0) {
-            System.exit(0);
+        UserInputManager ConsoleManager= new UserInputManager(args);
+
+       switch (ConsoleManager.parse(Input)) {
+           case 0: {                break;}
+           case 1: {System.exit(0); break;}
+           case 2: {System.exit(5); break;}
+           case 3: {System.exit(3); break;}
         }
 
         switch (UM.FindUser(Input)) {
-            case 1: {
-                System.exit(1);
-            }
-            case 2: {
-                System.exit(2);
-            }
-            case 0: {
-                break;
-            }
+            case 1: {System.exit(1);}
+            case 2: {System.exit(2);}
+            case 0: {break;}
         }
 
         switch (RM.GetResource(Input)) {
-            case 1: {
-                System.exit(4);
-            }
-            case 2: {
-                System.exit(3);
-            }
-            case 0: {
-                break;
-            }
+            case 1: {System.exit(4);}
+            case 2: {System.exit(3);}
+            case 0: {break;}
         }
         System.exit(0);
     }
