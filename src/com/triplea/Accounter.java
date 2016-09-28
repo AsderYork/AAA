@@ -1,4 +1,4 @@
-package com.company;
+package com.triplea;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -65,7 +65,7 @@ public class Accounter {
 
 }
 
-class AccountMessage{
+class AccountMessage {
     String Action; //Login/AccessGranted/AccessRejected
     String AccountDate;
 

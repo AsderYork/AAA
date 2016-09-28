@@ -1,4 +1,4 @@
-package com.company;
+package com.triplea;
 
 import java.util.TreeMap;
 
@@ -35,7 +35,7 @@ public class ResourceManager {
         for (int i = 0; i < tokens.length; i++) {
             PartPath += tokens[i];
 
-            if( IsResourceAccessible(PartPath, Input.Role, Input.USERID) ) {
+            if (IsResourceAccessible(PartPath, Input.Role, Input.USERID)) {
                 Accounter.AccessGranted(Input);
                 System.out.println("Access Granted");
                 return 0;//Требуемая запись о ресурсе найдена. Предоставляем
@@ -47,13 +47,13 @@ public class ResourceManager {
         return 1;
     }
 
-    private boolean IsResourceAccessible(String PATH, int ROLE, int USERID)
-    {
+    private boolean IsResourceAccessible(String PATH, int ROLE, int USERID) {
         ResourceData Data;
         Data = Resources.get(PATH);
         if (Data != null) {
-            if ((Data.UserID == USERID) && (Data.Access == ROLE))
-            {return true;}
+            if ((Data.UserID == USERID) && (Data.Access == ROLE)) {
+                return true;
+            }
         }
         return false;
     }

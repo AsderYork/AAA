@@ -1,6 +1,8 @@
-package com.company;
-import java.security.*;
-import java.math.*;
+package com.triplea;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /*
 Модуль хэширования. Обеспечивает независимость от метода шифрования пароля
@@ -8,23 +10,18 @@ import java.math.*;
 
 public class Hasher {
 
-    public static String HashPassword(String Value, String Salt)
-    {
-        return Hash(Hash(Value)+Salt);
+    public static String HashPassword(String Value, String Salt) {
+        return Hash(Hash(Value) + Salt);
     }
 
-    private static String Hash(String Value)
-    {
+    private static String Hash(String Value) {
         //Метод поддуржки. Принимает строку, возвращает её хэш
 
         MessageDigest Digest = null;
 
-        try
-        {//Дэйджест может не найти метод и выбросить исключение. Ловим его и возвращаем значение ошибки
+        try {//Дэйджест может не найти метод и выбросить исключение. Ловим его и возвращаем значение ошибки
             Digest = MessageDigest.getInstance("MD5");
-        }
-        catch (NoSuchAlgorithmException e)
-        {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return "ERROR";
         }

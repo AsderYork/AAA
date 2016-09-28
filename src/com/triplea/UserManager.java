@@ -1,12 +1,10 @@
-package com.company;
+package com.triplea;
 
 import java.util.HashMap;
 
 /*
 Модуль обработки данных пользователей. Обеспечивает идентификацию пользователя на основании структуры UserInput
  */
-
-
 
 
 public class UserManager {
@@ -26,7 +24,10 @@ public class UserManager {
         //Если пользователя с таким именем нет, сообщаем об этом
         UserData Data = GetUserData(User.UserName);
 
-        if (Data == null) {System.out.println("Wrong username"); return 1;}
+        if (Data == null) {
+            System.out.println("Wrong username");
+            return 1;
+        }
 
 
         if (Hasher.HashPassword(User.Password, Data.Salt) == Data.HashedPassword) {
@@ -56,7 +57,7 @@ public class UserManager {
 
 
     //Метод получения данных о пользователе. Вынесен в отдельный метод что бы скрыть реализацию
-    private UserData GetUserData(String Username){
+    private UserData GetUserData(String Username) {
         UserData Data = Map.get(Username);
         return Data;
     }
