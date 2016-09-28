@@ -10,6 +10,7 @@ public class Main {
         UM.addUser("jdoe", "John Doe", "sup3rpaZZ", "Salt");
         UM.addUser("jrow", "Jane Row", "Qweqrty12", "AnotherSalt");
 
+
         ResourceManager RM = new ResourceManager();
         RM.AddResource("a",1,0);
         RM.AddResource("a.b",2,0);
@@ -36,4 +37,15 @@ public class Main {
         }
         System.exit(0);
     }
+}
+
+class UserInput {
+    String UserName;//Имя пользователя
+    String Password;//Пароль
+    String PATH;//Путь до ресурса
+    int Role;//Роль использования ресурса
+    int USERID;//Идентификатор. Появляется только после менеджера ввода
+    String StartDate;//Дата начала
+    String EndDate;//Дата окончания. Могут оставаться пустыми
+    int UsageValue;//Значение использования ресурса.
 }
