@@ -1,6 +1,7 @@
 package com.triplea;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /*
 Модуль обработки данных пользователей. Обеспечивает идентификацию пользователя на основании структуры UserInput
@@ -30,7 +31,7 @@ public class UserManager {
         }
 
 
-        if (Hasher.HashPassword(User.Password, Data.Salt) == Data.HashedPassword) {
+        if (Objects.equals(Hasher.HashPassword(User.Password, Data.Salt), Data.HashedPassword)) {
             //Если хэш пароля верный, записываем ID пользователя и возвращаем 0
             User.USERID = Data.ID;
             System.out.println("Welcome " + Data.Name);
