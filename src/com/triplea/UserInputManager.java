@@ -23,7 +23,7 @@ public class UserInputManager {
     }
 
     public ExitCode parse(UserInput userInput) {
-        CommandLineParser parser = new BasicParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
 
         try {
@@ -60,9 +60,9 @@ public class UserInputManager {
             }
 
             if (cmd.hasOption("val")) {
-                userInput.valueOfResourse = Integer.parseInt(cmd.getOptionValue("val"));
+                userInput.valueOfResourse = ValueIsIntString(cmd.getOptionValue("val"));
                 if (userInput.valueOfResourse < 0) {
-                    System.err.println("Wrong value of resource");
+                    System.err.println("val cant be <0");
                     return ExitCode.INCORRECT_ACTIVITY;
                 }
             }
@@ -74,7 +74,6 @@ public class UserInputManager {
 
         } catch (IllegalArgumentException ill) {
 
-            System.err.println("Wrong role parameter");
             return ExitCode.INCORRECT_ACTIVITY;
 
         } catch (ParseException pe) {
@@ -100,8 +99,12 @@ public class UserInputManager {
         if (inputString.equals("READ") | inputString.equals("WRITE") | inputString.equals("EXECUTE")) {
             return inputString;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Wrong role parameter");
         }
+    }
+
+    private int ValueIsIntString(String inputString) throws NumberFormatException {
+        return Integer.parseInt(inputString);
     }
 }
 
