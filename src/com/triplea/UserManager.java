@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /*
-Модуль обработки данных пользователей. Обеспечивает идентификацию пользователя на основании структуры UserInput
- */
+Модуль обработки данных пользователей. Обеспечивает идентификацию пользователя
+        */
 
 
 public class UserManager {
@@ -15,43 +15,39 @@ public class UserManager {
         Map = new HashMap<String, UserData>();
     }
 
-    /*Поиск пользователя по имени и паролю из UserInput. В случае успеха дописывает в поле ID - номер пользоваетеля
-  Возвращает 0 в случае успеха
-  1 - Неизвестный логин
-  2 - Неверный пароль*/
-    public int FindUser(UserInput User) {
-
+    /*Поиск пользователя по имени и паролю В случае успеха возвращает через
+    * пареметр OUT_UserID, идентификатор пользователя*/
+    public EXIT_CODES FindUser(String UserLogin, String InputPassword, int OUT_UserID) {
+        UserData Data = GetUserData(UserLogin);
 
         //Если пользователя с таким именем нет, сообщаем об этом
-        UserData Data = GetUserData(User.UserName);
-
         if (Data == null) {
             System.out.println("Wrong username");
-            return 1;
+            return EXIT_CODES.WRONG_LOGIN;
         }
 
 
-        if (Objects.equals(Hasher.HashPassword(User.Password, Data.Salt), Data.HashedPassword)) {
-            //Если хэш пароля верный, записываем ID пользователя и возвращаем 0
-            User.USERID = Data.ID;
+        if (Objects.equals(Hasher.HashPassword(InputPassword, Data.Salt), Data.HashedPassword)) {
+            //Если хэш пароля верный, записываем ID
+            OUT_UserID = Data.ID;
             System.out.println("Welcome " + Data.Name);
             Accounter.Login(Data);
-            return 0;
+            return EXIT_CODES.DO_NOT_EXIT;
         }
 
-        //Если же хэш оказался неверным, отмечаем это и вываливаемся с кодом 2
+        //Если же хэш оказался неверным, отмечаем это
         System.out.println("Wrong password");
-        return 2;
+        return EXIT_CODES.WRONG_PASSWORD;
     }
 
     //Простой метод добавления пользователя
-    public void addUser(String Username, String Name, String Password, String Salt) {
+    public void addUser(String UserLogin, String UserName, String Password, String Salt) {
         UserData Data = new UserData();
-        Data.Username = Username;
+        Data.Username = UserLogin;
         Data.HashedPassword = Hasher.HashPassword(Password, Salt);
         Data.Salt = Salt;
-        Data.Name = Name;
-        Map.put(Username, Data);
+        Data.Name = UserName;
+        Map.put(UserLogin, Data);
         Data.ID = Map.size();
 
     }

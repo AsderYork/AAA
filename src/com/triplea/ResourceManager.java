@@ -1,5 +1,7 @@
 package com.triplea;
 
+import com.sun.corba.se.spi.orbutil.fsm.Input;
+
 import java.util.TreeMap;
 
 /*
@@ -13,45 +15,54 @@ public class ResourceManager {
         Resources = new TreeMap<String, ResourceData>();
     }
 
-    public void AddResource(String PATH, int Role, int USERID) {
+    public void AddPermission(String PATH, int Role, int USERID) {
         ResourceData Data = new ResourceData();
-        Data.UserID = USERID;
-        Data.Access = Role;
+        Data.AddUserPermission(USERID, Role);
         Resources.put(PATH, Data);
     }
 
-    public int GetResource(UserInput Input)//0-OK; 1-FORBIDDEN
+    public boolean IsResourceAccessible(int UserID, String PATH, String Role)
     {
-        assert ((Input.Role < 1) || (Input.Role > 3));//Проверяем условия контракта
+        int IntROLE=0;//Преводим роль к интовому типу
+        switch(Role){
+            case "READ": {IntROLE = 1; break;}
+            case "WRITE":{IntROLE = 2; break;}
+            case "EXECUTE": {IntROLE = 4; break;}
+            default:
+            {
+                System.out.println("IsResourceAccasiable did not expect "+Role+" as a role");
+                return false;
+            }
+        }
 
         //Разбиваем путь до ресурса на куски
-        String PartPath = new String();
         String delims = "[.]";
-        String[] tokens = Input.PATH.split(delims);
+        String[] tokens = PATH.split(delims);
 
         /*Проверяем с самого корня, есть ли у нас доступ к родительским ресурсам
         Так как доступ наследуется. Если находим требуемый доступ у дочернего ресурса, значит и у данного он есть*/
-
+        String PartPath = new String();
         for (int i = 0; i < tokens.length; i++) {
             PartPath += tokens[i];
 
-            if (IsResourceAccessible(PartPath, Input.Role, Input.USERID)) {
-                Accounter.AccessGranted(Input);
+            if (IsSubresourceAccessible(PartPath, IntROLE, UserID)) {
                 System.out.println("Access Granted");
-                return 0;//Требуемая запись о ресурсе найдена. Предоставляем
+                return true;
             }
+            PartPath+=".";//Так как у нас только токены, мы должны добавлять между ними точку, что бы это было похоже на путь
 
         }
+
         System.out.println("Access Rejected");
-        Accounter.AccessRejected(Input);
-        return 1;
+        return false;
     }
 
-    private boolean IsResourceAccessible(String PATH, int ROLE, int USERID) {
+    private boolean IsSubresourceAccessible(String PATH, int ROLE, int USERID) {
+        //Метод поддержки. Проверяет, доступна ли часть пути ресурса.
         ResourceData Data;
         Data = Resources.get(PATH);
         if (Data != null) {
-            if ((Data.UserID == USERID) && (Data.Access == ROLE)) {
+            if (Data.IsPermissionExist(USERID,ROLE)) {
                 return true;
             }
         }
@@ -61,6 +72,41 @@ public class ResourceManager {
 }
 
 class ResourceData {
-    int UserID;
-    int Access;//1-R;2-W;3-X;
+    private TreeMap<Integer, Integer> UserID;//Ключ - ид пользователя. Значение - тип доступа
+
+    public ResourceData(){//Инициализируем контейнер
+        UserID = new TreeMap<Integer, Integer>();
+    }
+
+    public void AddUserPermission(int ID, int Role)
+    {//Еще раз напомню, 1-READ;2-WRITE;4-EXECUTE;
+        Integer Data = UserID.get(ID);
+        if(Data == null)//Если записи о пользователе еще нет
+        {
+            UserID.put(ID,Role);
+        }
+        else
+        {
+            if((Data & Role) == 0){//Если такой роли еще нет, то добавляем её
+                UserID.put(ID,Data+Role);
+            }//Иначе не делаем ничего
+        }
+    }
+
+    public boolean IsPermissionExist(int ID, int Role)
+    {
+        Integer Data = UserID.get(ID);
+        if(Data != null)//Проверяем, есть ли запись у этого пользователея.
+        {
+            if((Data & Role) == 1){//Если такая роль есть, то сообщаем об этом
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+
 }
