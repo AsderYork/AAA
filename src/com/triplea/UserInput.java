@@ -1,12 +1,13 @@
 package com.triplea;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 class UserInput {
-    String name;//Имя пользователя
-    String password;//Пароль
-    String resource;//Путь до ресурса
-    String role;//Роль использования ресурса
-    LocalDateTime startDateOfResourceRequest;//Начальная дата
-    LocalDateTime endDateOfResourceRequest;//Конечная дата
-    int valueOfResourse; //значение ресурса
+    public String name;//Имя пользователя
+    public String password;//Пароль
+    public String resource;//Путь до ресурса
+    public String role;//Роль использования ресурса
+    public LocalDate startDateOfResourceRequest;//Начальная дата
+    public LocalDate endDateOfResourceRequest;//Конечная дата
+    public int valueOfResourse; //значение ресурса
 }

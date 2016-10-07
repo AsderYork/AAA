@@ -2,13 +2,13 @@ package com.triplea;
 
 import org.apache.commons.cli.*;
 
-import java.util.BitSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 
 public class UserInputManager {
     private String[] args = null;
     private Options options = new Options();
-    private BitSet allowInput = new BitSet();
 
     UserInputManager(String[] args) {
         this.args = args;
@@ -22,109 +22,86 @@ public class UserInputManager {
         options.addOption("val", "value", true, "Value");
     }
 
-    public int parse(UserInput ui) {
-        CommandLineParser parser = new
-                BasicParser();
+    public ExitCode parse(UserInput userInput) {
+        CommandLineParser parser = new BasicParser();
         CommandLine cmd;
-        final int CORRECT_WORK =     0;
-        final int CORRECT_EXIT =     1;
-        final int INVALID_ACTIVITY = 2;
-        final int WRONG_ROLE =       3;
-        // WRONG_DATE
-
 
         try {
             cmd = parser.parse(options, args);
 
+
             if (cmd.hasOption("h")) {
                 help();
-                return CORRECT_EXIT;
+                return ExitCode.EXIT_SUCCESSFULLY;
             }
 
             if (cmd.hasOption("login")) {
-                allowInput.set(0);
-                ui.UserName = cmd.getOptionValue("login");
+                userInput.name = cmd.getOptionValue("login");
             }
 
             if (cmd.hasOption("pass")) {
-                allowInput.set(1);
-                ui.Password = cmd.getOptionValue("pass");
+                userInput.password = cmd.getOptionValue("pass");
             }
 
             if (cmd.hasOption("res")) {
-                allowInput.set(2);
-                ui.PATH = cmd.getOptionValue("res");
+                userInput.resource = cmd.getOptionValue("res");
             }
 
             if (cmd.hasOption("role")) {
-                allowInput.set(3);
-                switch (cmd.getOptionValue("role")) {
-                    case "READ":
-                        ui.Role = 1;
-                        break;
-                    case "WRITE":
-                        ui.Role = 2;
-                        break;
-                    case "EXECUTE":
-                        ui.Role = 3;
-                    default:
-                        System.err.println("Wrong role format");
-                        return WRONG_ROLE;
-                }
-
+                userInput.role = RoleParser(cmd.getOptionValue("role"));
             }
 
             if (cmd.hasOption("ds")) {
-                allowInput.set(4);
-                ui.StartDate = cmd.getOptionValue("ds");
+                userInput.startDateOfResourceRequest = DateParser(cmd.getOptionValue("ds"));
             }
 
             if (cmd.hasOption("de")) {
-                allowInput.set(5);
-                ui.EndDate = cmd.getOptionValue("de");
+                userInput.endDateOfResourceRequest = DateParser(cmd.getOptionValue("de"));
             }
 
             if (cmd.hasOption("val")) {
-                allowInput.set(6);
-                ui.UsageValue = Integer.parseInt(cmd.getOptionValue("val"));
+                userInput.valueOfResourse = Integer.parseInt(cmd.getOptionValue("val"));
+                if (userInput.valueOfResourse < 0) {
+                    System.err.println("Wrong value of resource");
+                    return ExitCode.INCORRECT_ACTIVITY;
+                }
             }
 
-        } catch (ParseException e) {
+        } catch (DateTimeParseException dt) {
+
+            System.err.println("Wrong date parameter");
+            return ExitCode.INCORRECT_ACTIVITY;
+
+        } catch (IllegalArgumentException ill) {
+
+            System.err.println("Wrong role parameter");
+            return ExitCode.INCORRECT_ACTIVITY;
+
+        } catch (ParseException pe) {
             System.err.println("Failed to parse command line properties");
             help();
-            return CORRECT_EXIT;
+            return ExitCode.EXIT_SUCCESSFULLY;
         }
 
-        try {
-            switch (Long.toString(allowInput.toLongArray()[0], 2)) {
-                case "11":
-                    help();
-                    return CORRECT_EXIT;
-                case "1111":
-                    return CORRECT_WORK;
-                case "1111111":
-                    return CORRECT_WORK;
-                default:
-                    System.err.println("Wrong attributes");
-                    help();
-                    return CORRECT_EXIT;
-            }
-        } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-
-            System.err.println("Not enough attributes");
-            help();
-            return CORRECT_EXIT;
-
-        }
-
+        //TODO more checks
+        return ExitCode.EXIT_SUCCESSFULLY;
     }
 
     private void help() {
-        // This prints out some help
-        HelpFormatter formater = new HelpFormatter();
-        formater.printHelp("Main", options);
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("Main", options);
     }
 
+    private LocalDate DateParser(String inputString) throws DateTimeParseException {
+        return LocalDate.parse(inputString);
+    }
 
+    private String RoleParser(String inputString) {
+        if (inputString.equals("READ") | inputString.equals("WRITE") | inputString.equals("EXECUTE")) {
+            return inputString;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 }
 
