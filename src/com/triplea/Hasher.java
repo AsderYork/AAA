@@ -10,8 +10,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hasher {
 
-    public static String HashPassword(String Value, String Salt) {
-        return Hash(Hash(Value) + Salt);
+    public static String HashPassword(String Password, String Salt) {
+        return Hash(Hash(Password) + Salt);
     }
 
     private static String Hash(String Value) {
