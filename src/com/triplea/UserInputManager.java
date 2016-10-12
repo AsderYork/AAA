@@ -22,7 +22,7 @@ public class UserInputManager {
         options.addOption("val", "value", true, "Value");
     }
 
-    public ExitCode parse(UserInput userInput) {
+    public EXIT_CODES parse(UserInput userInput) {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
 
@@ -32,7 +32,7 @@ public class UserInputManager {
 
             if (cmd.hasOption("h")) {
                 help();
-                return ExitCode.EXIT_SUCCESSFULLY;
+                return EXIT_CODES.EXIT_SUCCESSFULLY;
             }
 
             if (cmd.hasOption("login")) {
@@ -63,27 +63,27 @@ public class UserInputManager {
                 userInput.valueOfResourse = ValueIsIntString(cmd.getOptionValue("val"));
                 if (userInput.valueOfResourse < 0) {
                     System.err.println("val cant be <0");
-                    return ExitCode.INCORRECT_ACTIVITY;
+                    return EXIT_CODES.INCORRECT_ACTIVITY;
                 }
             }
 
         } catch (DateTimeParseException dt) {
 
             System.err.println("Wrong date parameter");
-            return ExitCode.INCORRECT_ACTIVITY;
+            return EXIT_CODES.INCORRECT_ACTIVITY;
 
         } catch (IllegalArgumentException ill) {
 
-            return ExitCode.INCORRECT_ACTIVITY;
+            return EXIT_CODES.INCORRECT_ACTIVITY;
 
         } catch (ParseException pe) {
             System.err.println("Failed to parse command line properties");
             help();
-            return ExitCode.EXIT_SUCCESSFULLY;
+            return EXIT_CODES.EXIT_SUCCESSFULLY;
         }
 
         //TODO more checks
-        return ExitCode.EXIT_SUCCESSFULLY;
+        return EXIT_CODES.EXIT_SUCCESSFULLY;
     }
 
     private void help() {

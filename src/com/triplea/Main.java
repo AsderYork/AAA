@@ -1,31 +1,40 @@
 package com.triplea;
 
-enum EXIT_CODES {DO_NOT_EXIT,
-    EXIT_SUCCESSFULLY,
-    WRONG_LOGIN,
-    WRONG_PASSWORD,
-    WRONG_ROLE,
-    RESOURCE_PERMISSION_DENIED,
-    INCORRECT_ACTIVITY};
-
-
-
 
 public class Main {
 
-    private static void CheckExitCode(EXIT_CODES Code)
-    {//Метод поддержки, обеспечивающий обработку возвращаемых значений главных методов блоков. Боже мой, какая дикая терминология!
-        switch(Code) {
-            case DO_NOT_EXIT:{return;}
-            case EXIT_SUCCESSFULLY:{System.exit(0); break;}
-            case WRONG_LOGIN:{System.exit(1); break;}
-            case WRONG_PASSWORD:{System.exit(2); break;}
-            case WRONG_ROLE:{System.exit(3); break;}
-            case RESOURCE_PERMISSION_DENIED:{System.exit(4); break;}
-            case INCORRECT_ACTIVITY:{System.exit(5); break;}
+    private static void CheckExitCode(EXIT_CODES Code) {//Метод поддержки, обеспечивающий обработку возвращаемых значений главных методов блоков. Боже мой, какая дикая терминология!
+        switch (Code) {
+            case DO_NOT_EXIT: {
+                return;
+            }
+            case EXIT_SUCCESSFULLY: {
+                System.exit(0);
+                break;
+            }
+            case WRONG_LOGIN: {
+                System.exit(1);
+                break;
+            }
+            case WRONG_PASSWORD: {
+                System.exit(2);
+                break;
+            }
+            case WRONG_ROLE: {
+                System.exit(3);
+                break;
+            }
+            case RESOURCE_PERMISSION_DENIED: {
+                System.exit(4);
+                break;
+            }
+            case INCORRECT_ACTIVITY: {
+                System.exit(5);
+                break;
+            }
 
-            default:{
-                System.out.println("One of the modules have returned "+ Code.name()+". It's unexpected.");
+            default: {
+                System.out.println("One of the modules have returned " + Code.name() + ". It's unexpected.");
                 break;
             }
         }
@@ -53,14 +62,13 @@ public class Main {
         //Важно помнить, что метод CheckExitCode на самом деле может завершать программу.
         CheckExitCode(ConsoleManager.parse(args, Input));
 
-        int USERID=0;//Принимаем из менеджера пользователей идентификатор
-        CheckExitCode(UM.FindUser(Input.name,Input.password,USERID));
+        int USERID = 0;//Принимаем из менеджера пользователей идентификатор
+        CheckExitCode(UM.FindUser(Input.name, Input.password, USERID));
 
-        if (RM.IsResourceAccessible(USERID,Input.resource,Input.role)) {
-            Accounter.ResourceAccessSuccess(Input,USERID);
-        }
-        else{
-            Accounter.AccessRejected(Input,USERID);
+        if (RM.IsResourceAccessible(USERID, Input.resource, Input.role)) {
+            Accounter.ResourceAccessSuccess(Input, USERID);
+        } else {
+            Accounter.AccessRejected(Input, USERID);
             CheckExitCode(EXIT_CODES.RESOURCE_PERMISSION_DENIED);
         }
 

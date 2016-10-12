@@ -2,28 +2,26 @@ package com.triplea;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.TreeMap;
-import java.time.LocalDateTime;
 /*
 Блок аккаунтинга. Собирает данные о действиях пользователей.
  */
 
 public class Accounter {
 
+    private static Accounter Singleton;
     private TreeMap<String, AccountMessage> Log;
 
-    private static Accounter Singleton;
-
     //Приватный конструктор. Никто, кроме аккаунтера, не может создать экземпляр аккаунтера
-    private Accounter()
-    {
-        Log = new TreeMap<String, AccountMessage>();
+    private Accounter() {
+        Log = new TreeMap<>();
     }
 
     //Проверка наличия синглетона, если нет, то создаем
-   static private void CheckForSingleton() {
-        if(Singleton == null){
+    static private void CheckForSingleton() {
+        if (Singleton == null) {
             Singleton = new Accounter();
         }
     }

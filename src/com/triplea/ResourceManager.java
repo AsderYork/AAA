@@ -1,7 +1,5 @@
 package com.triplea;
 
-import com.sun.corba.se.spi.orbutil.fsm.Input;
-
 import java.util.TreeMap;
 
 /*
@@ -12,7 +10,7 @@ public class ResourceManager {
     public TreeMap<String, ResourceData> Resources;
 
     public ResourceManager() {
-        Resources = new TreeMap<String, ResourceData>();
+        Resources = new TreeMap<>();
     }
 
     public void AddPermission(String PATH, int Role, int USERID) {
@@ -21,16 +19,23 @@ public class ResourceManager {
         Resources.put(PATH, Data);
     }
 
-    public boolean IsResourceAccessible(int UserID, String PATH, String Role)
-    {
-        int IntROLE=0;//Преводим роль к интовому типу
-        switch(Role){
-            case "READ": {IntROLE = 1; break;}
-            case "WRITE":{IntROLE = 2; break;}
-            case "EXECUTE": {IntROLE = 4; break;}
-            default:
-            {
-                System.out.println("IsResourceAccasiable did not expect "+Role+" as a role");
+    public boolean IsResourceAccessible(int UserID, String PATH, String Role) {
+        int IntROLE;//Преводим роль к интовому типу
+        switch (Role) {
+            case "READ": {
+                IntROLE = 1;
+                break;
+            }
+            case "WRITE": {
+                IntROLE = 2;
+                break;
+            }
+            case "EXECUTE": {
+                IntROLE = 4;
+                break;
+            }
+            default: {
+                System.out.println("IsResourceAccasiable did not expect " + Role + " as a role");
                 return false;
             }
         }
@@ -41,15 +46,15 @@ public class ResourceManager {
 
         /*Проверяем с самого корня, есть ли у нас доступ к родительским ресурсам
         Так как доступ наследуется. Если находим требуемый доступ у дочернего ресурса, значит и у данного он есть*/
-        String PartPath = new String();
-        for (int i = 0; i < tokens.length; i++) {
-            PartPath += tokens[i];
+        String PartPath = "";
+        for (String token : tokens) {
+            PartPath += token;
 
             if (IsSubresourceAccessible(PartPath, IntROLE, UserID)) {
                 System.out.println("Access Granted");
                 return true;
             }
-            PartPath+=".";//Так как у нас только токены, мы должны добавлять между ними точку, что бы это было похоже на путь
+            PartPath += ".";//Так как у нас только токены, мы должны добавлять между ними точку, что бы это было похоже на путь
 
         }
 
@@ -62,7 +67,7 @@ public class ResourceManager {
         ResourceData Data;
         Data = Resources.get(PATH);
         if (Data != null) {
-            if (Data.IsPermissionExist(USERID,ROLE)) {
+            if (Data.IsPermissionExist(USERID, ROLE)) {
                 return true;
             }
         }
@@ -74,39 +79,32 @@ public class ResourceManager {
 class ResourceData {
     private TreeMap<Integer, Integer> UserID;//Ключ - ид пользователя. Значение - тип доступа
 
-    public ResourceData(){//Инициализируем контейнер
-        UserID = new TreeMap<Integer, Integer>();
+    public ResourceData() {//Инициализируем контейнер
+        UserID = new TreeMap<>();
     }
 
-    public void AddUserPermission(int ID, int Role)
-    {//Еще раз напомню, 1-READ;2-WRITE;4-EXECUTE;
+    public void AddUserPermission(int ID, int Role) {//Еще раз напомню, 1-READ;2-WRITE;4-EXECUTE;
         Integer Data = UserID.get(ID);
-        if(Data == null)//Если записи о пользователе еще нет
+        if (Data == null)//Если записи о пользователе еще нет
         {
-            UserID.put(ID,Role);
-        }
-        else
-        {
-            if((Data & Role) == 0){//Если такой роли еще нет, то добавляем её
-                UserID.put(ID,Data+Role);
+            UserID.put(ID, Role);
+        } else {
+            if ((Data & Role) == 0) {//Если такой роли еще нет, то добавляем её
+                UserID.put(ID, Data + Role);
             }//Иначе не делаем ничего
         }
     }
 
-    public boolean IsPermissionExist(int ID, int Role)
-    {
+    public boolean IsPermissionExist(int ID, int Role) {
         Integer Data = UserID.get(ID);
-        if(Data != null)//Проверяем, есть ли запись у этого пользователея.
+        if (Data != null)//Проверяем, есть ли запись у этого пользователея.
         {
-            if((Data & Role) == 1){//Если такая роль есть, то сообщаем об этом
+            if ((Data & Role) == 1) {//Если такая роль есть, то сообщаем об этом
                 return true;
             }
         }
         return false;
     }
-
-
-
 
 
 }

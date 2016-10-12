@@ -12,7 +12,7 @@ public class UserManager {
     HashMap<String, UserData> Map;//Карта пользователей.
 
     public UserManager() {
-        Map = new HashMap<String, UserData>();
+        Map = new HashMap<>();
     }
 
     /*Поиск пользователя по имени и паролю В случае успеха возвращает через
@@ -55,8 +55,7 @@ public class UserManager {
 
     //Метод получения данных о пользователе. Вынесен в отдельный метод что бы скрыть реализацию
     private UserData GetUserData(String Username) {
-        UserData Data = Map.get(Username);
-        return Data;
+        return Map.get(Username);
     }
 
 }

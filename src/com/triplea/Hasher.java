@@ -17,7 +17,7 @@ public class Hasher {
     private static String Hash(String Value) {
         //Метод поддуржки. Принимает строку, возвращает её хэш
 
-        MessageDigest Digest = null;
+        MessageDigest Digest;
 
         try {//Дэйджест может не найти метод и выбросить исключение. Ловим его и возвращаем значение ошибки
             Digest = MessageDigest.getInstance("MD5");
@@ -37,8 +37,6 @@ public class Hasher {
 
         BigInteger HashInBigInteger = new BigInteger(1, ReturnedByteCode);
 
-        String md5Hex = HashInBigInteger.toString(16);
-
-        return md5Hex;
+        return HashInBigInteger.toString(16);
     }
 }
