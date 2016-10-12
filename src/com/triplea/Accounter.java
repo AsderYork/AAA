@@ -2,7 +2,7 @@ package com.triplea;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.TreeMap;
 /*
@@ -93,6 +93,6 @@ class AccountMessage {
     String Role;
     String PATH;
     int Value;
-    LocalDateTime DateStart;
-    LocalDateTime DateFinished;
+    LocalDate DateStart;
+    LocalDate DateFinished;
 }

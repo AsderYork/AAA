@@ -60,7 +60,7 @@ public class Main {
         UserInputManager ConsoleManager = new UserInputManager(args);
 
         //Важно помнить, что метод CheckExitCode на самом деле может завершать программу.
-        CheckExitCode(ConsoleManager.parse(args, Input));
+        CheckExitCode(ConsoleManager.parse(Input));
 
         int USERID = 0;//Принимаем из менеджера пользователей идентификатор
         CheckExitCode(UM.FindUser(Input.name, Input.password, USERID));
