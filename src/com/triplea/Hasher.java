@@ -19,11 +19,13 @@ public class Hasher {
 
         MessageDigest Digest;
 
-        try {//Дэйджест может не найти метод и выбросить исключение. Ловим его и возвращаем значение ошибки
+        try {//Дэйджест может не найти метод и выбросить исключение. Ловим его и падаем так сильно, как только можем
+
             Digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            return "ERROR";
+            assert(false);
+            return "Hash error. You should'n see this because of assert!";
         }
 
         //Подготавливаем дайджест к работе и вностим в него нашу строку
