@@ -61,15 +61,12 @@ public class Main {
 
         //Важно помнить, что метод CheckExitCode на самом деле может завершать программу.
         CheckExitCode(ConsoleManager.parse(Input));
+        CheckExitCode(UM.FindUser(Input.name, Input.password));
 
-        //Костыль, ага
-        UserID  USERID = new UserID(0);//Принимаем из менеджера пользователей идентификатор
-        CheckExitCode(UM.FindUser(Input.name, Input.password, USERID));
-
-        if (RM.IsResourceAccessible(USERID.getUserID(), Input.resource, Input.role)) {
-            Accounter.ResourceAccessSuccess(Input, USERID.getUserID());
+        if (RM.IsResourceAccessible(UM.getLastUserID(), Input.resource, Input.role)) {
+            Accounter.ResourceAccessSuccess(Input, UM.getLastUserID());
         } else {
-            Accounter.AccessRejected(Input, USERID.getUserID());
+            Accounter.AccessRejected(Input, UM.getLastUserID());
             CheckExitCode(EXIT_CODES.RESOURCE_PERMISSION_DENIED);
         }
 

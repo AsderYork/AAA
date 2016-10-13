@@ -4,22 +4,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 
-class UserID
-{
-    private int UserID;
-
-    public UserID(int Value){UserID = Value;}
-
-    public int getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(int userID) {
-        UserID = userID;
-    }
-}
-
-
 /*
 Модуль обработки данных пользователей. Обеспечивает идентификацию пользователя
         */
@@ -30,6 +14,7 @@ public class UserManager {
 
     public UserManager() {
         Map = new HashMap<>();
+        LastUserID = -1;
     }
 
     /*Поиск пользователя по имени и паролю В случае успеха возвращает через
@@ -39,7 +24,7 @@ public class UserManager {
     * Так к примеру язык отказывается передать int по ссылке, как он поступил бы с любым другим объектом
     * Именно для этого сейчас я буду городить целый класс-обертку, только что бы обойти это ограничение - очередной
     * прыжок в попытке отнять метафорический портфель*/
-    public EXIT_CODES FindUser(String UserLogin, String InputPassword, UserID OUT_UserID) {
+    public EXIT_CODES FindUser(String UserLogin, String InputPassword) {
         UserData Data = GetUserData(UserLogin);
 
         //Если пользователя с таким именем нет, сообщаем об этом
@@ -51,7 +36,7 @@ public class UserManager {
 
         if (Objects.equals(Hasher.HashPassword(InputPassword, Data.Salt), Data.HashedPassword)) {
             //Если хэш пароля верный, записываем ID
-            OUT_UserID.setUserID(Data.ID);
+            LastUserID=Data.ID;
             System.out.println("Welcome " + Data.Name);
             Accounter.Login(Data);
             return EXIT_CODES.DO_NOT_EXIT;
@@ -64,13 +49,14 @@ public class UserManager {
 
     //Простой метод добавления пользователя
     public void addUser(String UserLogin, String UserName, String Password, String Salt) {
-        UserData Data = new UserData();
-        Data.Username = UserLogin;
-        Data.HashedPassword = Hasher.HashPassword(Password, Salt);
-        Data.Salt = Salt;
-        Data.Name = UserName;
-        Map.put(UserLogin, Data);
-        Data.ID = Map.size();
+
+        UserData Data = new UserData(
+                UserLogin,
+                UserName,
+                Hasher.HashPassword(Password, Salt),
+                Salt,
+                Map.size());
+
 
     }
 
@@ -80,12 +66,22 @@ public class UserManager {
         return Map.get(Username);
     }
 
+    public int getLastUserID() {
+       assert(LastUserID >=0);/*Ага, теперь у нас получилась временная зависимость между этим методом, и FindUser.
+       Это связано с тем, что FindUser является главной функцией, а потом обязана возвращать EXIT_CODE, а значит
+       вернуть ID не может.
+       Другие варианты решения
+       1) Разбить функцию на куски. Проверка, есть ли пользователь с таким именем. Есть ли пользователь с таким паролем
+       Это снижает уровень абстракции, а так же приводит к многократному выполнению одних и тех же операций(
+       Что в свою очередь можно решить кэшированием значений, но это совершенно без надобность усложнит программу)
+       2) Изменить архитектуру проэкта - сделать так, что функции возвращали EXIT_CODE в виде исключений. Это хороший
+       вариант, и скорее всего я так и сделаю. Но это третует пересмотра проекта, так что пока не стоит с этим
+       торопиться.
+        */
+        return LastUserID;
+    }
+
+    private int LastUserID;
+
 }
 
-class UserData {//Структура данных пользователя
-    String Username;
-    String Name;
-    String HashedPassword;
-    String Salt;
-    int ID;
-}
