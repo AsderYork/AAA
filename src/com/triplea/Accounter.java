@@ -2,6 +2,7 @@ package com.triplea;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.TreeMap;
 /*
@@ -36,10 +37,10 @@ public class Accounter {
                 dateFormat.format(date),
                 Data.ID,
                 "",
-               "",
-               0,
-                LocalDate::now(),
-                LocalDate::now());
+                "",
+                0,
+                LocalDate.now(),
+                LocalDate.now());
 
         Singleton.Log.put(String.valueOf(Singleton.Log.size()), MSG);
 

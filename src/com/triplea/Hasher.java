@@ -33,7 +33,7 @@ public class Hasher {
         Digest.update(Value.getBytes());
 
         //Подготавливаем переменную для хранения результата
-        byte[] ReturnedByteCode = new byte[0];
+        byte[] ReturnedByteCode;
         ReturnedByteCode = Digest.digest();
 
 

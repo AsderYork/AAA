@@ -56,6 +56,7 @@ public class UserManager {
                 Hasher.HashPassword(Password, Salt),
                 Salt,
                 Map.size());
+        Map.put(UserLogin, Data);
 
 
     }
