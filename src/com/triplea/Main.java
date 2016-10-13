@@ -4,41 +4,10 @@ package com.triplea;
 public class Main {
 
     private static void CheckExitCode(EXIT_CODES Code) {//Метод поддержки, обеспечивающий обработку возвращаемых значений главных методов блоков. Боже мой, какая дикая терминология!
-        switch (Code) {
-            case DO_NOT_EXIT: {
-                return;
-            }
-            case EXIT_SUCCESSFULLY: {
-                System.exit(0);
-                break;
-            }
-            case WRONG_LOGIN: {
-                System.exit(1);
-                break;
-            }
-            case WRONG_PASSWORD: {
-                System.exit(2);
-                break;
-            }
-            case WRONG_ROLE: {
-                System.exit(3);
-                break;
-            }
-            case RESOURCE_PERMISSION_DENIED: {
-                System.exit(4);
-                break;
-            }
-            case INCORRECT_ACTIVITY: {
-                System.exit(5);
-                break;
-            }
+        if(Code.getStatusCode() == -1) {
+            return;}
 
-            default: {
-                System.out.println("One of the modules have returned " + Code.name() + ". It's unexpected.");
-                break;
-            }
-        }
-
+        System.exit(Code.getStatusCode());
     }
 
     public static void main(String[] args) {
