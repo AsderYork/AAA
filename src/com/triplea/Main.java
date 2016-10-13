@@ -4,8 +4,9 @@ package com.triplea;
 public class Main {
 
     private static void CheckExitCode(EXIT_CODES Code) {//Метод поддержки, обеспечивающий обработку возвращаемых значений главных методов блоков. Боже мой, какая дикая терминология!
-        if(Code.getStatusCode() == -1) {
-            return;}
+        if (Code.getStatusCode() == -1) {
+            return;
+        }
 
         System.exit(Code.getStatusCode());
     }

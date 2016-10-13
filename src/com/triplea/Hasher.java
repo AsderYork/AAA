@@ -24,7 +24,7 @@ public class Hasher {
             Digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            assert(false);
+            assert (false);
             return "Hash error. You should'n see this because of assert!";
         }
 

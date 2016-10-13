@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class UserManager {
     HashMap<String, UserData> Map;//Карта пользователей.
+    private int LastUserID;
 
     public UserManager() {
         Map = new HashMap<>();
@@ -36,7 +37,7 @@ public class UserManager {
 
         if (Objects.equals(Hasher.HashPassword(InputPassword, Data.Salt), Data.HashedPassword)) {
             //Если хэш пароля верный, записываем ID
-            LastUserID=Data.ID;
+            LastUserID = Data.ID;
             System.out.println("Welcome " + Data.Name);
             Accounter.Login(Data);
             return EXIT_CODES.DO_NOT_EXIT;
@@ -60,14 +61,13 @@ public class UserManager {
 
     }
 
-
     //Метод получения данных о пользователе. Вынесен в отдельный метод что бы скрыть реализацию
     private UserData GetUserData(String Username) {
         return Map.get(Username);
     }
 
     public int getLastUserID() {
-       assert(LastUserID >=0);/*Ага, теперь у нас получилась временная зависимость между этим методом, и FindUser.
+        assert (LastUserID >= 0);/*Ага, теперь у нас получилась временная зависимость между этим методом, и FindUser.
        Это связано с тем, что FindUser является главной функцией, а потом обязана возвращать EXIT_CODE, а значит
        вернуть ID не может.
        Другие варианты решения
@@ -80,8 +80,6 @@ public class UserManager {
         */
         return LastUserID;
     }
-
-    private int LastUserID;
 
 }
 
