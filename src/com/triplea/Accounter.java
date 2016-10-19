@@ -40,7 +40,8 @@ public class Accounter {
                 "",
                 0,
                 LocalDate.now(),
-                LocalDate.now());
+                LocalDate.now()
+        );
 
         Singleton.Log.put(String.valueOf(Singleton.Log.size()), MSG);
 
