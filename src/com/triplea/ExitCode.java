@@ -1,6 +1,6 @@
 package com.triplea;
 
-public enum EXIT_CODES {
+public enum ExitCode {
     DO_NOT_EXIT(-1),
     EXIT_SUCCESSFULLY(0),
     WRONG_LOGIN(1),
@@ -11,7 +11,7 @@ public enum EXIT_CODES {
 
     private int statusCode;
 
-    EXIT_CODES(int statusCode) {
+    ExitCode(int statusCode) {
         this.statusCode = statusCode;
     }
 
