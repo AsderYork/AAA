@@ -4,10 +4,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/*
-Модуль хэширования. Обеспечивает независимость от метода шифрования пароля
-*/
-
 public class Hasher {
 
     public static String HashPassword(String Password, String Salt) {
@@ -19,7 +15,7 @@ public class Hasher {
 
         MessageDigest Digest;
 
-        try {//Дэйджест может не найти метод и выбросить исключение. Ловим его и падаем так сильно, как только можем
+        try {
 
             Digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
@@ -33,12 +29,12 @@ public class Hasher {
         Digest.update(Value.getBytes());
 
         //Подготавливаем переменную для хранения результата
-        byte[] ReturnedByteCode = new byte[0];
+        byte[] ReturnedByteCode;
         ReturnedByteCode = Digest.digest();
 
 
-        BigInteger HashInBigInteger = new BigInteger(1, ReturnedByteCode);
+        BigInteger hashInBigInteger = new BigInteger(1, ReturnedByteCode);
 
-        return HashInBigInteger.toString(16);
+        return hashInBigInteger.toString(16);
     }
 }

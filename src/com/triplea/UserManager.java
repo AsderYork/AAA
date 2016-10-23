@@ -4,11 +4,6 @@ import java.util.HashMap;
 import java.util.Objects;
 
 
-/*
-Модуль обработки данных пользователей. Обеспечивает идентификацию пользователя
-        */
-
-
 public class UserManager {
     HashMap<String, UserData> Map;//Карта пользователей.
     private int LastUserID;
@@ -18,55 +13,59 @@ public class UserManager {
         LastUserID = -1;
     }
 
-    /*Поиск пользователя по имени и паролю В случае успеха возвращает через
-    * пареметр OUT_UserID, идентификатор пользователя*/
-    /*Жизнь программиста на Java похожа на попытку отобрать портфель у кучки школьных задир:
-    * Кажеться в близки к цели, но это всего лишь иллюзия. Язык никогда не дает вам столько контроля, сколько нужно
-    * Так к примеру язык отказывается передать int по ссылке, как он поступил бы с любым другим объектом
-    * Именно для этого сейчас я буду городить целый класс-обертку, только что бы обойти это ограничение - очередной
-    * прыжок в попытке отнять метафорический портфель*/
-    public EXIT_CODES FindUser(String UserLogin, String InputPassword) {
-        UserData Data = GetUserData(UserLogin);
+    public ExitCode FindUser(String UserLogin, String InputPassword) {
+        UserData data = GetUserData(UserLogin);
 
-        //Если пользователя с таким именем нет, сообщаем об этом
-        if (Data == null) {
+        if (data == null) {
             System.out.println("Wrong username");
-            return EXIT_CODES.WRONG_LOGIN;
+            return ExitCode.WRONG_LOGIN;
         }
 
 
+<<<<<<< HEAD
         if (Objects.equals(Hasher.HashPassword(InputPassword, Data.Salt), Data.HashedPassword)) {
             //Если хэш пароля верный, записываем ID
             LastUserID = Data.ID;
             System.out.println("Welcome " + Data.Name);
             Accounter.Login(Data);
             return EXIT_CODES.DO_NOT_EXIT;
+=======
+        if (Objects.equals(Hasher.HashPassword(InputPassword, data.Salt), data.HashedPassword)) {
+
+            LastUserID = data.id;
+            System.out.println("Welcome " + data.Name);
+            Accounter.Login(data);
+            return ExitCode.DO_NOT_EXIT;
+>>>>>>> master
         }
 
-        //Если же хэш оказался неверным, отмечаем это
         System.out.println("Wrong password");
-        return EXIT_CODES.WRONG_PASSWORD;
+        return ExitCode.WRONG_PASSWORD;
     }
 
-    //Простой метод добавления пользователя
     public void addUser(String UserLogin, String UserName, String Password, String Salt) {
 
-        UserData Data = new UserData(
+        UserData data = new UserData(
                 UserLogin,
                 UserName,
                 Hasher.HashPassword(Password, Salt),
                 Salt,
                 Map.size());
+        Map.put(UserLogin, data);
 
 
     }
 
+<<<<<<< HEAD
     //Метод получения данных о пользователе. Вынесен в отдельный метод что бы скрыть реализацию
+=======
+>>>>>>> master
     private UserData GetUserData(String Username) {
         return Map.get(Username);
     }
 
     public int getLastUserID() {
+<<<<<<< HEAD
         assert (LastUserID >= 0);/*Ага, теперь у нас получилась временная зависимость между этим методом, и FindUser.
        Это связано с тем, что FindUser является главной функцией, а потом обязана возвращать EXIT_CODE, а значит
        вернуть ID не может.
@@ -78,6 +77,9 @@ public class UserManager {
        вариант, и скорее всего я так и сделаю. Но это третует пересмотра проекта, так что пока не стоит с этим
        торопиться.
         */
+=======
+        assert (LastUserID >= 0);
+>>>>>>> master
         return LastUserID;
     }
 

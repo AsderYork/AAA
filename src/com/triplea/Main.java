@@ -3,44 +3,52 @@ package com.triplea;
 
 public class Main {
 
+<<<<<<< HEAD
     private static void CheckExitCode(EXIT_CODES Code) {//Метод поддержки, обеспечивающий обработку возвращаемых значений главных методов блоков. Боже мой, какая дикая терминология!
         if (Code.getStatusCode() == -1) {
             return;
         }
 
         System.exit(Code.getStatusCode());
+=======
+    private static void CheckExitCode(ExitCode code) {
+        if (code.getStatusCode() == -1) {
+            return;
+        }
+
+        System.exit(code.getStatusCode());
+>>>>>>> master
     }
 
     public static void main(String[] args) {
-        UserInput Input = new UserInput();//Результат пользоватльского ввода будет записан сюда
+        UserInput input = new UserInput();
 
 
-        UserManager UM = new UserManager();
-        UM.addUser("jdoe", "John Doe", "sup3rpaZZ", "Salt");
-        UM.addUser("jrow", "Jane Row", "Qweqrty12", "AnotherSalt");
+        UserManager um = new UserManager();
+        um.addUser("jdoe", "John Doe", "sup3rpaZZ", "Salt");
+        um.addUser("jrow", "Jane Row", "Qweqrty12", "AnotherSalt");
 
 
-        ResourceManager RM = new ResourceManager();
-        RM.AddPermission("a", 1, 0);
-        RM.AddPermission("a.b", 2, 0);
-        RM.AddPermission("a.b.c", 3, 1);
-        RM.AddPermission("a.bc", 3, 0);
+        ResourceManager rm = new ResourceManager();
+        rm.AddPermission("a", 1, 0);
+        rm.AddPermission("a.b", 2, 0);
+        rm.AddPermission("a.b.c", 3, 1);
+        rm.AddPermission("a.bc", 3, 0);
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);
 
-        //Важно помнить, что метод CheckExitCode на самом деле может завершать программу.
-        CheckExitCode(ConsoleManager.parse(Input));
-        CheckExitCode(UM.FindUser(Input.name, Input.password));
+        CheckExitCode(ConsoleManager.parse(input));
+        CheckExitCode(um.FindUser(input.name, input.password));
 
-        if (RM.IsResourceAccessible(UM.getLastUserID(), Input.resource, Input.role)) {
-            Accounter.ResourceAccessSuccess(Input, UM.getLastUserID());
+        if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
+            Accounter.ResourceAccessSuccess(input, um.getLastUserID());
         } else {
-            Accounter.AccessRejected(Input, UM.getLastUserID());
-            CheckExitCode(EXIT_CODES.RESOURCE_PERMISSION_DENIED);
+            Accounter.AccessRejected(input, um.getLastUserID());
+            CheckExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
         }
 
-        System.exit(0);//Если все прошло хорошо, заканчиваем так.
+        System.exit(0);
     }
 }
 

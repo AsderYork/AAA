@@ -4,31 +4,31 @@ import java.time.LocalDate;
 
 
 public class AccountMessage {
-    String Action; //Login/AccessGranted/AccessRejected
-    String AccountDate;
+    String action; //Login/AccessGranted/AccessRejected
+    String accountDate;
 
-    int USERID;
-    String Role;
-    String PATH;
-    int Value;
-    LocalDate DateStart;
-    LocalDate DateFinished;
+    int userid;
+    String role;
+    String path;
+    int value;
+    LocalDate dateStart;
+    LocalDate dateFinished;
 
     public AccountMessage(String action,
                           String accountDate,
-                          int USERID,
+                          int userid,
                           String role,
-                          String PATH,
+                          String path,
                           int value,
                           LocalDate dateStart,
                           LocalDate dateFinished) {
-        Action = action;
-        AccountDate = accountDate;
-        this.USERID = USERID;
-        Role = role;
-        this.PATH = PATH;
-        Value = value;
-        DateStart = dateStart;
-        DateFinished = dateFinished;
+        this.action = action;
+        this.accountDate = accountDate;
+        this.userid = userid;
+        this.role = role;
+        this.path = path;
+        this.value = value;
+        this.dateStart = dateStart;
+        this.dateFinished = dateFinished;
     }
 }

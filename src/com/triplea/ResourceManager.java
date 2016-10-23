@@ -2,10 +2,6 @@ package com.triplea;
 
 import java.util.TreeMap;
 
-/*
-Блок управления доступом к ресурсам
- */
-
 public class ResourceManager {
     public TreeMap<String, ResourceData> Resources;
 
@@ -20,7 +16,7 @@ public class ResourceManager {
     }
 
     public boolean IsResourceAccessible(int UserID, String PATH, String Role) {
-        int IntROLE;//Преводим роль к интовому типу
+        int IntROLE;
         switch (Role) {
             case "READ": {
                 IntROLE = 1;
@@ -40,12 +36,9 @@ public class ResourceManager {
             }
         }
 
-        //Разбиваем путь до ресурса на куски
         String delims = "[.]";
         String[] tokens = PATH.split(delims);
 
-        /*Проверяем с самого корня, есть ли у нас доступ к родительским ресурсам
-        Так как доступ наследуется. Если находим требуемый доступ у дочернего ресурса, значит и у данного он есть*/
         String PartPath = "";
         for (String token : tokens) {
             PartPath += token;
@@ -63,12 +56,11 @@ public class ResourceManager {
         return false;
     }
 
-    private boolean IsSubresourceAccessible(String PATH, int ROLE, int USERID) {
-        //Метод поддержки. Проверяет, доступна ли часть пути ресурса.
+    private boolean IsSubresourceAccessible(String path, int role, int userid) {
         ResourceData Data;
-        Data = Resources.get(PATH);
+        Data = Resources.get(path);
         if (Data != null) {
-            if (Data.IsPermissionExist(USERID, ROLE)) {
+            if (Data.IsPermissionExist(userid, role)) {
                 return true;
             }
         }

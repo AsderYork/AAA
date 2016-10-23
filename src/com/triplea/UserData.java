@@ -1,18 +1,17 @@
 package com.triplea;
 
-class UserData {//Структура данных пользователя
+class UserData {
     String Username;
     String Name;
+    String HashedPassword;
+    String Salt;
+    int id;
 
-    public UserData(String username, String name, String hashedPassword, String salt, int ID) {
+    public UserData(String username, String name, String hashedPassword, String salt, int id) {
         Username = username;
         Name = name;
         HashedPassword = hashedPassword;
         Salt = salt;
-        this.ID = ID;
+        this.id = id;
     }
-
-    String HashedPassword;
-    String Salt;
-    int ID;
 }
