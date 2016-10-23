@@ -34,16 +34,9 @@ public class Accounter {
                 Data.id,
                 "",
                 "",
-<<<<<<< HEAD
-                "",
-                0,
-                LocalDate.now (),
-                LocalDate.now ()
-=======
                 0,
                 LocalDate.now(),
                 LocalDate.now()
->>>>>>> master
         );
 
         Singleton.Log.put(String.valueOf(Singleton.Log.size()), MSG);

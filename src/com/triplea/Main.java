@@ -3,21 +3,12 @@ package com.triplea;
 
 public class Main {
 
-<<<<<<< HEAD
-    private static void CheckExitCode(EXIT_CODES Code) {//Метод поддержки, обеспечивающий обработку возвращаемых значений главных методов блоков. Боже мой, какая дикая терминология!
-        if (Code.getStatusCode() == -1) {
-            return;
-        }
-
-        System.exit(Code.getStatusCode());
-=======
     private static void CheckExitCode(ExitCode code) {
         if (code.getStatusCode() == -1) {
             return;
         }
 
         System.exit(code.getStatusCode());
->>>>>>> master
     }
 
     public static void main(String[] args) {
