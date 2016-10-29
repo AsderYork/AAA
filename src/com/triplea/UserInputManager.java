@@ -82,7 +82,7 @@ public class UserInputManager {
             return ExitCode.EXIT_SUCCESSFULLY;
         }
 
-        return ExitCode.EXIT_SUCCESSFULLY;
+        return ExitCode.DO_NOT_EXIT;
     }
 
     private void help() {

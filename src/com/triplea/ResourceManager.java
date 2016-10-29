@@ -17,6 +17,11 @@ public class ResourceManager {
 
     public boolean IsResourceAccessible(int UserID, String PATH, String Role) {
         int IntROLE;
+        //Выбрасываемся, если роль нулевая. Ведь если так, то и никакого ресурса нет
+        if ((Role == null) || (PATH == null)) {
+            return false;
+        }
+
         switch (Role) {
             case "READ": {
                 IntROLE = 1;

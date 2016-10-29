@@ -3,7 +3,7 @@ package com.triplea;
 
 public class Main {
 
-    private static void CheckExitCode(ExitCode code) {
+    private static void checkExitCode(ExitCode code) {
         if (code.getStatusCode() == -1) {
             return;
         }
@@ -29,14 +29,14 @@ public class Main {
 
         UserInputManager ConsoleManager = new UserInputManager(args);
 
-        CheckExitCode(ConsoleManager.parse(input));
-        CheckExitCode(um.FindUser(input.name, input.password));
+        checkExitCode(ConsoleManager.parse(input));
+        checkExitCode(um.FindUser(input.name, input.password));
 
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
             Accounter.ResourceAccessSuccess(input, um.getLastUserID());
         } else {
             Accounter.AccessRejected(input, um.getLastUserID());
-            CheckExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
+            checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
         }
 
         System.exit(0);
