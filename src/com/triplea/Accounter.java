@@ -11,15 +11,15 @@ import java.util.TreeMap;
 
 public class Accounter {
 
-    private static Accounter Singleton;
-    private TreeMap<String, AccountMessage> Log;
+    private static Accounter singleton;
+    private TreeMap<String, AccountMessage> log;
     private Accounter() {
-        Log = new TreeMap<>();
+        log = new TreeMap<>();
     }
 
     static private void CheckForSingleton() {
-        if (Singleton == null) {
-            Singleton = new Accounter();
+        if (singleton == null) {
+            singleton = new Accounter();
         }
     }
 
@@ -39,28 +39,28 @@ public class Accounter {
                 LocalDate.now()
         );
 
-        Singleton.Log.put(String.valueOf(Singleton.Log.size()), MSG);
+        singleton.log.put(String.valueOf(singleton.log.size()), MSG);
 
     }
 
-    public static void ResourceAccessSuccess(UserInput Input, int USERID) {
+    public static void ResourceAccessSuccess(UserInput input, int userid) {
         CheckForSingleton();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         AccountMessage MSG = new AccountMessage("AccessGranted",
                 dateFormat.format(date),
-                USERID,
-                Input.role,
-                Input.resource,
-                Input.valueOfResourse,
-                Input.startDateOfResourceRequest,
-                Input.endDateOfResourceRequest);
+                userid,
+                input.role,
+                input.resource,
+                input.valueOfResourse,
+                input.startDateOfResourceRequest,
+                input.endDateOfResourceRequest);
 
-        Singleton.Log.put(String.valueOf(Singleton.Log.size()), MSG);
+        singleton.log.put(String.valueOf(singleton.log.size()), MSG);
     }
 
-    public static void AccessRejected(UserInput Input, int userid) {
+    public static void AccessRejected(UserInput input, int userid) {
         CheckForSingleton();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -69,13 +69,13 @@ public class Accounter {
         AccountMessage MSG = new AccountMessage("AccessRejected",
                 dateFormat.format(date),
                 userid,
-                Input.role,
-                Input.resource,
-                Input.valueOfResourse,
-                Input.startDateOfResourceRequest,
-                Input.endDateOfResourceRequest);
+                input.role,
+                input.resource,
+                input.valueOfResourse,
+                input.startDateOfResourceRequest,
+                input.endDateOfResourceRequest);
 
-        Singleton.Log.put(String.valueOf(Singleton.Log.size()), MSG);
+        singleton.log.put(String.valueOf(singleton.log.size()), MSG);
     }
 
 }

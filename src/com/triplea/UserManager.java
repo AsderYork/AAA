@@ -5,16 +5,16 @@ import java.util.Objects;
 
 
 public class UserManager {
-    HashMap<String, UserData> Map;//Карта пользователей.
-    private int LastUserID;
+    HashMap<String, UserData> Map;
+    private int lastUserID;
 
     public UserManager() {
         Map = new HashMap<>();
-        LastUserID = -1;
+        lastUserID = -1;
     }
 
-    public ExitCode FindUser(String UserLogin, String InputPassword) {
-        UserData data = GetUserData(UserLogin);
+    public ExitCode FindUser(String userLogin, String inputPassword) {
+        UserData data = GetUserData(userLogin);
 
         if (data == null) {
             System.out.println("Wrong username");
@@ -22,10 +22,10 @@ public class UserManager {
         }
 
 
-        if (Objects.equals(Hasher.HashPassword(InputPassword, data.Salt), data.HashedPassword)) {
+        if (Objects.equals(Hasher.HashPassword(inputPassword, data.salt), data.hashedPassword)) {
 
-            LastUserID = data.id;
-            System.out.println("Welcome " + data.Name);
+            lastUserID = data.id;
+            System.out.println("Welcome " + data.name);
             Accounter.Login(data);
             return ExitCode.DO_NOT_EXIT;
         }
@@ -34,15 +34,15 @@ public class UserManager {
         return ExitCode.WRONG_PASSWORD;
     }
 
-    public void addUser(String UserLogin, String UserName, String Password, String Salt) {
+    public void addUser(String userLogin, String userName, String password, String salt) {
 
         UserData data = new UserData(
-                UserLogin,
-                UserName,
-                Hasher.HashPassword(Password, Salt),
-                Salt,
+                userLogin,
+                userName,
+                Hasher.HashPassword(password, salt),
+                salt,
                 Map.size());
-        Map.put(UserLogin, data);
+        Map.put(userLogin, data);
 
 
     }
@@ -52,8 +52,8 @@ public class UserManager {
     }
 
     public int getLastUserID() {
-        assert (LastUserID >= 0);
-        return LastUserID;
+        assert (lastUserID >= 0);
+        return lastUserID;
     }
 
 }

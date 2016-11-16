@@ -3,58 +3,56 @@ package com.triplea;
 import java.util.TreeMap;
 
 public class ResourceManager {
-    public TreeMap<String, ResourceData> Resources;
+    public TreeMap<String, ResourceData> resources;
 
     public ResourceManager() {
-        Resources = new TreeMap<>();
+        resources = new TreeMap<>();
     }
 
     public void AddPermission(String PATH, int Role, int USERID) {
         ResourceData Data = new ResourceData();
         Data.AddUserPermission(USERID, Role);
-        Resources.put(PATH, Data);
+        resources.put(PATH, Data);
     }
 
-    public boolean IsResourceAccessible(int UserID, String PATH, String Role) {
-        int IntROLE;
+    public boolean IsResourceAccessible(int userID, String path, String role) {
+        int intRole;
         //Выбрасываемся, если роль нулевая. Ведь если так, то и никакого ресурса нет
-        if ((Role == null) || (PATH == null)) {
+        if ((role == null) || (path == null)) {
             return false;
         }
 
-        switch (Role) {
+        switch (role) {
             case "READ": {
-                IntROLE = 1;
+                intRole = 1;
                 break;
             }
             case "WRITE": {
-                IntROLE = 2;
+                intRole = 2;
                 break;
             }
             case "EXECUTE": {
-                IntROLE = 4;
+                intRole = 4;
                 break;
             }
             default: {
-                System.out.println("IsResourceAccasiable did not expect " + Role + " as a role");
+                System.out.println("IsResourceAccasiable did not expect " + role + " as a role");
                 return false;
             }
         }
 
         String delims = "[.]";
-        String[] tokens = PATH.split(delims);
+        String[] tokens = path.split(delims);
 
-        String PartPath = "";
+        String partPath = "";
         for (String token : tokens) {
-            PartPath += token;
+            partPath += token;
 
-            if (IsSubresourceAccessible(PartPath, IntROLE, UserID)) {
+            if (IsSubresourceAccessible(partPath, intRole, userID)) {
                 System.out.println("Access Granted");
                 return true;
             }
-            PartPath += ".";//Так как у нас только токены, мы должны добавлять между ними точку, что бы это было похоже
-            // на путь
-
+            partPath += ".";
         }
 
         System.out.println("Access Rejected");
@@ -62,10 +60,10 @@ public class ResourceManager {
     }
 
     private boolean IsSubresourceAccessible(String path, int role, int userid) {
-        ResourceData Data;
-        Data = Resources.get(path);
-        if (Data != null) {
-            if (Data.IsPermissionExist(userid, role)) {
+        ResourceData data;
+        data = resources.get(path);
+        if (data != null) {
+            if (data.IsPermissionExist(userid, role)) {
                 return true;
             }
         }

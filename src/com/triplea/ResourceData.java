@@ -1,12 +1,11 @@
 package com.triplea;
 
 import java.util.TreeMap;
-import java.util.BitSet;
 
 class ResourceData {
     private TreeMap<Integer, Integer> userid;
 
-    public ResourceData() {//Инициализируем контейнер
+    public ResourceData() {
         userid = new TreeMap<>();
     }
 
@@ -32,7 +31,7 @@ class ResourceData {
 
     public boolean IsPermissionExist(int ID, int Role) {
         Integer Data = userid.get(ID);
-        if (Data != null) {//Хорошо бы переписать эту часть
+        if (Data != null) {
             if (Role == 1) {
                 switch (Data) {
                     case 1:
