@@ -24,4 +24,4 @@ else
         CP="$LIB:$OUT_JAR:$SRC"
 fi
 
-java -cp $CP com.triplea.Main $*
+java -cp ${CP} com.triplea.Main $*

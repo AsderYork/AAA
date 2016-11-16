@@ -6,7 +6,7 @@ mode=$*
 
 testing(){
     let "numberOfTests += 1"
-    if [[ $mode = -dev ]] ; then
+    if [[ ${mode} = -dev ]] ; then
         ./run.sh $1
     else
         ./run.sh $1 &> /dev/null
@@ -24,7 +24,7 @@ testing(){
 isSuccessfullTest(){
     echo "$numberOfCompletedTests/$numberOfTests"
 
-    if [ $numberOfCompletedTests == $numberOfTests ] ; then
+    if [ ${numberOfCompletedTests} == ${numberOfTests} ] ; then
         echo "All Tests Completed Successfuly"
         exit 0
     else
