@@ -4,6 +4,7 @@ import org.apache.commons.cli.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.BitSet;
 
 
 public class UserInputManager {
@@ -29,6 +30,10 @@ public class UserInputManager {
         try {
             cmd = parser.parse(options, args);
 
+            if(!ValidationGroupsOfOmotion(cmd)){
+                help();
+                return ExitCode.EXIT_SUCCESSFULLY;
+            }
 
             if (cmd.hasOption("h")) {
                 help();
@@ -104,6 +109,52 @@ public class UserInputManager {
 
     private int ValueIsIntString(String inputString) throws NumberFormatException {
         return Integer.parseInt(inputString);
+    }
+
+    private  boolean ValidationGroupsOfOmotion(CommandLine cmd) {
+        BitSet allowInput = new BitSet(8);
+        allowInput.set(0);
+
+        if (cmd.hasOption("login")) {
+            allowInput.set(1);
+        }
+
+        if (cmd.hasOption("pass")) {
+            allowInput.set(2);
+        }
+
+        if (cmd.hasOption("res")) {
+            allowInput.set(3);
+        }
+
+        if (cmd.hasOption("role")) {
+            allowInput.set(4);
+        }
+
+        if (cmd.hasOption("ds")) {
+            allowInput.set(5);
+        }
+
+        if (cmd.hasOption("de")) {
+            allowInput.set(6);
+
+        }
+
+        if (cmd.hasOption("val")) {
+            allowInput.set(7);
+        }
+
+        switch (Long.toString(allowInput.toLongArray()[0], 2)) {
+            case "111":
+                return true;
+            case "11111":
+                return true;
+            case "11111111":
+                return true;
+            default:
+                System.err.println("Not enough attributes");
+                return false;
+        }
     }
 }
 
