@@ -4,6 +4,6 @@ jdk:
 before_script:
     - bash build.sh
     - chmod +x run.sh
-    - bash run.sh
+    - bash run.sh -h
 script:
     - bash test.sh -dev
