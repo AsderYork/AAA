@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 
 public class AccountMessage {
-    String action; //Login/AccessGranted/AccessRejected
+    String action; //login/AccessGranted/accessRejected
     String accountDate;
 
     int userid;

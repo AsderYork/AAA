@@ -9,7 +9,7 @@ class ResourceData {
         userid = new TreeMap<>();
     }
 
-    public void AddUserPermission(int ID, int Role) {
+    public void addUserPermission(int ID, int Role) {
         Integer Data = userid.get(ID);
 
         if (Data == null)
@@ -29,7 +29,7 @@ class ResourceData {
     EXECUTE 4,5,6,7
      */
 
-    public boolean IsPermissionExist(int ID, int Role) {
+    public boolean isPermissionExist(int ID, int Role) {
         Integer Data = userid.get(ID);
         if (Data != null) {
             if (Role == 1) {

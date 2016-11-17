@@ -11,7 +11,7 @@ public class ResourceManager {
 
     public void AddPermission(String PATH, int Role, int USERID) {
         ResourceData Data = new ResourceData();
-        Data.AddUserPermission(USERID, Role);
+        Data.addUserPermission(USERID, Role);
         resources.put(PATH, Data);
     }
 
@@ -63,7 +63,7 @@ public class ResourceManager {
         ResourceData data;
         data = resources.get(path);
         if (data != null) {
-            if (data.IsPermissionExist(userid, role)) {
+            if (data.isPermissionExist(userid, role)) {
                 return true;
             }
         }

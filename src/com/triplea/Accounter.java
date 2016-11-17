@@ -17,19 +17,19 @@ public class Accounter {
         log = new TreeMap<>();
     }
 
-    static private void CheckForSingleton() {
+    static private void checkForSingleton() {
         if (singleton == null) {
             singleton = new Accounter();
         }
     }
 
-    public static void Login(UserData Data) {
-        CheckForSingleton();
+    public static void login(UserData Data) {
+        checkForSingleton();
 
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        AccountMessage MSG = new AccountMessage("Login",
+        AccountMessage MSG = new AccountMessage("login",
                 dateFormat.format(date),
                 Data.id,
                 "",
@@ -43,8 +43,8 @@ public class Accounter {
 
     }
 
-    public static void ResourceAccessSuccess(UserInput input, int userid) {
-        CheckForSingleton();
+    public static void resourceAccessSuccess(UserInput input, int userid) {
+        checkForSingleton();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
@@ -60,13 +60,13 @@ public class Accounter {
         singleton.log.put(String.valueOf(singleton.log.size()), MSG);
     }
 
-    public static void AccessRejected(UserInput input, int userid) {
-        CheckForSingleton();
+    public static void accessRejected(UserInput input, int userid) {
+        checkForSingleton();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
 
-        AccountMessage MSG = new AccountMessage("AccessRejected",
+        AccountMessage MSG = new AccountMessage("accessRejected",
                 dateFormat.format(date),
                 userid,
                 input.role,

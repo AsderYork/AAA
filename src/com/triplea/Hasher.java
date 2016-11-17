@@ -7,10 +7,10 @@ import java.security.NoSuchAlgorithmException;
 public class Hasher {
 
     public static String HashPassword(String Password, String Salt) {
-        return Hash(Hash(Password) + Salt);
+        return hash(hash(Password) + Salt);
     }
 
-    private static String Hash(String Value) {
+    private static String hash(String Value) {
         //Метод поддуржки. Принимает строку, возвращает её хэш
 
         MessageDigest Digest;
@@ -21,7 +21,7 @@ public class Hasher {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             assert (false);
-            return "Hash error. You should'n see this because of assert!";
+            return "hash error. You should'n see this because of assert!";
         }
 
         //Подготавливаем дайджест к работе и вностим в него нашу строку

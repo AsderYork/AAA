@@ -13,8 +13,8 @@ public class UserManager {
         lastUserID = -1;
     }
 
-    public ExitCode FindUser(String userLogin, String inputPassword) {
-        UserData data = GetUserData(userLogin);
+    public ExitCode findUser(String userLogin, String inputPassword) {
+        UserData data = getUserData(userLogin);
 
         if (data == null) {
             System.out.println("Wrong username");
@@ -26,7 +26,7 @@ public class UserManager {
 
             lastUserID = data.id;
             System.out.println("Welcome " + data.name);
-            Accounter.Login(data);
+            Accounter.login(data);
             return ExitCode.DO_NOT_EXIT;
         }
 
@@ -47,7 +47,7 @@ public class UserManager {
 
     }
 
-    private UserData GetUserData(String Username) {
+    private UserData getUserData(String Username) {
         return Map.get(Username);
     }
 

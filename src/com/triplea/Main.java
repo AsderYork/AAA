@@ -30,7 +30,7 @@ public class Main {
         UserInputManager ConsoleManager = new UserInputManager(args);
 
         checkExitCode(ConsoleManager.parse(input));
-        checkExitCode(um.FindUser(input.name, input.password));
+        checkExitCode(um.findUser(input.name, input.password));
 
         if(input.role == null)
         {
@@ -40,9 +40,9 @@ public class Main {
 
 
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
-            Accounter.ResourceAccessSuccess(input, um.getLastUserID());
+            Accounter.resourceAccessSuccess(input, um.getLastUserID());
         } else {
-            Accounter.AccessRejected(input, um.getLastUserID());
+            Accounter.accessRejected(input, um.getLastUserID());
             checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
         }
 

@@ -30,7 +30,7 @@ public class UserInputManager {
         try {
             cmd = parser.parse(options, args);
 
-            if(!ValidationGroupsOfOmotion(cmd)){
+            if(!validationGroupsOfOption(cmd)){
                 help();
                 return ExitCode.EXIT_SUCCESSFULLY;
             }
@@ -53,19 +53,19 @@ public class UserInputManager {
             }
 
             if (cmd.hasOption("role")) {
-                userInput.role = RoleParser(cmd.getOptionValue("role"));
+                userInput.role = roleParser(cmd.getOptionValue("role"));
             }
 
             if (cmd.hasOption("ds")) {
-                userInput.startDateOfResourceRequest = DateParser(cmd.getOptionValue("ds"));
+                userInput.startDateOfResourceRequest = dateParser(cmd.getOptionValue("ds"));
             }
 
             if (cmd.hasOption("de")) {
-                userInput.endDateOfResourceRequest = DateParser(cmd.getOptionValue("de"));
+                userInput.endDateOfResourceRequest = dateParser(cmd.getOptionValue("de"));
             }
 
             if (cmd.hasOption("val")) {
-                userInput.valueOfResourse = ValueIsIntString(cmd.getOptionValue("val"));
+                userInput.valueOfResourse = valueIsIntString(cmd.getOptionValue("val"));
                 if (userInput.valueOfResourse < 0) {
                     System.err.println("val cant be <0");
                     return ExitCode.INCORRECT_ACTIVITY;
@@ -102,11 +102,11 @@ public class UserInputManager {
         formatter.printHelp("Main", options);
     }
 
-    private LocalDate DateParser(String inputString) throws DateTimeParseException {
+    private LocalDate dateParser(String inputString) throws DateTimeParseException {
         return LocalDate.parse(inputString);
     }
 
-    private String RoleParser(String inputString) throws WrongRoleException {
+    private String roleParser(String inputString) throws WrongRoleException {
         if (inputString.equals("READ") | inputString.equals("WRITE") | inputString.equals("EXECUTE")) {
             return inputString;
         } else {
@@ -114,11 +114,11 @@ public class UserInputManager {
         }
     }
 
-    private int ValueIsIntString(String inputString) throws NumberFormatException {
+    private int valueIsIntString(String inputString) throws NumberFormatException {
         return Integer.parseInt(inputString);
     }
 
-    private  boolean ValidationGroupsOfOmotion(CommandLine cmd) {
+    private  boolean validationGroupsOfOption(CommandLine cmd) {
         BitSet allowInput = new BitSet(8);
         allowInput.set(0);
 
