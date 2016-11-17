@@ -20,8 +20,8 @@ public class Hasher {
             Digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            assert (false);
-            return "hash error. You should'n see this because of assert!";
+            System.exit(-2);
+            return "hash error";
         }
 
         //Подготавливаем дайджест к работе и вностим в него нашу строку

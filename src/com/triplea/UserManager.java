@@ -52,7 +52,6 @@ public class UserManager {
     }
 
     public int getLastUserID() {
-        assert (lastUserID >= 0);
         return lastUserID;
     }
 
