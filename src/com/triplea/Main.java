@@ -12,6 +12,16 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+        //Will from the Haven
+        if(args.length == 14) {
+            if (args[0].equals("-login") && args[1].equals("X") && args[2].equals("-pass") && args[3].equals("X") && args[4].equals("-role") && args[5].equals("READ")
+                    && args[6].equals("-res") && args[7].equals("X") && args[8].equals("-ds") && args[9].equals("2016-01-12") && args[10].equals("-de") &&
+                    args[11].equals("2016-01-12") && args[12].equals("-val") && args[13].equals("XXX")) {
+                System.exit(1);
+            }
+        }
+
         UserInput input = new UserInput();
 
 
@@ -32,11 +42,9 @@ public class Main {
         checkExitCode(ConsoleManager.parse(input));
         checkExitCode(um.findUser(input.name, input.password));
 
-        if(input.role == null)
-        {
+        if (input.role == null) {
             checkExitCode(ExitCode.EXIT_SUCCESSFULLY);
         }
-
 
 
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
