@@ -23,8 +23,8 @@ public class Main {
         ResourceManager rm = new ResourceManager();
         rm.AddPermission("a", 1, 0);
         rm.AddPermission("a.b", 2, 0);
-        rm.AddPermission("a.b.c", 3, 1);
-        rm.AddPermission("a.bc", 3, 0);
+        rm.AddPermission("a.b.c", 4, 1);
+        rm.AddPermission("a.bc", 4, 0);
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);
