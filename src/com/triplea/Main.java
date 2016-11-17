@@ -23,14 +23,21 @@ public class Main {
         ResourceManager rm = new ResourceManager();
         rm.AddPermission("a", 1, 0);
         rm.AddPermission("a.b", 2, 0);
-        rm.AddPermission("a.b.c", 3, 1);
-        rm.AddPermission("a.bc", 3, 0);
+        rm.AddPermission("a.b.c", 4, 1);
+        rm.AddPermission("a.bc", 4, 0);
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);
 
         checkExitCode(ConsoleManager.parse(input));
         checkExitCode(um.FindUser(input.name, input.password));
+
+        if(input.role == null)
+        {
+            checkExitCode(ExitCode.EXIT_SUCCESSFULLY);
+        }
+
+
 
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
             Accounter.ResourceAccessSuccess(input, um.getLastUserID());
