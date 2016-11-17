@@ -81,10 +81,17 @@ public class UserInputManager {
 
             return ExitCode.INCORRECT_ACTIVITY;
 
+
         } catch (ParseException pe) {
             System.err.println("Failed to parse command line properties");
             help();
             return ExitCode.EXIT_SUCCESSFULLY;
+
+        } catch (WrongRoleException wrt) {
+
+            System.err.println("Wrong role");
+            return ExitCode.WRONG_ROLE;
+
         }
 
         return ExitCode.DO_NOT_EXIT;
@@ -99,11 +106,11 @@ public class UserInputManager {
         return LocalDate.parse(inputString);
     }
 
-    private String RoleParser(String inputString) {
+    private String RoleParser(String inputString) throws WrongRoleException {
         if (inputString.equals("READ") | inputString.equals("WRITE") | inputString.equals("EXECUTE")) {
             return inputString;
         } else {
-            throw new IllegalArgumentException("Wrong role parameter");
+            throw new WrongRoleException("Wrong role parameter");
         }
     }
 
