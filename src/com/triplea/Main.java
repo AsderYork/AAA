@@ -32,6 +32,14 @@ public class Main {
         CheckExitCode(ConsoleManager.parse(input));
         CheckExitCode(um.FindUser(input.name, input.password));
 
+        if(input.role == null)
+        {/*Наша система устроена так, что в случае, если данные пользователя верны, но он не запросил
+        никакой ресурс, то предпологается, что он на самом деле таки хотел ресурс. Просто пустой и без роли
+        А потому он получает RESOURCE_PERMISSION_DENIED. Однако в тестах указано, что необходимо проверять,
+        в таком случае нужно возвращать 0. Этот костыль тут именно за этим.*/
+            CheckExitCode(ExitCode.EXIT_SUCCESSFULLY);
+        }
+
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
             Accounter.ResourceAccessSuccess(input, um.getLastUserID());
         } else {
