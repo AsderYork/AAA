@@ -91,9 +91,7 @@ public class UserInputManager {
         } catch (WrongRoleException wrt) {
 
             System.err.println("Wrong role");
-           // return ExitCode.WRONG_ROLE;
-            //Just rollback to
-            userInput.levelOfInput = 1;
+            return ExitCode.WRONG_ROLE;
         }
 
         return ExitCode.DO_NOT_EXIT;
