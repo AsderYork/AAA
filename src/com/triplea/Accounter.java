@@ -43,9 +43,14 @@ public class Accounter {
 
     }
 
-    public static void resourceAccessSuccess(UserInput input, int userid) {
+    public static ExitCode resourceAccessSuccess(UserInput input, int userid) {
         checkForSingleton();
 
+
+        if(input.endDateOfResourceRequest == null)
+        {
+            return ExitCode.INCORRECT_ACTIVITY;
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         AccountMessage MSG = new AccountMessage("AccessGranted",
@@ -58,10 +63,17 @@ public class Accounter {
                 input.endDateOfResourceRequest);
 
         singleton.log.put(String.valueOf(singleton.log.size()), MSG);
+
+        return ExitCode.EXIT_SUCCESSFULLY;
     }
 
-    public static void accessRejected(UserInput input, int userid) {
+    public static ExitCode accessRejected(UserInput input, int userid) {
         checkForSingleton();
+
+        if(input.endDateOfResourceRequest == null)
+        {
+            return ExitCode.INCORRECT_ACTIVITY;
+        }
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
@@ -76,6 +88,8 @@ public class Accounter {
                 input.endDateOfResourceRequest);
 
         singleton.log.put(String.valueOf(singleton.log.size()), MSG);
+
+        return ExitCode.EXIT_SUCCESSFULLY;
     }
 
 }

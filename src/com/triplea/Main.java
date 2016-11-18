@@ -43,23 +43,17 @@ public class Main {
 
 
         checkExitCode(um.findUser(input.name, input.password));
-
-        if (input.role == null) {
+        if(input.levelOfInput < 2){
             checkExitCode(ExitCode.EXIT_SUCCESSFULLY);
         }
 
 
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
-            if(input.levelOfInput < 3){
-                checkExitCode(ExitCode.INCORRECT_ACTIVITY);
-            }
-            Accounter.resourceAccessSuccess(input, um.getLastUserID());
+            checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));
         } else {
-            Accounter.accessRejected(input, um.getLastUserID());
-            if(input.levelOfInput < 3){
-                checkExitCode(ExitCode.INCORRECT_ACTIVITY);
-            }
-            checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
+            if(Accounter.accessRejected(input, um.getLastUserID())==ExitCode.EXIT_SUCCESSFULLY);{
+            checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);}
+            checkExitCode(ExitCode.INCORRECT_ACTIVITY);
         }
 
         System.exit(0);
