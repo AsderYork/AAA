@@ -56,6 +56,7 @@ public class Main {
             if(Accounter.accessRejected(input, um.getLastUserID())==ExitCode.EXIT_SUCCESSFULLY);{
             checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);}
             checkExitCode(ExitCode.INCORRECT_ACTIVITY);}
+            checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
         }
 
         System.exit(0);
