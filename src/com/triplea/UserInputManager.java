@@ -40,46 +40,46 @@ public class UserInputManager {
                 return ExitCode.EXIT_SUCCESSFULLY;
             }
 
-            if (cmd.hasOption("login")) {
+            if (cmd.hasOption("login")&&(cmd.hasOption("pass"))) {
                 userInput.name = cmd.getOptionValue("login");
-            }
-
-            if (cmd.hasOption("pass")) {
                 userInput.password = cmd.getOptionValue("pass");
+                userInput.levelOfInput = 1;
             }
-
-            if (cmd.hasOption("res")) {
+            if (cmd.hasOption("res")&&(cmd.hasOption("role"))) {
                 userInput.resource = cmd.getOptionValue("res");
-            }
-
-            if (cmd.hasOption("role")) {
                 userInput.role = roleParser(cmd.getOptionValue("role"));
+                userInput.levelOfInput = 2;
             }
 
-            if (cmd.hasOption("ds")) {
+
+            if (cmd.hasOption("ds")&&cmd.hasOption("de")&&(cmd.hasOption("val"))) {
+
+                userInput.valueOfResourse = -1;//Deafult value in case of wrong input.Before date in case of exception
+
+                //Date Parsing
+                userInput.levelOfInput = 3;
                 userInput.startDateOfResourceRequest = dateParser(cmd.getOptionValue("ds"));
-            }
-
-            if (cmd.hasOption("de")) {
                 userInput.endDateOfResourceRequest = dateParser(cmd.getOptionValue("de"));
-            }
 
-            if (cmd.hasOption("val")) {
+                //Value parsing. It's kinda special. Not like fonts, of course
+
                 userInput.valueOfResourse = valueIsIntString(cmd.getOptionValue("val"));
                 if (userInput.valueOfResourse < 0) {
                     System.err.println("val cant be <0");
-                    return ExitCode.INCORRECT_ACTIVITY;
+                    //return ExitCode.INCORRECT_ACTIVITY;
                 }
             }
+
 
         } catch (DateTimeParseException dt) {
 
             System.err.println("Wrong date parameter");
-            return ExitCode.INCORRECT_ACTIVITY;
+            //From now on, we'll do nothing against incorrect input. Like not our business or something
+            //return ExitCode.INCORRECT_ACTIVITY;
 
         } catch (IllegalArgumentException ill) {
 
-            return ExitCode.INCORRECT_ACTIVITY;
+            //return ExitCode.INCORRECT_ACTIVITY;
 
 
         } catch (ParseException pe) {
@@ -91,7 +91,6 @@ public class UserInputManager {
 
             System.err.println("Wrong role");
             return ExitCode.WRONG_ROLE;
-
         }
 
         return ExitCode.DO_NOT_EXIT;
