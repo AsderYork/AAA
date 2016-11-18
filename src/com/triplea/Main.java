@@ -40,7 +40,7 @@ public class Main {
         UserInputManager ConsoleManager = new UserInputManager(args);
 
         checkExitCode(ConsoleManager.parse(input));
-
+        System.err.println("levelOfInput:"+input.levelOfInput);
 
         checkExitCode(um.findUser(input.name, input.password));
         if(input.levelOfInput < 2){
