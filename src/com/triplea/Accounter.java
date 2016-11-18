@@ -47,7 +47,7 @@ public class Accounter {
         checkForSingleton();
 
 
-        if(input.endDateOfResourceRequest == null)
+        if(input.valueOfResourse < 0)
         {
             return ExitCode.INCORRECT_ACTIVITY;
         }
@@ -70,7 +70,7 @@ public class Accounter {
     public static ExitCode accessRejected(UserInput input, int userid) {
         checkForSingleton();
 
-        if(input.endDateOfResourceRequest == null)
+        if(input.valueOfResourse < 0)
         {
             return ExitCode.INCORRECT_ACTIVITY;
         }

@@ -53,21 +53,20 @@ public class UserInputManager {
 
 
             if (cmd.hasOption("ds")&&cmd.hasOption("de")&&(cmd.hasOption("val"))) {
+
+                userInput.valueOfResourse = -1;//Deafult value in case of wrong input.Before date in case of exception
+
                 //Date Parsing
+                userInput.levelOfInput = 3;
                 userInput.startDateOfResourceRequest = dateParser(cmd.getOptionValue("ds"));
                 userInput.endDateOfResourceRequest = dateParser(cmd.getOptionValue("de"));
 
                 //Value parsing. It's kinda special. Not like fonts, of course
-                userInput.valueOfResourse = 0;//Deafult value in case of wrong input
+
                 userInput.valueOfResourse = valueIsIntString(cmd.getOptionValue("val"));
                 if (userInput.valueOfResourse < 0) {
                     System.err.println("val cant be <0");
                     //return ExitCode.INCORRECT_ACTIVITY;
-                }
-                else
-                {
-                    //If we made it up here, then this option set is fine
-                    userInput.levelOfInput = 3;
                 }
             }
 
