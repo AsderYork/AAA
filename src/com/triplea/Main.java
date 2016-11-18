@@ -49,11 +49,13 @@ public class Main {
 
 
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
-            checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));
+            if(input.levelOfInput > 2){
+            checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));}
         } else {
+            if(input.levelOfInput > 2){
             if(Accounter.accessRejected(input, um.getLastUserID())==ExitCode.EXIT_SUCCESSFULLY);{
             checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);}
-            checkExitCode(ExitCode.INCORRECT_ACTIVITY);
+            checkExitCode(ExitCode.INCORRECT_ACTIVITY);}
         }
 
         System.exit(0);
