@@ -1,17 +1,21 @@
 package com.triplea;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Hasher {
 
+    private static final Logger logger = LogManager.getLogger("Hasher");
     public static String HashPassword(String Password, String Salt) {
         return hash(hash(Password) + Salt);
     }
 
     private static String hash(String Value) {
-        //Метод поддуржки. Принимает строку, возвращает её хэш
+        //Метод поддержки. Принимает строку, возвращает её хэш
 
         MessageDigest Digest;
 
@@ -19,7 +23,7 @@ public class Hasher {
 
             Digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.error("Something happened to hash func!", e);
             System.exit(-2);
             return "hash error";
         }
