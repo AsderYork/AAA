@@ -8,12 +8,10 @@ import java.util.Objects;
 import java.sql.*;
 
 public class UserManager {
-    HashMap<String, UserData> Map;
     private int lastUserID;
 
     private static final Logger logger = LogManager.getLogger("UserManager");
     public UserManager() {
-        Map = new HashMap<>();
         lastUserID = -1;
     }
 
@@ -49,14 +47,6 @@ public class UserManager {
 
         logger.info("Adding new user");
         //btw it's possible to have more the 1 user with the same username. Which is bad for passwords
-            UserData data = new UserData(
-                userLogin,
-                userName,
-                Hasher.HashPassword(password, salt),
-                salt,
-                Map.size());
-            Map.put(userLogin, data);
-
             boolean TableExists = DBWorker.isTableExists("USERSDATA");
             if(!TableExists){
                 logger.info("There is no USERSDATA table. Creating!");
@@ -111,8 +101,6 @@ public class UserManager {
             logger.error("Cant parse from USERDATA request. Probably user we trying to find doesn't exits!", e);
         }
         return null;
-
-        //return Map.get(Username);
     }
 
     public int getLastUserID() {
