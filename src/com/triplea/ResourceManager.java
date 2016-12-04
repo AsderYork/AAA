@@ -5,16 +5,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.TreeMap;
 
 public class ResourceManager {
-    public TreeMap<String, ResourceData> resources;
 
     private static final Logger logger = LogManager.getLogger("ResourceManager");
 
-    public ResourceManager() {
-        resources = new TreeMap<>();
-    }
 
     private boolean checkFlag(int Data, int FlagOfInterest){
         //If Data were incorrect, return false
@@ -77,10 +72,6 @@ public class ResourceManager {
             logger.error("While we were checking if there is already permission for that user:path, we got smthin ", e);
         }
 
-
-       /*ResourceData Data = new ResourceData();
-        Data.addUserPermission(USERID, Role);
-        resources.put(PATH, Data);*/
     }
 
     public boolean IsResourceAccessible(int userID, String path, String role) {
@@ -161,15 +152,6 @@ public class ResourceManager {
         }
         return false;
 
-
-      /*  ResourceData data;
-        data = resources.get(path);
-        if (data != null) {
-            if (data.isPermissionExist(userid, role)) {
-                return true;
-            }
-        }
-        return false;*/
     }
 
 }
