@@ -3,6 +3,8 @@ package com.triplea;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.TreeMap;
 
 public class ResourceManager {
@@ -14,10 +16,71 @@ public class ResourceManager {
         resources = new TreeMap<>();
     }
 
+    private boolean checkFlag(int Data, int FlagOfInterest){
+        //If Data were incorrect, return false
+        if((Data <= 0)||(Data>7)){return false;}
+        //If unexisted flag were requested, return false
+        if(!((FlagOfInterest==1)||(FlagOfInterest==2)||(FlagOfInterest==4))){return false;}
+
+        if(FlagOfInterest==1)  {
+            if((Data==1)||(Data==3)||(Data==5)||(Data==7)){return true;};
+        }
+        if(FlagOfInterest==2)  {
+            if((Data==2)||(Data==3)||(Data==6)||(Data==7)){return true;};
+        }
+        if(FlagOfInterest==4)  {
+            if((Data==4)||(Data==5)||(Data==6)||(Data==7)){return true;};
+        }
+        return false;
+    }
+
     public void AddPermission(String PATH, int Role, int USERID) {
-        ResourceData Data = new ResourceData();
+        logger.info("Adding new Permission");
+
+        boolean TableExists = DBWorker.isTableExists("PERMISSIONSDATA");
+        if(!TableExists){
+            logger.info("There is no PERMISSIONSDATA table. Creating!");
+            DBWorker.execute("CREATE TABLE PERMISSIONSDATA(" +
+                    "ID int," +
+                    "Subresource VARCHAR(255)," +
+                    "Permission int)");        }
+        else {
+            logger.info("At least we have PERMISSIONSDATA table");
+        }
+
+        //Check if permission already exists and we just need to update it
+        ResultSet RS = DBWorker.ExecuteRequest("SELECT * FROM PERMISSIONSDATA WHERE (ID="+USERID+")AND(Subresource='" +
+                PATH+"');");
+        try {
+            if(RS.next()) {
+                int ValueFromDB =  RS.getInt("Permission");
+                logger.info("But this permission is already exist. Probably we need to augment it?");
+                if(!checkFlag(ValueFromDB, Role))
+                {
+                    logger.info("Yup. It needs augmentation");
+                    ValueFromDB+=Role;
+                    DBWorker.execute("UPDATE PERMISSIONSDATA SET Permission = "+ValueFromDB+" WHERE" +
+                            "(ID="+USERID+")AND(Subresource='"+PATH+"');");
+                }
+                else{
+                    logger.info("Nah, its fine! No augmentation needed");
+                }
+
+            }
+            else  {
+                logger.info("This permission will be first of his kind!");
+                DBWorker.execute("INSERT INTO PERMISSIONSDATA(ID, Subresource, Permission) " +
+                        "VALUES("+USERID+", '"+PATH+"', "+ Role+");");
+
+            }
+        } catch (SQLException e) {
+            logger.error("While we were checking if there is already permission for that user:path, we got smthin ", e);
+        }
+
+
+       /*ResourceData Data = new ResourceData();
         Data.addUserPermission(USERID, Role);
-        resources.put(PATH, Data);
+        resources.put(PATH, Data);*/
     }
 
     public boolean IsResourceAccessible(int userID, String path, String role) {
@@ -74,14 +137,39 @@ public class ResourceManager {
     }
 
     private boolean IsSubresourceAccessible(String path, int role, int userid) {
-        ResourceData data;
+
+
+        ResultSet RS = DBWorker.ExecuteRequest("SELECT * FROM PERMISSIONSDATA WHERE (ID="+userid+")AND(Subresource='" +
+                path+"');");
+        int DBPermission = 0;
+        try {
+
+            if(RS.next())
+            {
+                DBPermission =  RS.getInt("Permission");
+                return checkFlag(DBPermission, role);
+            }
+            else {
+                return false;
+            }
+
+
+
+        } catch (SQLException e) {
+            logger.error("While we were checking permission for IsResourceAccessible, we got smthin ", e);
+
+        }
+        return false;
+
+
+      /*  ResourceData data;
         data = resources.get(path);
         if (data != null) {
             if (data.isPermissionExist(userid, role)) {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
 
 }
