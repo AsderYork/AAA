@@ -33,10 +33,10 @@ public class Main {
 
 
         ResourceManager rm = new ResourceManager();
-        rm.AddPermission("a", 1, 0);
-        rm.AddPermission("a.b", 2, 0);
-        rm.AddPermission("a.b.c", 4, 1);
-        rm.AddPermission("a.bc", 4, 0);
+        rm.AddPermission("a", 1, 1);
+        rm.AddPermission("a.b", 2, 1);
+        rm.AddPermission("a.b.c", 4, 2);
+        rm.AddPermission("a.bc", 4, 1);
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);
