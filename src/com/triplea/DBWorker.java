@@ -2,7 +2,7 @@ package com.triplea;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.flywaydb.core.Flyway;
 import java.sql.*;
 
 /**
@@ -13,12 +13,20 @@ public class DBWorker {
     private static Connection conn = null;
 
     private static final Logger logger = LogManager.getLogger("DBWorker");
+
+    public static void Migrate()
+    {
+        Flyway flyway = new Flyway();
+        flyway.setDataSource("jdbc:h2:file:./target/foobar", "sa", "");
+        flyway.migrate();
+    }
+
     public static boolean connectToLocalDB()
     {
         logger.info("So we trying to connect to db");
         try{
             Class.forName("org.h2.Driver").newInstance();
-            conn = DriverManager.getConnection("jdbc:h2:file:C:/data/db", "sa", "");
+            conn = DriverManager.getConnection("jdbc:h2:file:./target/foobar", "sa", "");
             return true;
         }
         catch(Exception e)   {
