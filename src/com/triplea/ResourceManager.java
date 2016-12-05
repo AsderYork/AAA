@@ -3,6 +3,7 @@ package com.triplea;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.nio.file.Path;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -43,8 +44,28 @@ public class ResourceManager {
             logger.info("At least we have PERMISSIONSDATA table");
         }
 
+
+        ResourceData dataInDB = ResourceData_Access.getResourceData_ByIDAndPath(USERID, PATH);
+        if(dataInDB == null)      {
+            logger.info("This permission will be first of his kind!");
+            ResourceData_Access.putResourceData(new ResourceData(USERID, PATH, Role));
+        }
+        else{
+            logger.info("But this permission is already exist. Probably we need to augment it?");
+            if(!checkFlag(dataInDB.Permission, Role))   {
+                logger.info("Yup. It needs augmentation");
+                dataInDB.Permission+=Role;
+                ResourceData_Access.updateResourceDataPermission(dataInDB);
+            }
+            else{
+                logger.info("Nah, its fine! No augmentation needed");
+            }
+        }
+
+
+
         //Check if permission already exists and we just need to update it
-        ResultSet RS = DBWorker.ExecuteRequest("SELECT * FROM PERMISSIONSDATA WHERE (ID="+USERID+")AND(Subresource='" +
+       /* ResultSet RS = DBWorker.ExecuteRequest("SELECT * FROM PERMISSIONSDATA WHERE (ID="+USERID+")AND(Subresource='" +
                 PATH+"');");
         try {
             if(RS.next()) {
@@ -70,7 +91,7 @@ public class ResourceManager {
             }
         } catch (SQLException e) {
             logger.error("While we were checking if there is already permission for that user:path, we got smthin ", e);
-        }
+        }*/
 
     }
 
@@ -130,7 +151,13 @@ public class ResourceManager {
     private boolean IsSubresourceAccessible(String path, int role, int userid) {
 
 
-        ResultSet RS = DBWorker.ExecuteRequest("SELECT * FROM PERMISSIONSDATA WHERE (ID="+userid+")AND(Subresource='" +
+        ResourceData dataInDB = ResourceData_Access.getResourceData_ByIDAndPath(userid, path);
+        if(dataInDB == null){
+            return false;}
+
+        return checkFlag(dataInDB.Permission, role);
+
+       /* ResultSet RS = DBWorker.ExecuteRequest("SELECT * FROM PERMISSIONSDATA WHERE (ID="+userid+")AND(Subresource='" +
                 path+"');");
         int DBPermission = 0;
         try {
@@ -150,7 +177,7 @@ public class ResourceManager {
             logger.error("While we were checking permission for IsResourceAccessible, we got smthin ", e);
 
         }
-        return false;
+        return false;*/
 
     }
 

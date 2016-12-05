@@ -3,9 +3,7 @@ package com.triplea;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
 import java.util.Objects;
-import java.sql.*;
 
 public class UserManager {
     private int lastUserID;
@@ -63,11 +61,9 @@ public class UserManager {
 
 
         boolean ResultOfExecution = false;
-        ResultOfExecution =  DBWorker.execute("INSERT INTO USERSDATA(Login, Username, HashedPassword, Salt) " +
-                "VALUES ('"+userLogin+"', '" +
-                userName + "', '" +
-                Hasher.HashPassword(password, salt) + "', '" +
-                salt + "' )");
+        UserData userData = new UserData(userLogin,userName, Hasher.HashPassword(password, salt), salt);
+        ResultOfExecution = UserData_Access.putUser(userData);
+
 
         if(ResultOfExecution == false){
             logger.info("Failed to add new record. Probably it's allready exist, but who knows?");
@@ -78,29 +74,7 @@ public class UserManager {
 
 
     private UserData getUserData(String Username) {
-        String username;
-        String name;
-        String hashedPassword;
-        String salt;
-        int ID;
-
-        ResultSet RS = DBWorker.ExecuteRequest("SELECT * FROM USERSDATA WHERE Login='"+Username+"';");
-        try {
-            if (RS.next()) {
-                username =  RS.getString("Login");
-                name =  RS.getString("Username");
-                hashedPassword =  RS.getString("HashedPassword");
-                salt =  RS.getString("Salt");
-                ID = RS.getInt("ID");
-                return new UserData(username,name,hashedPassword,salt,ID);
-            }
-            else {
-                return null;
-            }
-        } catch (SQLException e) {
-            logger.error("Cant parse from USERDATA request. Probably user we trying to find doesn't exits!", e);
-        }
-        return null;
+        return UserData_Access.getUserByLogin(Username);
     }
 
     public int getLastUserID() {

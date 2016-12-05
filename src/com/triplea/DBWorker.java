@@ -82,4 +82,14 @@ public class DBWorker {
         return null;
     }
 
+    public static PreparedStatement MakePreparedStatement(String Str){
+
+        try {
+            return conn.prepareStatement(Str);
+        } catch (SQLException e) {
+            logger.error("Failed to create PreparedStatement |"+Str+"|", e);
+        }
+        return null;
+    }
+
 }
