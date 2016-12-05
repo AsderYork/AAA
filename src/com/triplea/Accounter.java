@@ -48,7 +48,7 @@ public class Accounter {
                 LocalDate.now()
         );
 
-        singleton.log.put(String.valueOf(singleton.log.size()), MSG);
+        AccountMessage_Access.putMessage(MSG);
 
     }
 
@@ -76,7 +76,7 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        singleton.log.put(String.valueOf(singleton.log.size()), MSG);
+        AccountMessage_Access.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }
@@ -104,7 +104,7 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        singleton.log.put(String.valueOf(singleton.log.size()), MSG);
+        AccountMessage_Access.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }
