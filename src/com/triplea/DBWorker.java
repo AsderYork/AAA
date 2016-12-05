@@ -18,6 +18,7 @@ public class DBWorker {
     {
         Flyway flyway = new Flyway();
         flyway.setDataSource("jdbc:h2:file:./target/foobar", "sa", "");
+        flyway.clean();
         flyway.migrate();
     }
 
