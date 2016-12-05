@@ -1,26 +1,26 @@
 package com.triplea;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Main {
+
+    private static final Logger logger = LogManager.getLogger("Main");
 
     private static void checkExitCode(ExitCode code) {
         if (code.getStatusCode() == -1) {
             return;
         }
 
+        DBWorker.disconnect();
         System.exit(code.getStatusCode());
     }
 
     public static void main(String[] args) {
+        DBWorker.Migrate();
+        DBWorker.connectToLocalDB();
 
-        //Will from the Haven
-       /* if(args.length == 14) {
-            if (args[0].equals("-login") && args[1].equals("X") && args[2].equals("-pass") && args[3].equals("X") && args[4].equals("-role") && args[5].equals("READ")
-                    && args[6].equals("-res") && args[7].equals("X") && args[8].equals("-ds") && args[9].equals("2016-01-12") && args[10].equals("-de") &&
-                    args[11].equals("2016-01-12") && args[12].equals("-val") && args[13].equals("XXX")) {
-                System.exit(1);
-            }
-        }*/
+
+        logger.info("The beginning\nFilling everything with data");
 
         UserInput input = new UserInput();
 
@@ -31,34 +31,43 @@ public class Main {
 
 
         ResourceManager rm = new ResourceManager();
-        rm.AddPermission("a", 1, 0);
-        rm.AddPermission("a.b", 2, 0);
-        rm.AddPermission("a.b.c", 4, 1);
-        rm.AddPermission("a.bc", 4, 0);
+        rm.AddPermission("a", 1, 1);
+        rm.AddPermission("a.b", 2, 1);
+        rm.AddPermission("a.b.c", 4, 2);
+        rm.AddPermission("a.bc", 4, 1);
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);
-
+        logger.info("And now we parsing userinput. It may finish the program, if input is incorrect, btw");
         checkExitCode(ConsoleManager.parse(input));
-        System.err.println("levelOfInput:"+input.levelOfInput);
 
+        logger.info("If we're here, then we at least have pass/username. Let's work with that! It also may throw us");
         checkExitCode(um.findUser(input.name, input.password));
+
+        logger.info("So we're here till now, eh? Look's like User/pass is correct. But is there enything else?");
         if(input.levelOfInput < 2){
+            logger.info("Looks like nothing more to compute. Finishing ");
             checkExitCode(ExitCode.EXIT_SUCCESSFULLY);
         }
 
-
+        logger.info("Ooh, we recive a resource request! Let's check if we can provide it!");
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
+            logger.info("Yup. We can provide that one!");
             if(input.levelOfInput > 2){
-            checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));}
+                logger.info("We can even acoount that!");
+                checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));}
         } else {
+            logger.info("Can't provide that resource");
             if(input.levelOfInput > 2){
-            if(Accounter.accessRejected(input, um.getLastUserID())==ExitCode.EXIT_SUCCESSFULLY);{
+                logger.info("At least we can write this down");
+                if(Accounter.accessRejected(input, um.getLastUserID())==ExitCode.EXIT_SUCCESSFULLY);{
             checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);}
-            checkExitCode(ExitCode.INCORRECT_ACTIVITY);}
+                logger.info("Nope. We can't. Wrong date or something");
+                checkExitCode(ExitCode.INCORRECT_ACTIVITY);}
             checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
         }
 
+        DBWorker.disconnect();
         System.exit(0);
     }
 }
