@@ -22,7 +22,7 @@ public class UserData_Access {
             logger.info("It happened that user already have ID. It shouldn't be like that! And id will be ignored!");
         }
 
-        String Request = "INSERT INTO USERSDATA(Login, Username, HashedPassword, Salt) " +
+        String Request = "INSERT INTO USERS_DATA(Login, Username, HashedPassword, Salt) " +
                 "VALUES (?,?,?,?)";
 
         PreparedStatement Statement = DBWorker.MakePreparedStatement(Request);
@@ -48,7 +48,7 @@ public class UserData_Access {
         String salt;
         Integer ID;
 
-        String Request = "SELECT * FROM USERSDATA WHERE Login=?;";
+        String Request = "SELECT * FROM USERS_DATA WHERE Login=?;";
 
         PreparedStatement Statement = DBWorker.MakePreparedStatement(Request);
 

@@ -17,7 +17,7 @@ public class ResourceData_Access {
     private static final Logger logger = LogManager.getLogger("ResourceData_Access");
 
     public static boolean putResourceData(ResourceData data) {
-        String statement = "INSERT INTO PERMISSIONSDATA(ID, Subresource, Permission)" +
+        String statement = "INSERT INTO PERMISSION_SDATA(ID, Subresource, Permission)" +
                 " VALUES(?, ?, ?);";
 
         PreparedStatement Statement = DBWorker.MakePreparedStatement(statement);
@@ -35,7 +35,7 @@ public class ResourceData_Access {
     }
 
     public static boolean updateResourceDataPermission(ResourceData data) {
-        String statement = ("UPDATE PERMISSIONSDATA SET Permission = ?" +
+        String statement = ("UPDATE PERMISSION_SDATA SET Permission = ?" +
                 " WHERE(ID=?)AND(Subresource=?);");
 
         PreparedStatement Statement = DBWorker.MakePreparedStatement(statement);
@@ -54,7 +54,7 @@ public class ResourceData_Access {
 
 
     public static ResourceData getResourceData_ByIDAndPath(Integer ID, String Path) {
-        String request = "SELECT * FROM PERMISSIONSDATA WHERE (ID=?)AND(Subresource=?);";
+        String request = "SELECT * FROM PERMISSION_SDATA WHERE (ID=?)AND(Subresource=?);";
 
         PreparedStatement Statement = DBWorker.MakePreparedStatement(request);
 
