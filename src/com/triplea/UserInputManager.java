@@ -10,9 +10,9 @@ import java.util.BitSet;
 
 
 public class UserInputManager {
+    private static final Logger logger = LogManager.getLogger("UserInputManager");
     private String[] args = null;
     private Options options = new Options();
-    private static final Logger logger = LogManager.getLogger("UserInputManager");
 
     UserInputManager(String[] args) {
         this.args = args;
@@ -31,14 +31,14 @@ public class UserInputManager {
         CommandLine cmd;
 
         logger.info("So we just received user input");
-        for(int i=0; i<args.length; i++) {
-            logger.info(args[i]);
+        for (String arg : args) {
+            logger.info(arg);
         }
 
         try {
             cmd = parser.parse(options, args);
 
-            if(!validationGroupsOfOption(cmd)){
+            if (!validationGroupsOfOption(cmd)) {
                 help();
                 logger.info("But there's a problem with input. Just showing help");
                 return ExitCode.EXIT_SUCCESSFULLY;
@@ -50,14 +50,14 @@ public class UserInputManager {
                 return ExitCode.EXIT_SUCCESSFULLY;
             }
 
-            if (cmd.hasOption("login")&&(cmd.hasOption("pass"))) {
+            if (cmd.hasOption("login") && (cmd.hasOption("pass"))) {
 
                 logger.info("We've got pass/log. Btw it's first stage of input");
                 userInput.name = cmd.getOptionValue("login");
                 userInput.password = cmd.getOptionValue("pass");
                 userInput.levelOfInput = 1;
             }
-            if (cmd.hasOption("res")&&(cmd.hasOption("role"))) {
+            if (cmd.hasOption("res") && (cmd.hasOption("role"))) {
 
                 logger.info("We've received a res/role combo. Looks like a second stage of input!");
                 userInput.resource = cmd.getOptionValue("res");
@@ -66,7 +66,7 @@ public class UserInputManager {
             }
 
 
-            if (cmd.hasOption("ds")&&cmd.hasOption("de")&&(cmd.hasOption("val"))) {
+            if (cmd.hasOption("ds") && cmd.hasOption("de") && (cmd.hasOption("val"))) {
 
                 userInput.valueOfResourse = -1;//Deafult value in case of wrong input.Before date in case of exception
 
@@ -97,21 +97,19 @@ public class UserInputManager {
 
         } catch (IllegalArgumentException ill) {
 
-            logger.error("Illegal argument",ill);
+            logger.error("Illegal argument", ill);
             //return ExitCode.INCORRECT_ACTIVITY;
 
 
         } catch (ParseException pe) {
 
             logger.error("Can't even parse it properly. Let's just show help", pe);
-            System.err.println("Failed to parse command line properties");
             help();
             return ExitCode.EXIT_SUCCESSFULLY;
 
         } catch (WrongRoleException wrt) {
 
             logger.error("The role wasn't what expected", wrt);
-            System.err.println("Wrong role");
             return ExitCode.WRONG_ROLE;
         }
 
@@ -140,7 +138,7 @@ public class UserInputManager {
         return Integer.parseInt(inputString);
     }
 
-    private  boolean validationGroupsOfOption(CommandLine cmd) {
+    private boolean validationGroupsOfOption(CommandLine cmd) {
         BitSet allowInput = new BitSet(8);
         allowInput.set(0);
 

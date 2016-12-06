@@ -2,7 +2,10 @@ package com.triplea;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.sql.*;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by Asder on 05.12.2016.
@@ -10,10 +13,10 @@ import java.sql.*;
 public class UserData_Access {
 
     private static final Logger logger = LogManager.getLogger("UserData_Access");
-    public static boolean putUser(UserData userData)
-    {
+
+    public static boolean putUser(UserData userData) {
         //ID will be INGORED. It's in DB's managment
-        if(userData.id != null)  {
+        if (userData.id != null) {
             logger.info("It happened that user already have ID. It shouldn't be like that! And id will be ignored!");
         }
 
@@ -23,10 +26,10 @@ public class UserData_Access {
         PreparedStatement Statement = DBWorker.MakePreparedStatement(Request);
 
         try {
-            Statement.setString(1,userData.username);
-            Statement.setString(2,userData.name);
-            Statement.setString(3,userData.hashedPassword);
-            Statement.setString(4,userData.salt);
+            Statement.setString(1, userData.username);
+            Statement.setString(2, userData.name);
+            Statement.setString(3, userData.hashedPassword);
+            Statement.setString(4, userData.salt);
             Statement.executeUpdate();
             return true;
 
@@ -36,8 +39,7 @@ public class UserData_Access {
         }
     }
 
-    public static UserData getUserByLogin(String login)
-    {
+    public static UserData getUserByLogin(String login) {
         String username;
         String name;
         String hashedPassword;
@@ -49,17 +51,16 @@ public class UserData_Access {
         PreparedStatement Statement = DBWorker.MakePreparedStatement(Request);
 
         try {
-            Statement.setString(1,login);
-            ResultSet RS =  Statement.executeQuery();
+            Statement.setString(1, login);
+            ResultSet RS = Statement.executeQuery();
             if (RS.next()) {
-                username =  RS.getString("Login");
-                name =  RS.getString("Username");
-                hashedPassword =  RS.getString("HashedPassword");
-                salt =  RS.getString("Salt");
+                username = RS.getString("Login");
+                name = RS.getString("Username");
+                hashedPassword = RS.getString("HashedPassword");
+                salt = RS.getString("Salt");
                 ID = RS.getInt("ID");
-                return new UserData(username,name,hashedPassword,salt,ID);
-            }
-            else {
+                return new UserData(username, name, hashedPassword, salt, ID);
+            } else {
                 return null;
             }
 

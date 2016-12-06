@@ -8,9 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.TreeMap;
-/*
-Блок аккаунтинга. Собирает данные о действиях пользователей.
- */
+
 
 public class Accounter {
 
@@ -18,6 +16,7 @@ public class Accounter {
 
     private static Accounter singleton;
     private TreeMap<String, AccountMessage> log;
+
     private Accounter() {
         log = new TreeMap<>();
     }
@@ -57,8 +56,7 @@ public class Accounter {
 
 
         logger.info("Looks like we succeed at resource providing");
-        if(input.valueOfResourse < 0)
-        {
+        if (input.valueOfResourse < 0) {
 
             logger.info("But we dont have enough data fo accounting. This one remain silent!");
             return ExitCode.INCORRECT_ACTIVITY;
@@ -85,8 +83,7 @@ public class Accounter {
         checkForSingleton();
 
         logger.info("Oh, we failed at resource providing");
-        if(input.valueOfResourse < 0)
-        {
+        if (input.valueOfResourse < 0) {
 
             logger.info("We can't even do accounting, provided data is not enough. This one remain silent!");
             return ExitCode.INCORRECT_ACTIVITY;

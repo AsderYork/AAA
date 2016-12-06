@@ -1,11 +1,11 @@
 package com.triplea;
 
 public class WrongRoleException extends Exception {
-    public WrongRoleException(){
+    public WrongRoleException() {
         super();
     }
 
-    public WrongRoleException(String message){
+    public WrongRoleException(String message) {
         super(message);
     }
 }

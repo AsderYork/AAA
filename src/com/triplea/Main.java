@@ -1,4 +1,5 @@
 package com.triplea;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,8 +17,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        DBWorker.Migrate();
         DBWorker.connectToLocalDB();
+        DBWorker.Migrate();
 
 
         logger.info("The beginning\nFilling everything with data");
@@ -45,25 +46,29 @@ public class Main {
         checkExitCode(um.findUser(input.name, input.password));
 
         logger.info("So we're here till now, eh? Look's like User/pass is correct. But is there enything else?");
-        if(input.levelOfInput < 2){
+        if (input.levelOfInput < 2) {
             logger.info("Looks like nothing more to compute. Finishing ");
             checkExitCode(ExitCode.EXIT_SUCCESSFULLY);
         }
 
-        logger.info("Ooh, we recive a resource request! Let's check if we can provide it!");
+        logger.info("Ooh, we receive a resource request! Let's check if we can provide it!");
         if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
             logger.info("Yup. We can provide that one!");
-            if(input.levelOfInput > 2){
-                logger.info("We can even acoount that!");
-                checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));}
+            if (input.levelOfInput > 2) {
+                logger.info("We can even account that!");
+                checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));
+            }
         } else {
             logger.info("Can't provide that resource");
-            if(input.levelOfInput > 2){
+            if (input.levelOfInput > 2) {
                 logger.info("At least we can write this down");
-                if(Accounter.accessRejected(input, um.getLastUserID())==ExitCode.EXIT_SUCCESSFULLY);{
-            checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);}
+                if (Accounter.accessRejected(input, um.getLastUserID()) == ExitCode.EXIT_SUCCESSFULLY)
+                {
+                    checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
+                }
                 logger.info("Nope. We can't. Wrong date or something");
-                checkExitCode(ExitCode.INCORRECT_ACTIVITY);}
+                checkExitCode(ExitCode.INCORRECT_ACTIVITY);
+            }
             checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
         }
 

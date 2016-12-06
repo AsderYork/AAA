@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 public class Hasher {
 
     private static final Logger logger = LogManager.getLogger("Hasher");
+
     public static String HashPassword(String Password, String Salt) {
         return hash(hash(Password) + Salt);
     }
