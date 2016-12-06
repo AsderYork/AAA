@@ -22,5 +22,5 @@ public class UserData {
         this.salt = salt;
         this.id = null;
     }
-    
+
 }
