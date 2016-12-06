@@ -17,7 +17,7 @@ public class AccountMessage_Access {
         String stat = "INSERT INTO ACCOUNTED_DATA(Action, AccountDate, UserID,Role,Path,Value,DateStart,DateFinished)" +
                 " VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-        PreparedStatement Statement = DBWorker.MakePreparedStatement(stat);
+        PreparedStatement Statement = DBWorker.makePreparedStatement(stat);
         try {
             Statement.setString(1, msg.action);
             Statement.setString(2, msg.accountDate);

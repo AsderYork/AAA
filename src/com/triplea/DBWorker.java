@@ -12,7 +12,7 @@ public class DBWorker {
     private static final Logger logger = LogManager.getLogger("DBWorker");
     private static Connection conn = null;
 
-    public static void Migrate() {
+    public static void migrate() {
         Flyway flyway = new Flyway();
         flyway.setDataSource("jdbc:h2:file:./db-aaa", "user", "password");
         flyway.clean();
@@ -43,7 +43,7 @@ public class DBWorker {
         return false;
     }
 
-    public static PreparedStatement MakePreparedStatement(String Str) {
+    public static PreparedStatement makePreparedStatement(String Str) {
 
         try {
             return conn.prepareStatement(Str);

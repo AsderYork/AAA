@@ -11,14 +11,13 @@ public class Main {
         if (code.getStatusCode() == -1) {
             return;
         }
-
         DBWorker.disconnect();
         System.exit(code.getStatusCode());
     }
 
     public static void main(String[] args) {
         DBWorker.connectToLocalDB();
-        DBWorker.Migrate();
+        DBWorker.migrate();
 
 
         logger.info("The beginning\nFilling everything with data");
@@ -32,10 +31,10 @@ public class Main {
 
 
         ResourceManager rm = new ResourceManager();
-        rm.AddPermission("a", 1, 1);
-        rm.AddPermission("a.b", 2, 1);
-        rm.AddPermission("a.b.c", 4, 2);
-        rm.AddPermission("a.bc", 4, 1);
+        rm.addpermission("a", 1, 1);
+        rm.addpermission("a.b", 2, 1);
+        rm.addpermission("a.b.c", 4, 2);
+        rm.addpermission("a.bc", 4, 1);
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);

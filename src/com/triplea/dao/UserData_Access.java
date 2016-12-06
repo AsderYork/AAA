@@ -17,15 +17,15 @@ public class UserData_Access {
     private static final Logger logger = LogManager.getLogger("UserData_Access");
 
     public static boolean putUser(UserData userData) {
-        //ID will be INGORED. It's in DB's managment
+        //id will be INGORED. It's in DB's managment
         if (userData.id != null) {
-            logger.info("It happened that user already have ID. It shouldn't be like that! And id will be ignored!");
+            logger.info("It happened that user already have id. It shouldn't be like that! And id will be ignored!");
         }
 
         String Request = "INSERT INTO USERS_DATA(Login, Username, HashedPassword, Salt) " +
                 "VALUES (?,?,?,?)";
 
-        PreparedStatement Statement = DBWorker.MakePreparedStatement(Request);
+        PreparedStatement Statement = DBWorker.makePreparedStatement(Request);
 
         try {
             Statement.setString(1, userData.username);
@@ -50,7 +50,7 @@ public class UserData_Access {
 
         String Request = "SELECT * FROM USERS_DATA WHERE Login=?;";
 
-        PreparedStatement Statement = DBWorker.MakePreparedStatement(Request);
+        PreparedStatement Statement = DBWorker.makePreparedStatement(Request);
 
         try {
             Statement.setString(1, login);
@@ -60,7 +60,7 @@ public class UserData_Access {
                 name = RS.getString("Username");
                 hashedPassword = RS.getString("HashedPassword");
                 salt = RS.getString("Salt");
-                ID = RS.getInt("ID");
+                ID = RS.getInt("id");
                 return new UserData(username, name, hashedPassword, salt, ID);
             } else {
                 return null;

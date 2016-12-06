@@ -17,14 +17,14 @@ public class ResourceData_Access {
     private static final Logger logger = LogManager.getLogger("ResourceData_Access");
 
     public static boolean putResourceData(ResourceData data) {
-        String statement = "INSERT INTO PERMISSION_SDATA(ID, Subresource, Permission)" +
+        String statement = "INSERT INTO PERMISSION_SDATA(id, subresource, permission)" +
                 " VALUES(?, ?, ?);";
 
-        PreparedStatement Statement = DBWorker.MakePreparedStatement(statement);
+        PreparedStatement Statement = DBWorker.makePreparedStatement(statement);
         try {
-            Statement.setInt(1, data.ID);
-            Statement.setString(2, data.Subresource);
-            Statement.setInt(3, data.Permission);
+            Statement.setInt(1, data.id);
+            Statement.setString(2, data.subresource);
+            Statement.setInt(3, data.permission);
             Statement.executeUpdate();
             return true;
 
@@ -35,14 +35,14 @@ public class ResourceData_Access {
     }
 
     public static boolean updateResourceDataPermission(ResourceData data) {
-        String statement = ("UPDATE PERMISSION_SDATA SET Permission = ?" +
-                " WHERE(ID=?)AND(Subresource=?);");
+        String statement = ("UPDATE PERMISSION_SDATA SET permission = ?" +
+                " WHERE(id=?)AND(subresource=?);");
 
-        PreparedStatement Statement = DBWorker.MakePreparedStatement(statement);
+        PreparedStatement Statement = DBWorker.makePreparedStatement(statement);
         try {
-            Statement.setInt(1, data.Permission);
-            Statement.setInt(2, data.ID);
-            Statement.setString(3, data.Subresource);
+            Statement.setInt(1, data.permission);
+            Statement.setInt(2, data.id);
+            Statement.setString(3, data.subresource);
             Statement.executeUpdate();
             return true;
 
@@ -54,9 +54,9 @@ public class ResourceData_Access {
 
 
     public static ResourceData getResourceData_ByIDAndPath(Integer ID, String Path) {
-        String request = "SELECT * FROM PERMISSION_SDATA WHERE (ID=?)AND(Subresource=?);";
+        String request = "SELECT * FROM PERMISSION_SDATA WHERE (id=?)AND(subresource=?);";
 
-        PreparedStatement Statement = DBWorker.MakePreparedStatement(request);
+        PreparedStatement Statement = DBWorker.makePreparedStatement(request);
 
         ResourceData RetVal = new ResourceData();
 
@@ -67,9 +67,9 @@ public class ResourceData_Access {
 
             ResultSet RS = Statement.executeQuery();
             if (RS.next()) {
-                RetVal.ID = RS.getInt("ID");
-                RetVal.Permission = RS.getInt("Permission");
-                RetVal.Subresource = RS.getString("Subresource");
+                RetVal.id = RS.getInt("id");
+                RetVal.permission = RS.getInt("permission");
+                RetVal.subresource = RS.getString("subresource");
                 return RetVal;
             } else {
                 return null;

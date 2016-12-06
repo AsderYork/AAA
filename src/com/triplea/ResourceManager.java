@@ -41,8 +41,8 @@ public class ResourceManager {
         return false;
     }
 
-    public void AddPermission(String PATH, int Role, int USERID) {
-        logger.info("Adding new Permission");
+    public void addpermission(String PATH, int Role, int USERID) {
+        logger.info("Adding new permission");
 
         ResourceData dataInDB = ResourceData_Access.getResourceData_ByIDAndPath(USERID, PATH);
         if (dataInDB == null) {
@@ -50,9 +50,9 @@ public class ResourceManager {
             ResourceData_Access.putResourceData(new ResourceData(USERID, PATH, Role));
         } else {
             logger.info("But this permission is already exist. Probably we need to augment it?");
-            if (!checkFlag(dataInDB.Permission, Role)) {
+            if (!checkFlag(dataInDB.permission, Role)) {
                 logger.info("Yup. It needs augmentation");
-                dataInDB.Permission += Role;
+                dataInDB.permission += Role;
                 ResourceData_Access.updateResourceDataPermission(dataInDB);
             } else {
                 logger.info("Nah, its fine! No augmentation needed");
@@ -120,7 +120,7 @@ public class ResourceManager {
             return false;
         }
 
-        return checkFlag(dataInDB.Permission, role);
+        return checkFlag(dataInDB.permission, role);
     }
 
 }
