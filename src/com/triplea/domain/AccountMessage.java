@@ -1,18 +1,18 @@
-package com.triplea;
+package com.triplea.domain;
 
 import java.time.LocalDate;
 
 
 public class AccountMessage {
-    String action; //login/AccessGranted/accessRejected
-    String accountDate;
+    public String action; //login/AccessGranted/accessRejected
+    public String accountDate;
 
-    Integer userid;
-    String role;
-    String path;
-    Integer value;
-    LocalDate dateStart;
-    LocalDate dateFinished;
+    public Integer userid;
+    public String role;
+    public String path;
+    public Integer value;
+    public LocalDate dateStart;
+    public LocalDate dateFinished;
 
     public AccountMessage(String action,
                           String accountDate,

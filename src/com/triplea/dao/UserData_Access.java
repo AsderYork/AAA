@@ -1,5 +1,7 @@
-package com.triplea;
+package com.triplea.dao;
 
+import com.triplea.DBWorker;
+import com.triplea.domain.UserData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

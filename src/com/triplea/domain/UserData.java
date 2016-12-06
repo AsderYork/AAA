@@ -1,11 +1,11 @@
-package com.triplea;
+package com.triplea.domain;
 
-class UserData {
-    String username;
-    String name;
-    String hashedPassword;
-    String salt;
-    Integer id;
+public class UserData {
+    public String username;
+    public String name;
+    public String hashedPassword;
+    public String salt;
+    public Integer id;
 
     public UserData(String username, String name, String hashedPassword, String salt, int id) {
         this.username = username;

@@ -1,5 +1,7 @@
 package com.triplea;
 
+import com.triplea.dao.ResourceData_Access;
+import com.triplea.domain.ResourceData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

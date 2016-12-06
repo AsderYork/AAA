@@ -1,12 +1,12 @@
-package com.triplea;
+package com.triplea.domain;
 
 /**
  * Created by Asder on 05.12.2016.
  */
 public class ResourceData {
-    Integer ID;
-    String Subresource;
-    Integer Permission;
+    public Integer ID;
+    public String Subresource;
+    public Integer Permission;
 
 
     public ResourceData(Integer ID, String subresource, Integer permission) {
