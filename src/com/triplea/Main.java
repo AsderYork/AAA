@@ -20,21 +20,12 @@ public class Main {
         DBWorker.migrate();
 
 
-        logger.info("The beginning\nFilling everything with data");
+        logger.info("The beginning");
 
         UserInput input = new UserInput();
-
-
         UserManager um = new UserManager();
-        um.addUser("jdoe", "John Doe", "sup3rpaZZ", "Salt");
-        um.addUser("jrow", "Jane Row", "Qweqrty12", "AnotherSalt");
-
-
         ResourceManager rm = new ResourceManager();
-        rm.addpermission("a", 1, 1);
-        rm.addpermission("a.b", 2, 1);
-        rm.addpermission("a.b.c", 4, 2);
-        rm.addpermission("a.bc", 4, 1);
+
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);
