@@ -11,31 +11,21 @@ public class Main {
         if (code.getStatusCode() == -1) {
             return;
         }
-
         DBWorker.disconnect();
         System.exit(code.getStatusCode());
     }
 
     public static void main(String[] args) {
         DBWorker.connectToLocalDB();
-        DBWorker.Migrate();
+        DBWorker.migrate();
 
 
-        logger.info("The beginning\nFilling everything with data");
+        logger.info("The beginning");
 
         UserInput input = new UserInput();
-
-
         UserManager um = new UserManager();
-        um.addUser("jdoe", "John Doe", "sup3rpaZZ", "Salt");
-        um.addUser("jrow", "Jane Row", "Qweqrty12", "AnotherSalt");
-
-
         ResourceManager rm = new ResourceManager();
-        rm.AddPermission("a", 1, 1);
-        rm.AddPermission("a.b", 2, 1);
-        rm.AddPermission("a.b.c", 4, 2);
-        rm.AddPermission("a.bc", 4, 1);
+
 
 
         UserInputManager ConsoleManager = new UserInputManager(args);

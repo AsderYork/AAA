@@ -1,5 +1,8 @@
 package com.triplea;
 
+import com.triplea.dao.AccountMessageAccess;
+import com.triplea.domain.AccountMessage;
+import com.triplea.domain.UserData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -7,32 +10,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.TreeMap;
 
 
 public class Accounter {
 
     private static final Logger logger = LogManager.getLogger("Accounter");
 
-    private static Accounter singleton;
-    private TreeMap<String, AccountMessage> log;
 
-    private Accounter() {
-        log = new TreeMap<>();
-    }
-
-    static private void checkForSingleton() {
-
-        logger.info("So someone called Accounter singleton");
-        if (singleton == null) {
-            logger.info("And we just created it");
-            singleton = new Accounter();
-        }
-    }
 
     public static void login(UserData Data) {
-        checkForSingleton();
-
 
         logger.info("Simple as that: we just creating AccountMessage with tmp date and given data");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -47,12 +33,11 @@ public class Accounter {
                 LocalDate.now()
         );
 
-        AccountMessage_Access.putMessage(MSG);
+        AccountMessageAccess.putMessage(MSG);
 
     }
 
     public static ExitCode resourceAccessSuccess(UserInput input, int userid) {
-        checkForSingleton();
 
 
         logger.info("Looks like we succeed at resource providing");
@@ -74,13 +59,12 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessage_Access.putMessage(MSG);
+        AccountMessageAccess.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }
 
     public static ExitCode accessRejected(UserInput input, int userid) {
-        checkForSingleton();
 
         logger.info("Oh, we failed at resource providing");
         if (input.valueOfResourse < 0) {
@@ -101,7 +85,7 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessage_Access.putMessage(MSG);
+        AccountMessageAccess.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }

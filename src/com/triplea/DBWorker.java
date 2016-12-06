@@ -12,7 +12,7 @@ public class DBWorker {
     private static final Logger logger = LogManager.getLogger("DBWorker");
     private static Connection conn = null;
 
-    public static void Migrate() {
+    public static void migrate() {
         Flyway flyway = new Flyway();
         flyway.setDataSource("jdbc:h2:file:./db-aaa", "user", "password");
         flyway.clean();
@@ -43,35 +43,7 @@ public class DBWorker {
         return false;
     }
 
-    public static Connection provideConnection() {
-        return conn;
-    }
-
-
-    public static boolean execute(String Str) {
-
-        try {
-            Statement statement = conn.createStatement();
-            statement.execute(Str);
-            return true;
-        } catch (SQLException e) {
-            logger.error("Trying to execute SQL-statement we did not succeed", e);
-        }
-        return false;
-    }
-
-
-    public static ResultSet ExecuteRequest(String Str) {
-        try {
-            Statement statement = conn.createStatement();
-            return statement.executeQuery(Str);
-        } catch (SQLException e) {
-            logger.error("Trying to execute SQL-query we did not succeed", e);
-        }
-        return null;
-    }
-
-    public static PreparedStatement MakePreparedStatement(String Str) {
+    public static PreparedStatement makePreparedStatement(String Str) {
 
         try {
             return conn.prepareStatement(Str);

@@ -1,21 +1,23 @@
-package com.triplea;
+package com.triplea.dao;
 
+import com.triplea.DBWorker;
+import com.triplea.domain.AccountMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AccountMessage_Access {
+public class AccountMessageAccess {
 
-    private static final Logger logger = LogManager.getLogger("AccountMessage_Access");
+    private static final Logger logger = LogManager.getLogger("AccountMessageAccess");
 
 
     public static boolean putMessage(AccountMessage msg) {
         String stat = "INSERT INTO ACCOUNTED_DATA(Action, AccountDate, UserID,Role,Path,Value,DateStart,DateFinished)" +
                 " VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-        PreparedStatement Statement = DBWorker.MakePreparedStatement(stat);
+        PreparedStatement Statement = DBWorker.makePreparedStatement(stat);
         try {
             Statement.setString(1, msg.action);
             Statement.setString(2, msg.accountDate);

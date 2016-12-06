@@ -1,5 +1,7 @@
 package com.triplea;
 
+import com.triplea.dao.UserDataAccess;
+import com.triplea.domain.UserData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +48,7 @@ public class UserManager {
 
         boolean ResultOfExecution;
         UserData userData = new UserData(userLogin, userName, Hasher.HashPassword(password, salt), salt);
-        ResultOfExecution = UserData_Access.putUser(userData);
+        ResultOfExecution = UserDataAccess.putUser(userData);
 
 
         if (ResultOfExecution == false) {
@@ -58,7 +60,7 @@ public class UserManager {
 
 
     private UserData getUserData(String Username) {
-        return UserData_Access.getUserByLogin(Username);
+        return UserDataAccess.getUserByLogin(Username);
     }
 
     public int getLastUserID() {
