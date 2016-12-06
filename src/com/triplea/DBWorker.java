@@ -14,7 +14,7 @@ public class DBWorker {
 
     public static void Migrate() {
         Flyway flyway = new Flyway();
-        flyway.setDataSource("jdbc:h2:file:./db/aaa", "user", "password");
+        flyway.setDataSource("jdbc:h2:file:./db-aaa", "user", "password");
         flyway.clean();
         flyway.migrate();
     }
@@ -23,7 +23,7 @@ public class DBWorker {
         logger.info("So we trying to connect to db");
         try {
             Class.forName("org.h2.Driver").newInstance();
-            conn = DriverManager.getConnection("jdbc:h2:file:./db/aaa", "user", "password");
+            conn = DriverManager.getConnection("jdbc:h2:file:./db-aaa", "user", "password");
             return true;
         } catch (Exception e) {
             logger.error("It's hard to admit, we failed!", e);
