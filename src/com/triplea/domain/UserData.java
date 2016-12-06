@@ -22,12 +22,5 @@ public class UserData {
         this.salt = salt;
         this.id = null;
     }
-
-    public UserData() {
-        this.username = null;
-        this.name = null;
-        this.hashedPassword = null;
-        this.salt = null;
-        this.id = null;
-    }
+    
 }

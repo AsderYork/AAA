@@ -17,25 +17,9 @@ public class Accounter {
 
     private static final Logger logger = LogManager.getLogger("Accounter");
 
-    private static Accounter singleton;
-    private TreeMap<String, AccountMessage> log;
 
-    private Accounter() {
-        log = new TreeMap<>();
-    }
-
-    static private void checkForSingleton() {
-
-        logger.info("So someone called Accounter singleton");
-        if (singleton == null) {
-            logger.info("And we just created it");
-            singleton = new Accounter();
-        }
-    }
 
     public static void login(UserData Data) {
-        checkForSingleton();
-
 
         logger.info("Simple as that: we just creating AccountMessage with tmp date and given data");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -55,7 +39,6 @@ public class Accounter {
     }
 
     public static ExitCode resourceAccessSuccess(UserInput input, int userid) {
-        checkForSingleton();
 
 
         logger.info("Looks like we succeed at resource providing");
@@ -83,7 +66,6 @@ public class Accounter {
     }
 
     public static ExitCode accessRejected(UserInput input, int userid) {
-        checkForSingleton();
 
         logger.info("Oh, we failed at resource providing");
         if (input.valueOfResourse < 0) {
