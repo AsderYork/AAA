@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class AccountMessage_Access {
+public class AccountMessageAccess {
 
-    private static final Logger logger = LogManager.getLogger("AccountMessage_Access");
+    private static final Logger logger = LogManager.getLogger("AccountMessageAccess");
 
 
     public static boolean putMessage(AccountMessage msg) {

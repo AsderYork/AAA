@@ -12,9 +12,9 @@ import java.sql.SQLException;
 /**
  * Created by Asder on 05.12.2016.
  */
-public class ResourceData_Access {
+public class ResourceDataAccess {
 
-    private static final Logger logger = LogManager.getLogger("ResourceData_Access");
+    private static final Logger logger = LogManager.getLogger("ResourceDataAccess");
 
     public static boolean putResourceData(ResourceData data) {
         String statement = "INSERT INTO PERMISSION_SDATA(id, subresource, permission)" +

@@ -1,6 +1,6 @@
 package com.triplea;
 
-import com.triplea.dao.AccountMessage_Access;
+import com.triplea.dao.AccountMessageAccess;
 import com.triplea.domain.AccountMessage;
 import com.triplea.domain.UserData;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +10,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.TreeMap;
 
 
 public class Accounter {
@@ -34,7 +33,7 @@ public class Accounter {
                 LocalDate.now()
         );
 
-        AccountMessage_Access.putMessage(MSG);
+        AccountMessageAccess.putMessage(MSG);
 
     }
 
@@ -60,7 +59,7 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessage_Access.putMessage(MSG);
+        AccountMessageAccess.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }
@@ -86,7 +85,7 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessage_Access.putMessage(MSG);
+        AccountMessageAccess.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }

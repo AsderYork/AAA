@@ -12,9 +12,9 @@ import java.sql.SQLException;
 /**
  * Created by Asder on 05.12.2016.
  */
-public class UserData_Access {
+public class UserDataAccess {
 
-    private static final Logger logger = LogManager.getLogger("UserData_Access");
+    private static final Logger logger = LogManager.getLogger("UserDataAccess");
 
     public static boolean putUser(UserData userData) {
         //id will be INGORED. It's in DB's managment

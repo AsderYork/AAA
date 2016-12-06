@@ -1,6 +1,6 @@
 package com.triplea;
 
-import com.triplea.dao.ResourceData_Access;
+import com.triplea.dao.ResourceDataAccess;
 import com.triplea.domain.ResourceData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,16 +44,16 @@ public class ResourceManager {
     public void addpermission(String PATH, int Role, int USERID) {
         logger.info("Adding new permission");
 
-        ResourceData dataInDB = ResourceData_Access.getResourceData_ByIDAndPath(USERID, PATH);
+        ResourceData dataInDB = ResourceDataAccess.getResourceData_ByIDAndPath(USERID, PATH);
         if (dataInDB == null) {
             logger.info("This permission will be first of his kind!");
-            ResourceData_Access.putResourceData(new ResourceData(USERID, PATH, Role));
+            ResourceDataAccess.putResourceData(new ResourceData(USERID, PATH, Role));
         } else {
             logger.info("But this permission is already exist. Probably we need to augment it?");
             if (!checkFlag(dataInDB.permission, Role)) {
                 logger.info("Yup. It needs augmentation");
                 dataInDB.permission += Role;
-                ResourceData_Access.updateResourceDataPermission(dataInDB);
+                ResourceDataAccess.updateResourceDataPermission(dataInDB);
             } else {
                 logger.info("Nah, its fine! No augmentation needed");
             }
@@ -115,7 +115,7 @@ public class ResourceManager {
     private boolean IsSubresourceAccessible(String path, int role, int userid) {
 
 
-        ResourceData dataInDB = ResourceData_Access.getResourceData_ByIDAndPath(userid, path);
+        ResourceData dataInDB = ResourceDataAccess.getResourceData_ByIDAndPath(userid, path);
         if (dataInDB == null) {
             return false;
         }
