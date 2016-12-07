@@ -24,5 +24,5 @@ else
         CP="$LIB:$OUT_JAR:$SRC"
 fi
 
-java -jar target/aaa-1.0-SNAPSHOT.jar
+java -jar target/aaa-1.0-SNAPSHOT.jar $*
 #java -cp ${CP} com.triplea.Main $*
