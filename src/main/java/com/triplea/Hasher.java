@@ -10,31 +10,22 @@ import java.security.NoSuchAlgorithmException;
 public class Hasher {
 
     private static final Logger logger = LogManager.getLogger("Hasher");
+    private static String algorithmName;
 
-    public static String HashPassword(String Password, String Salt) {
-        return hash(hash(Password) + Salt);
+    public static String hashPassword(String Password, String Salt, String AlgorithmName) throws NoSuchAlgorithmException {
+        return hash(hash(Password,AlgorithmName) + Salt,AlgorithmName);
     }
 
-    private static String hash(String Value) {
+    private static String hash(String Value, String AlgorithmName) throws NoSuchAlgorithmException {
         //Метод поддержки. Принимает строку, возвращает её хэш
 
         MessageDigest Digest;
 
-        try {
+        Digest = MessageDigest.getInstance(AlgorithmName);
 
-            Digest = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            logger.error("Something happened to hash func!", e);
-            System.exit(-2);
-            return "hash error";
-        }
-
-        //Подготавливаем дайджест к работе и вностим в него нашу строку
         Digest.reset();
         Digest.update(Value.getBytes());
-
-        //Подготавливаем переменную для хранения результата
-        byte[] ReturnedByteCode;
+        byte[] ReturnedByteCode = null;
         ReturnedByteCode = Digest.digest();
 
 

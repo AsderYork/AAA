@@ -1,7 +1,13 @@
 package com.triplea;
 
+import com.triplea.dao.AccountMessageAccess;
+import com.triplea.dao.ResourceDataAccess;
+import com.triplea.dao.UserDataAccess;
+import com.triplea.domain.UserInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.security.NoSuchAlgorithmException;
 
 public class Main {
 
@@ -15,7 +21,7 @@ public class Main {
         System.exit(code.getStatusCode());
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         DBWorker.connectToLocalDB();
         DBWorker.migrate();
 
@@ -23,8 +29,8 @@ public class Main {
         logger.info("The beginning");
 
         UserInput input = new UserInput();
-        UserManager um = new UserManager();
-        ResourceManager rm = new ResourceManager();
+        UserManager um = new UserManager(new UserDataAccess(), new AccountMessageAccess());
+        ResourceManager rm = new ResourceManager(new ResourceDataAccess());
 
 
 
@@ -46,13 +52,13 @@ public class Main {
             logger.info("Yup. We can provide that one!");
             if (input.levelOfInput > 2) {
                 logger.info("We can even account that!");
-                checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID()));
+                checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID(),new AccountMessageAccess()));
             }
         } else {
             logger.info("Can't provide that resource");
             if (input.levelOfInput > 2) {
                 logger.info("At least we can write this down");
-                if (Accounter.accessRejected(input, um.getLastUserID()) == ExitCode.EXIT_SUCCESSFULLY)
+                if (Accounter.accessRejected(input, um.getLastUserID(),new AccountMessageAccess()) == ExitCode.EXIT_SUCCESSFULLY)
                 {
                     checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
                 }

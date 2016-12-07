@@ -10,6 +10,12 @@ public class ResourceManager {
     private static final Logger logger = LogManager.getLogger("ResourceManager");
 
 
+    private ResourceDataAccess access;
+
+    public ResourceManager(ResourceDataAccess access)    {
+        this.access = access;
+    }
+
     private boolean checkFlag(int Data, int FlagOfInterest) {
         //If Data were incorrect, return false
         if ((Data <= 0) || (Data > 7)) {
@@ -41,27 +47,8 @@ public class ResourceManager {
         return false;
     }
 
-    public void addpermission(String PATH, int Role, int USERID) {
-        logger.info("Adding new permission");
-
-        ResourceData dataInDB = ResourceDataAccess.getResourceData_ByIDAndPath(USERID, PATH);
-        if (dataInDB == null) {
-            logger.info("This permission will be first of his kind!");
-            ResourceDataAccess.putResourceData(new ResourceData(USERID, PATH, Role));
-        } else {
-            logger.info("But this permission is already exist. Probably we need to augment it?");
-            if (!checkFlag(dataInDB.permission, Role)) {
-                logger.info("Yup. It needs augmentation");
-                dataInDB.permission += Role;
-                ResourceDataAccess.updateResourceDataPermission(dataInDB);
-            } else {
-                logger.info("Nah, its fine! No augmentation needed");
-            }
-        }
-    }
-
     public boolean IsResourceAccessible(int userID, String path, String role) {
-        int intRole;
+        int intRole = 0;
         logger.info("So we've been asked to check accessibility of given user to given resource");
         if ((role == null) || (path == null)) {
             logger.info("Roll/Pacth is null. This won't move us too far. Resource is inaccessible");
@@ -115,7 +102,7 @@ public class ResourceManager {
     private boolean IsSubresourceAccessible(String path, int role, int userid) {
 
 
-        ResourceData dataInDB = ResourceDataAccess.getResourceData_ByIDAndPath(userid, path);
+        ResourceData dataInDB = access.getResourceData_ByIDAndPath(userid, path);
         if (dataInDB == null) {
             return false;
         }

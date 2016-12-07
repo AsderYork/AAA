@@ -16,32 +16,7 @@ public class UserDataAccess {
 
     private static final Logger logger = LogManager.getLogger("UserDataAccess");
 
-    public static boolean putUser(UserData userData) {
-        //id will be INGORED. It's in DB's managment
-        if (userData.id != null) {
-            logger.info("It happened that user already have id. It shouldn't be like that! And id will be ignored!");
-        }
-
-        String Request = "INSERT INTO USERS_DATA(Login, Username, HashedPassword, Salt) " +
-                "VALUES (?,?,?,?)";
-
-        PreparedStatement Statement = DBWorker.makePreparedStatement(Request);
-
-        try {
-            Statement.setString(1, userData.username);
-            Statement.setString(2, userData.name);
-            Statement.setString(3, userData.hashedPassword);
-            Statement.setString(4, userData.salt);
-            Statement.executeUpdate();
-            return true;
-
-        } catch (SQLException e) {
-            logger.error("Well, we failed in putting values in prepared statement, or Executing it", e);
-            return false;
-        }
-    }
-
-    public static UserData getUserByLogin(String login) {
+    public UserData getUserByLogin(String login) {
         String username;
         String name;
         String hashedPassword;

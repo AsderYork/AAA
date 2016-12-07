@@ -16,44 +16,7 @@ public class ResourceDataAccess {
 
     private static final Logger logger = LogManager.getLogger("ResourceDataAccess");
 
-    public static boolean putResourceData(ResourceData data) {
-        String statement = "INSERT INTO PERMISSION_SDATA(id, subresource, permission)" +
-                " VALUES(?, ?, ?);";
-
-        PreparedStatement Statement = DBWorker.makePreparedStatement(statement);
-        try {
-            Statement.setInt(1, data.id);
-            Statement.setString(2, data.subresource);
-            Statement.setInt(3, data.permission);
-            Statement.executeUpdate();
-            return true;
-
-        } catch (SQLException e) {
-            logger.error("Well, we failed in putting values in prepared statement, or Executing it", e);
-            return false;
-        }
-    }
-
-    public static boolean updateResourceDataPermission(ResourceData data) {
-        String statement = ("UPDATE PERMISSION_SDATA SET permission = ?" +
-                " WHERE(id=?)AND(subresource=?);");
-
-        PreparedStatement Statement = DBWorker.makePreparedStatement(statement);
-        try {
-            Statement.setInt(1, data.permission);
-            Statement.setInt(2, data.id);
-            Statement.setString(3, data.subresource);
-            Statement.executeUpdate();
-            return true;
-
-        } catch (SQLException e) {
-            logger.error("Well, we failed in putting values in prepared statement, or Executing it", e);
-            return false;
-        }
-    }
-
-
-    public static ResourceData getResourceData_ByIDAndPath(Integer ID, String Path) {
+    public ResourceData getResourceData_ByIDAndPath(Integer ID, String Path) {
         String request = "SELECT * FROM PERMISSION_SDATA WHERE (id=?)AND(subresource=?);";
 
         PreparedStatement Statement = DBWorker.makePreparedStatement(request);

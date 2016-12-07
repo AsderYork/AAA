@@ -3,6 +3,7 @@ package com.triplea;
 import com.triplea.dao.AccountMessageAccess;
 import com.triplea.domain.AccountMessage;
 import com.triplea.domain.UserData;
+import com.triplea.domain.UserInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +19,7 @@ public class Accounter {
 
 
 
-    public static void login(UserData Data) {
+    public static void login(UserData Data, AccountMessageAccess access) {
 
         logger.info("Simple as that: we just creating AccountMessage with tmp date and given data");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -33,11 +34,11 @@ public class Accounter {
                 LocalDate.now()
         );
 
-        AccountMessageAccess.putMessage(MSG);
+        access.putMessage(MSG);
 
     }
 
-    public static ExitCode resourceAccessSuccess(UserInput input, int userid) {
+    public static ExitCode resourceAccessSuccess(UserInput input, int userid, AccountMessageAccess access) {
 
 
         logger.info("Looks like we succeed at resource providing");
@@ -59,12 +60,12 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessageAccess.putMessage(MSG);
+        access.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }
 
-    public static ExitCode accessRejected(UserInput input, int userid) {
+    public static ExitCode accessRejected(UserInput input, int userid, AccountMessageAccess access) {
 
         logger.info("Oh, we failed at resource providing");
         if (input.valueOfResourse < 0) {
@@ -85,7 +86,7 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessageAccess.putMessage(MSG);
+        access.putMessage(MSG);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }

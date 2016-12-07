@@ -1,5 +1,6 @@
 package com.triplea;
 
+import com.triplea.domain.UserInput;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +15,7 @@ public class UserInputManager {
     private String[] args = null;
     private Options options = new Options();
 
-    UserInputManager(String[] args) {
+    public UserInputManager(String[] args) {
         this.args = args;
         options.addOption("h", "help", false, "show help.");
         options.addOption("login", "login", true, "your login.");
@@ -41,12 +42,6 @@ public class UserInputManager {
             if (!validationGroupsOfOption(cmd)) {
                 help();
                 logger.info("But there's a problem with input. Just showing help");
-                return ExitCode.EXIT_SUCCESSFULLY;
-            }
-
-            if (cmd.hasOption("h")) {
-                logger.info("We've been asked for help. Literally");
-                help();
                 return ExitCode.EXIT_SUCCESSFULLY;
             }
 

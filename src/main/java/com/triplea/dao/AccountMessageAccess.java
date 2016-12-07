@@ -11,13 +11,23 @@ import java.sql.SQLException;
 public class AccountMessageAccess {
 
     private static final Logger logger = LogManager.getLogger("AccountMessageAccess");
+    private DBWorker DBW;
 
+    public AccountMessageAccess()
+    {
+        DBW = new DBWorker();
+    }
 
-    public static boolean putMessage(AccountMessage msg) {
+    public AccountMessageAccess(DBWorker dBW)
+    {
+        DBW = dBW;
+    }
+
+    public boolean putMessage(AccountMessage msg) {
         String stat = "INSERT INTO ACCOUNTED_DATA(Action, AccountDate, UserID,Role,Path,Value,DateStart,DateFinished)" +
                 " VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-        PreparedStatement Statement = DBWorker.makePreparedStatement(stat);
+        PreparedStatement Statement = DBW.makePreparedStatement(stat);
         try {
             Statement.setString(1, msg.action);
             Statement.setString(2, msg.accountDate);

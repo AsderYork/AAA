@@ -12,6 +12,7 @@ public class DBWorker {
     private static final Logger logger = LogManager.getLogger("DBWorker");
     private static Connection conn = null;
 
+
     public static void migrate() {
         Flyway flyway = new Flyway();
         flyway.setDataSource("jdbc:h2:file:./db-aaa", "user", "password");
