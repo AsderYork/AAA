@@ -14,35 +14,36 @@ import java.sql.SQLException;
  */
 public class UserDataAccess {
 
-    private static final Logger logger = LogManager.getLogger("UserDataAccess");
+    private static final Logger LOGGER = LogManager.getLogger("UserDataAccess");
 
     public UserData getUserByLogin(String login) {
         String username;
         String name;
         String hashedPassword;
         String salt;
-        Integer ID;
+        Integer id;
 
-        String Request = "SELECT * FROM USERS_DATA WHERE Login=?;";
+        String request = "SELECT * FROM USERS_DATA WHERE Login=?;";
 
-        PreparedStatement Statement = DBWorker.makePreparedStatement(Request);
+        PreparedStatement statement = DBWorker.makePreparedStatement(request);
 
         try {
-            Statement.setString(1, login);
-            ResultSet RS = Statement.executeQuery();
-            if (RS.next()) {
-                username = RS.getString("Login");
-                name = RS.getString("Username");
-                hashedPassword = RS.getString("HashedPassword");
-                salt = RS.getString("Salt");
-                ID = RS.getInt("id");
-                return new UserData(username, name, hashedPassword, salt, ID);
+            statement.setString(1, login);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                username = rs.getString("Login");
+                name = rs.getString("Username");
+                hashedPassword = rs.getString("HashedPassword");
+                salt = rs.getString("Salt");
+                id = rs.getInt("id");
+                return new UserData(username, name, hashedPassword, salt, id);
             } else {
                 return null;
             }
 
         } catch (SQLException e) {
-            logger.error("Well, we failed in putting values in prepared statement, or Executing Querry", e);
+            LOGGER.error("Well, we failed in putting values in prepared " +
+                    "statement, or Executing Querry", e);
             return null;
         }
     }

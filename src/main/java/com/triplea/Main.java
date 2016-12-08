@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Main {
 
-    private static final Logger logger = LogManager.getLogger("Main");
+    private static final Logger LOGGER = LogManager.getLogger("Main");
 
     private static void checkExitCode(ExitCode code) {
         if (code.getStatusCode() == -1) {
@@ -26,7 +26,7 @@ public class Main {
         DBWorker.migrate();
 
 
-        logger.info("The beginning");
+        LOGGER.info("The beginning");
 
         UserInput input = new UserInput();
         UserManager um = new UserManager(new UserDataAccess(), new AccountMessageAccess());
@@ -34,35 +34,34 @@ public class Main {
 
 
 
-        UserInputManager ConsoleManager = new UserInputManager(args);
-        logger.info("And now we parsing userinput. It may finish the program, if input is incorrect, btw");
-        checkExitCode(ConsoleManager.parse(input));
+        UserInputManager consoleManager = new UserInputManager(args);
+        LOGGER.info("And now we parsing userinput. It may finish the program, if input is incorrect, btw");
+        checkExitCode(consoleManager.parse(input));
 
-        logger.info("If we're here, then we at least have pass/username. Let's work with that! It also may throw us");
+        LOGGER.info("If we're here, then we at least have pass/username. Let's work with that! It also may throw us");
         checkExitCode(um.findUser(input.name, input.password));
 
-        logger.info("So we're here till now, eh? Look's like User/pass is correct. But is there enything else?");
+        LOGGER.info("So we're here till now, eh? Look's like User/pass is correct. But is there enything else?");
         if (input.levelOfInput < 2) {
-            logger.info("Looks like nothing more to compute. Finishing ");
+            LOGGER.info("Looks like nothing more to compute. Finishing ");
             checkExitCode(ExitCode.EXIT_SUCCESSFULLY);
         }
 
-        logger.info("Ooh, we receive a resource request! Let's check if we can provide it!");
-        if (rm.IsResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
-            logger.info("Yup. We can provide that one!");
+        LOGGER.info("Ooh, we receive a resource request! Let's check if we can provide it!");
+        if (rm.isResourceAccessible(um.getLastUserID(), input.resource, input.role)) {
+            LOGGER.info("Yup. We can provide that one!");
             if (input.levelOfInput > 2) {
-                logger.info("We can even account that!");
+                LOGGER.info("We can even account that!");
                 checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID(),new AccountMessageAccess()));
             }
         } else {
-            logger.info("Can't provide that resource");
+            LOGGER.info("Can't provide that resource");
             if (input.levelOfInput > 2) {
-                logger.info("At least we can write this down");
-                if (Accounter.accessRejected(input, um.getLastUserID(),new AccountMessageAccess()) == ExitCode.EXIT_SUCCESSFULLY)
-                {
+                LOGGER.info("At least we can write this down");
+                if (Accounter.accessRejected(input, um.getLastUserID(),new AccountMessageAccess()) == ExitCode.EXIT_SUCCESSFULLY) {
                     checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
                 }
-                logger.info("Nope. We can't. Wrong date or something");
+                LOGGER.info("Nope. We can't. Wrong date or something");
                 checkExitCode(ExitCode.INCORRECT_ACTIVITY);
             }
             checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);

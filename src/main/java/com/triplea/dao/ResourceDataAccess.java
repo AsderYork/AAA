@@ -14,32 +14,32 @@ import java.sql.SQLException;
  */
 public class ResourceDataAccess {
 
-    private static final Logger logger = LogManager.getLogger("ResourceDataAccess");
+    private static final Logger LOGGER = LogManager.getLogger("ResourceDataAccess");
 
-    public ResourceData getResourceData_ByIDAndPath(Integer ID, String Path) {
+    public ResourceData getResourceDataByIDAndPath(Integer id, String path) {
         String request = "SELECT * FROM PERMISSION_SDATA WHERE (id=?)AND(subresource=?);";
 
-        PreparedStatement Statement = DBWorker.makePreparedStatement(request);
+        PreparedStatement statement = DBWorker.makePreparedStatement(request);
 
-        ResourceData RetVal = new ResourceData();
+        ResourceData retVal = new ResourceData();
 
         try {
-            Statement.setInt(1, ID);
-            Statement.setString(2, Path);
+            statement.setInt(1, id);
+            statement.setString(2, path);
 
 
-            ResultSet RS = Statement.executeQuery();
-            if (RS.next()) {
-                RetVal.id = RS.getInt("id");
-                RetVal.permission = RS.getInt("permission");
-                RetVal.subresource = RS.getString("subresource");
-                return RetVal;
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                retVal.id = rs.getInt("id");
+                retVal.permission = rs.getInt("permission");
+                retVal.subresource = rs.getString("subresource");
+                return retVal;
             } else {
                 return null;
             }
 
         } catch (SQLException e) {
-            logger.error("Well, we failed in putting values in prepared statement, or Executing Querry", e);
+            LOGGER.error("Well, we failed in putting values in prepared statement, or Executing Querry", e);
             return null;
         }
     }

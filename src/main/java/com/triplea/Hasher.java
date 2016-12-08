@@ -9,27 +9,27 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hasher {
 
-    private static final Logger logger = LogManager.getLogger("Hasher");
+    private static final Logger LOGGER = LogManager.getLogger("Hasher");
     private static String algorithmName;
 
-    public static String hashPassword(String Password, String Salt, String AlgorithmName) throws NoSuchAlgorithmException {
-        return hash(hash(Password,AlgorithmName) + Salt,AlgorithmName);
+    public static String hashPassword(String password, String salt, String algorithmName) throws NoSuchAlgorithmException {
+        return hash(hash(password, algorithmName) + salt, algorithmName);
     }
 
-    private static String hash(String Value, String AlgorithmName) throws NoSuchAlgorithmException {
+    private static String hash(String value, String algorithmName) throws NoSuchAlgorithmException {
         //Метод поддержки. Принимает строку, возвращает её хэш
 
-        MessageDigest Digest;
+        MessageDigest digest;
 
-        Digest = MessageDigest.getInstance(AlgorithmName);
+        digest = MessageDigest.getInstance(algorithmName);
 
-        Digest.reset();
-        Digest.update(Value.getBytes());
-        byte[] ReturnedByteCode = null;
-        ReturnedByteCode = Digest.digest();
+        digest.reset();
+        digest.update(value.getBytes());
+        byte[] returnedByteCode = null;
+        returnedByteCode = digest.digest();
 
 
-        BigInteger hashInBigInteger = new BigInteger(1, ReturnedByteCode);
+        BigInteger hashInBigInteger = new BigInteger(1, returnedByteCode);
 
         return hashInBigInteger.toString(16);
     }

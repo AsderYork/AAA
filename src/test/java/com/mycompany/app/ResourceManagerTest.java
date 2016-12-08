@@ -2,9 +2,7 @@ package com.mycompany.app;
 
 import com.triplea.dao.ResourceDataAccess;
 import com.triplea.domain.ResourceData;
-import org.flywaydb.core.internal.util.scanner.Resource;
 import org.junit.Test;
-import org.mockito.internal.matchers.Any;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -21,7 +19,7 @@ public class ResourceManagerTest {
     {
         ResourceDataAccess RDA = mock(ResourceDataAccess.class);
         ResourceManager RM = new ResourceManager(RDA);
-        boolean Result = RM.IsResourceAccessible(1,null,null);
+        boolean Result = RM.isResourceAccessible(1,null,null);
         assertEquals(Result, false);
     }
 
@@ -30,7 +28,7 @@ public class ResourceManagerTest {
     {
         ResourceDataAccess RDA = mock(ResourceDataAccess.class);
         ResourceManager RM = new ResourceManager(RDA);
-        boolean Result = RM.IsResourceAccessible(1,"W","W");
+        boolean Result = RM.isResourceAccessible(1,"W","W");
         assertEquals(Result, false);
     }
     @Test
@@ -39,9 +37,9 @@ public class ResourceManagerTest {
         ResourceDataAccess RDA = mock(ResourceDataAccess.class);
         ResourceManager RM = new ResourceManager(RDA);
         ResourceData RD = new ResourceData(1,"W",1);
-        when(RDA.getResourceData_ByIDAndPath(1,"W") ).thenReturn(RD);
+        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(RD);
 
-        boolean Result = RM.IsResourceAccessible(1,"W","READ");
+        boolean Result = RM.isResourceAccessible(1,"W","READ");
         assertEquals(Result, true);
     }
 
@@ -51,9 +49,9 @@ public class ResourceManagerTest {
         ResourceDataAccess RDA = mock(ResourceDataAccess.class);
         ResourceManager RM = new ResourceManager(RDA);
         ResourceData RD = new ResourceData(1,"W",2);
-        when(RDA.getResourceData_ByIDAndPath(1,"W") ).thenReturn(RD);
+        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(RD);
 
-        boolean Result = RM.IsResourceAccessible(1,"W","WRITE");
+        boolean Result = RM.isResourceAccessible(1,"W","WRITE");
         assertEquals(Result, true);
     }
 
@@ -63,9 +61,9 @@ public class ResourceManagerTest {
         ResourceDataAccess RDA = mock(ResourceDataAccess.class);
         ResourceManager RM = new ResourceManager(RDA);
         ResourceData RD = new ResourceData(1,"W",4);
-        when(RDA.getResourceData_ByIDAndPath(1,"W") ).thenReturn(RD);
+        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(RD);
 
-        boolean Result = RM.IsResourceAccessible(1,"W","EXECUTE");
+        boolean Result = RM.isResourceAccessible(1,"W","EXECUTE");
         assertEquals(Result, true);
     }
 
@@ -75,9 +73,9 @@ public class ResourceManagerTest {
         ResourceDataAccess RDA = mock(ResourceDataAccess.class);
         ResourceManager RM = new ResourceManager(RDA);
         ResourceData RD = new ResourceData(1,"W",4);
-        when(RDA.getResourceData_ByIDAndPath(1,"W") ).thenReturn(null);
+        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(null);
 
-        boolean Result = RM.IsResourceAccessible(1,"W","EXECUTE");
+        boolean Result = RM.isResourceAccessible(1,"W","EXECUTE");
         assertEquals(Result, false);
     }
     @Test

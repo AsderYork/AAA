@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ResourceManager {
 
-    private static final Logger logger = LogManager.getLogger("ResourceManager");
+    private static final Logger LOGGER = LogManager.getLogger("ResourceManager");
 
 
     private ResourceDataAccess access;
@@ -16,30 +16,30 @@ public class ResourceManager {
         this.access = access;
     }
 
-    private boolean checkFlag(int Data, int FlagOfInterest) {
+    private boolean checkFlag(int data, int flagOfInterest) {
         //If Data were incorrect, return false
-        if ((Data <= 0) || (Data > 7)) {
+        if ((data <= 0) || (data > 7)) {
             return false;
         }
         //If unexisted flag were requested, return false
-        if (!((FlagOfInterest == 1) || (FlagOfInterest == 2) || (FlagOfInterest == 4))) {
+        if (!((flagOfInterest == 1) || (flagOfInterest == 2) || (flagOfInterest == 4))) {
             return false;
         }
 
-        if (FlagOfInterest == 1) {
-            if ((Data == 1) || (Data == 3) || (Data == 5) || (Data == 7)) {
+        if (flagOfInterest == 1) {
+            if ((data == 1) || (data == 3) || (data == 5) || (data == 7)) {
                 return true;
             }
             ;
         }
-        if (FlagOfInterest == 2) {
-            if ((Data == 2) || (Data == 3) || (Data == 6) || (Data == 7)) {
+        if (flagOfInterest == 2) {
+            if ((data == 2) || (data == 3) || (data == 6) || (data == 7)) {
                 return true;
             }
             ;
         }
-        if (FlagOfInterest == 4) {
-            if ((Data == 4) || (Data == 5) || (Data == 6) || (Data == 7)) {
+        if (flagOfInterest == 4) {
+            if ((data == 4) || (data == 5) || (data == 6) || (data == 7)) {
                 return true;
             }
             ;
@@ -47,15 +47,15 @@ public class ResourceManager {
         return false;
     }
 
-    public boolean IsResourceAccessible(int userID, String path, String role) {
+    public boolean isResourceAccessible(int userID, String path, String role) {
         int intRole = 0;
-        logger.info("So we've been asked to check accessibility of given user to given resource");
+        LOGGER.info("So we've been asked to check accessibility of given user to given resource");
         if ((role == null) || (path == null)) {
-            logger.info("Roll/Pacth is null. This won't move us too far. Resource is inaccessible");
+            LOGGER.info("Roll/Pacth is null. This won't move us too far. Resource is inaccessible");
             return false;
         }
 
-        logger.info("Translate role to int");
+        LOGGER.info("Translate role to int");
         switch (role) {
             case "READ": {
                 intRole = 1;
@@ -77,7 +77,7 @@ public class ResourceManager {
         }
 
 
-        logger.info("Parse path and tree-checking it's parts");
+        LOGGER.info("Parse path and tree-checking it's parts");
         String delims = "[.]";
         String[] tokens = path.split(delims);
 
@@ -85,24 +85,24 @@ public class ResourceManager {
         for (String token : tokens) {
             partPath += token;
 
-            if (IsSubresourceAccessible(partPath, intRole, userID)) {
+            if (isSubresourceAccessible(partPath, intRole, userID)) {
 
-                logger.info("So we have found what we've been looking for. Great!");
-                System.out.println("Access Granted");
+                LOGGER.info("So we have found what we've been looking for. Great!");
+                System.out.println("access Granted");
                 return true;
             }
             partPath += ".";
         }
 
-        logger.info("Cant provide that resource to that user.");
-        System.out.println("Access Rejected");
+        LOGGER.info("Cant provide that resource to that user.");
+        System.out.println("access Rejected");
         return false;
     }
 
-    private boolean IsSubresourceAccessible(String path, int role, int userid) {
+    private boolean isSubresourceAccessible(String path, int role, int userid) {
 
 
-        ResourceData dataInDB = access.getResourceData_ByIDAndPath(userid, path);
+        ResourceData dataInDB = access.getResourceDataByIDAndPath(userid, path);
         if (dataInDB == null) {
             return false;
         }
