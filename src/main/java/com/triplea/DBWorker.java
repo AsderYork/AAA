@@ -9,8 +9,9 @@ import java.sql.*;
 
 public class DBWorker {
 
-    private static final Logger logger = LogManager.getLogger("DBWorker");
+    private static final Logger LOGGER = LogManager.getLogger("DBWorker");
     private static Connection conn = null;
+
 
     public static void migrate() {
         Flyway flyway = new Flyway();
@@ -20,35 +21,35 @@ public class DBWorker {
     }
 
     public static boolean connectToLocalDB() {
-        logger.info("So we trying to connect to db");
+        LOGGER.info("So we trying to connect to db");
         try {
             Class.forName("org.h2.Driver").newInstance();
             conn = DriverManager.getConnection("jdbc:h2:file:./db-aaa", "user", "password");
             return true;
         } catch (Exception e) {
-            logger.error("It's hard to admit, we failed!", e);
+            LOGGER.error("It's hard to admit, we failed!", e);
             return false;
         }
 
     }
 
     public static boolean disconnect() {
-        logger.info("Closing connection to db");
+        LOGGER.info("Closing connection to db");
         try {
             conn.close();
             return true;
         } catch (SQLException e) {
-            logger.error("We can't even close it properly!", e);
+            LOGGER.error("We can't even close it properly!", e);
         }
         return false;
     }
 
-    public static PreparedStatement makePreparedStatement(String Str) {
+    public static PreparedStatement makePreparedStatement(String str) {
 
         try {
-            return conn.prepareStatement(Str);
+            return conn.prepareStatement(str);
         } catch (SQLException e) {
-            logger.error("Failed to create PreparedStatement |" + Str + "|", e);
+            LOGGER.error("Failed to create PreparedStatement |" + str + "|", e);
         }
         return null;
     }

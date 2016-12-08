@@ -1,8 +1,8 @@
-package com.triplea;
+package com.triplea.domain;
 
 import java.time.LocalDate;
 
-class UserInput {
+public class UserInput {
     public String name;
     public String password;
     public String resource;

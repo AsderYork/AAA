@@ -3,6 +3,7 @@ package com.triplea;
 import com.triplea.dao.AccountMessageAccess;
 import com.triplea.domain.AccountMessage;
 import com.triplea.domain.UserData;
+import com.triplea.domain.UserInput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,18 +15,20 @@ import java.util.Date;
 
 public class Accounter {
 
-    private static final Logger logger = LogManager.getLogger("Accounter");
+    private static final Logger LOGGER = LogManager.getLogger("Accounter");
 
 
 
-    public static void login(UserData Data) {
+    public static void login(UserData data, AccountMessageAccess access) {
 
-        logger.info("Simple as that: we just creating AccountMessage with tmp date and given data");
+        LOGGER.info("Simple as that: we just creating AccountMessage" +
+                " with tmp date and given data");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        AccountMessage MSG = new AccountMessage("login",
+
+        AccountMessage msg = new AccountMessage("login",
                 dateFormat.format(date),
-                Data.id,
+                data.id,
                 "",
                 "",
                 0,
@@ -33,24 +36,25 @@ public class Accounter {
                 LocalDate.now()
         );
 
-        AccountMessageAccess.putMessage(MSG);
+        access.putMessage(msg);
 
     }
 
-    public static ExitCode resourceAccessSuccess(UserInput input, int userid) {
+    public static ExitCode resourceAccessSuccess(UserInput input, int userid, AccountMessageAccess access) {
 
 
-        logger.info("Looks like we succeed at resource providing");
+        LOGGER.info("Looks like we succeed at resource providing");
         if (input.valueOfResourse < 0) {
 
-            logger.info("But we dont have enough data fo accounting. This one remain silent!");
+            LOGGER.info("But we dont have enough data fo accounting."
+                    + " This one remain silent!");
             return ExitCode.INCORRECT_ACTIVITY;
         }
 
-        logger.info("So just putting data in");
+        LOGGER.info("So just putting data in");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        AccountMessage MSG = new AccountMessage("AccessGranted",
+        AccountMessage msg = new AccountMessage("AccessGranted",
                 dateFormat.format(date),
                 userid,
                 input.role,
@@ -59,24 +63,25 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessageAccess.putMessage(MSG);
+        access.putMessage(msg);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }
 
-    public static ExitCode accessRejected(UserInput input, int userid) {
+    public static ExitCode accessRejected(UserInput input, int userid, AccountMessageAccess access) {
 
-        logger.info("Oh, we failed at resource providing");
+        LOGGER.info("Oh, we failed at resource providing");
         if (input.valueOfResourse < 0) {
 
-            logger.info("We can't even do accounting, provided data is not enough. This one remain silent!");
+            LOGGER.info("We can't even do accounting, provided data is not enough."
+                    +  " This one remain silent!");
             return ExitCode.INCORRECT_ACTIVITY;
         }
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        logger.info("At least we can do accounting.");
-        AccountMessage MSG = new AccountMessage("accessRejected",
+        LOGGER.info("At least we can do accounting.");
+        AccountMessage msg = new AccountMessage("accessRejected",
                 dateFormat.format(date),
                 userid,
                 input.role,
@@ -85,7 +90,7 @@ public class Accounter {
                 input.startDateOfResourceRequest,
                 input.endDateOfResourceRequest);
 
-        AccountMessageAccess.putMessage(MSG);
+        access.putMessage(msg);
 
         return ExitCode.EXIT_SUCCESSFULLY;
     }
