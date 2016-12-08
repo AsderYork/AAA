@@ -23,67 +23,60 @@ import com.triplea.ExitCode;
 
 public class UserManagerTest {
     @Test
-    public void TestWrongData() {
-        UserDataAccess UDA = mock(UserDataAccess.class);
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
+    public void testWrongData() {
+        UserDataAccess userDataAccess = mock(UserDataAccess.class);
+        AccountMessageAccess ama = mock(AccountMessageAccess.class);
 
-        UserData UD = new UserData("Login","User","HP","Salt",1);
-        when(UDA.getUserByLogin("Login") ).thenReturn(UD);
+        UserData ud = new UserData("Login","User","HP","Salt",1);
+        when(userDataAccess.getUserByLogin("Login") ).thenReturn(ud);
 
 
-        UserManager UM = new UserManager(UDA, AMA);
-        ExitCode Result =  ExitCode.WRONG_LOGIN;
+        UserManager userManager = new UserManager(userDataAccess, ama);
+        ExitCode result =  ExitCode.WRONG_LOGIN;
         try {
-            Result = UM.findUser(null, null);
+            result = userManager.findUser(null, null);
         } catch (NoSuchAlgorithmException e) {
            fail();
         }
-        assertEquals(Result, ExitCode.WRONG_LOGIN);
+        assertEquals(result, ExitCode.WRONG_LOGIN);
 
     }
     @Test
-    public void TestGoodData() {
-        UserDataAccess UDA = mock(UserDataAccess.class);
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
+    public void testGoodData() {
+        UserDataAccess uda = mock(UserDataAccess.class);
+        AccountMessageAccess ama = mock(AccountMessageAccess.class);
 
-        UserData UD = new UserData("Login","User","4fe0ab0674f0685d638141b4bc2d0d0c","A",1);
-        when(UDA.getUserByLogin("Login") ).thenReturn(UD);
+        UserData ud = new UserData("Login","User","4fe0ab0674f0685d638141b4bc2d0d0c","A",1);
+        when(uda.getUserByLogin("Login") ).thenReturn(ud);
 
 
-        UserManager UM = new UserManager(UDA, AMA);
-        ExitCode Result =  ExitCode.WRONG_LOGIN;
+        UserManager um = new UserManager(uda, ama);
+        ExitCode result =  ExitCode.WRONG_LOGIN;
         try {
-            Result = UM.findUser("Login", "A");
+            result = um.findUser("Login", "A");
         } catch (NoSuchAlgorithmException e) {
             fail();
         }
-        assertEquals(Result, ExitCode.DO_NOT_EXIT);
+        assertEquals(result, ExitCode.DO_NOT_EXIT);
 
     }
     @Test
-    public void TestIncorrectData() {
-        UserDataAccess UDA = mock(UserDataAccess.class);
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
+    public void testIncorrectData() {
+        UserDataAccess uda = mock(UserDataAccess.class);
+        AccountMessageAccess ama = mock(AccountMessageAccess.class);
 
-        UserData UD = new UserData("Login","User","sq","A",1);
-        when(UDA.getUserByLogin("Login") ).thenReturn(UD);
+        UserData userData = new UserData("Login","User","sq","A",1);
+        when(uda.getUserByLogin("Login") ).thenReturn(userData);
 
 
-        UserManager UM = new UserManager(UDA, AMA);
-        ExitCode Result =  ExitCode.WRONG_LOGIN;
+        UserManager um = new UserManager(uda, ama);
+        ExitCode result =  ExitCode.WRONG_LOGIN;
         try {
-            Result = UM.findUser("Login", "A");
+            result = um.findUser("Login", "A");
         } catch (NoSuchAlgorithmException e) {
             fail();
         }
-        assertEquals(Result, ExitCode.WRONG_PASSWORD);
+        assertEquals(result, ExitCode.WRONG_PASSWORD);
 
-    }
-    @Test
-    public void TestLUID() {
-        UserDataAccess UDA = mock(UserDataAccess.class);
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
-        UserManager UM = new UserManager(UDA, AMA);
-        assertEquals(UM.getLastUserID(), -1);
     }
 }

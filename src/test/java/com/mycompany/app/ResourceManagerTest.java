@@ -4,8 +4,7 @@ import com.triplea.dao.ResourceDataAccess;
 import com.triplea.domain.ResourceData;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import com.triplea.ResourceManager;
 
@@ -15,73 +14,67 @@ import com.triplea.ResourceManager;
 public class ResourceManagerTest {
 
     @Test
-    public void TestcheckRoleNull()
+    public void testcheckRoleNull()
     {
-        ResourceDataAccess RDA = mock(ResourceDataAccess.class);
-        ResourceManager RM = new ResourceManager(RDA);
-        boolean Result = RM.isResourceAccessible(1,null,null);
-        assertEquals(Result, false);
+        ResourceDataAccess rda = mock(ResourceDataAccess.class);
+        ResourceManager rm = new ResourceManager(rda);
+        boolean result = rm.isResourceAccessible(1,null,null);
+        assertFalse(result);
     }
 
     @Test
-    public void TestcheckRoleWrong()
+    public void testcheckRoleWrong()
     {
-        ResourceDataAccess RDA = mock(ResourceDataAccess.class);
-        ResourceManager RM = new ResourceManager(RDA);
-        boolean Result = RM.isResourceAccessible(1,"W","W");
-        assertEquals(Result, false);
+        ResourceDataAccess rda = mock(ResourceDataAccess.class);
+        ResourceManager rm = new ResourceManager(rda);
+        boolean result = rm.isResourceAccessible(1,"W","W");
+        assertFalse(result);
     }
     @Test
-    public void TestcheckRoleREAD()
+    public void testcheckRoleREAD()
     {
-        ResourceDataAccess RDA = mock(ResourceDataAccess.class);
-        ResourceManager RM = new ResourceManager(RDA);
-        ResourceData RD = new ResourceData(1,"W",1);
-        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(RD);
+        ResourceDataAccess rda = mock(ResourceDataAccess.class);
+        ResourceManager rm = new ResourceManager(rda);
+        ResourceData rd = new ResourceData(1,"W",1);
+        when(rda.getResourceDataByIDAndPath(1,"W") ).thenReturn(rd);
 
-        boolean Result = RM.isResourceAccessible(1,"W","READ");
-        assertEquals(Result, true);
-    }
-
-    @Test
-    public void TestcheckRoleWRITE()
-    {
-        ResourceDataAccess RDA = mock(ResourceDataAccess.class);
-        ResourceManager RM = new ResourceManager(RDA);
-        ResourceData RD = new ResourceData(1,"W",2);
-        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(RD);
-
-        boolean Result = RM.isResourceAccessible(1,"W","WRITE");
-        assertEquals(Result, true);
+        boolean result = rm.isResourceAccessible(1,"W","READ");
+        assertTrue(result);
     }
 
     @Test
-    public void TestcheckRoleEXEC()
+    public void testcheckRoleWRITE()
     {
-        ResourceDataAccess RDA = mock(ResourceDataAccess.class);
-        ResourceManager RM = new ResourceManager(RDA);
-        ResourceData RD = new ResourceData(1,"W",4);
-        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(RD);
+        ResourceDataAccess rda = mock(ResourceDataAccess.class);
+        ResourceManager rm = new ResourceManager(rda);
+        ResourceData rd = new ResourceData(1,"W",2);
+        when(rda.getResourceDataByIDAndPath(1,"W") ).thenReturn(rd);
 
-        boolean Result = RM.isResourceAccessible(1,"W","EXECUTE");
-        assertEquals(Result, true);
+        boolean result = rm.isResourceAccessible(1,"W","WRITE");
+        assertTrue(result);
     }
 
     @Test
-    public void TestcheckRoleMM()
+    public void testcheckRoleEXEC()
     {
-        ResourceDataAccess RDA = mock(ResourceDataAccess.class);
-        ResourceManager RM = new ResourceManager(RDA);
-        ResourceData RD = new ResourceData(1,"W",4);
-        when(RDA.getResourceDataByIDAndPath(1,"W") ).thenReturn(null);
+        ResourceDataAccess rda = mock(ResourceDataAccess.class);
+        ResourceManager rm = new ResourceManager(rda);
+        ResourceData rd = new ResourceData(1,"W",4);
+        when(rda.getResourceDataByIDAndPath(1,"W") ).thenReturn(rd);
 
-        boolean Result = RM.isResourceAccessible(1,"W","EXECUTE");
-        assertEquals(Result, false);
+        boolean result = rm.isResourceAccessible(1,"W","EXECUTE");
+        assertTrue(result);
     }
+
     @Test
-    public void TestResData()
+    public void testcheckRoleMM()
     {
-        ResourceData RD = new ResourceData();
-    }
+        ResourceDataAccess rda = mock(ResourceDataAccess.class);
+        ResourceManager rm = new ResourceManager(rda);
 
+        when(rda.getResourceDataByIDAndPath(1,"W") ).thenReturn(null);
+
+        boolean result = rm.isResourceAccessible(1,"W","EXECUTE");
+        assertFalse(result);
+    }
 }

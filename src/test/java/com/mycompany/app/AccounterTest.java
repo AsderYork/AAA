@@ -1,6 +1,7 @@
 package com.mycompany.app;
 
 import com.triplea.Accounter;
+import com.triplea.ExitCode;
 import com.triplea.dao.AccountMessageAccess;
 import com.triplea.domain.AccountMessage;
 import com.triplea.domain.UserData;
@@ -20,50 +21,46 @@ import static org.mockito.Mockito.*;
 public class AccounterTest {
 
     @Test
-    public void TestLogin() {
+    public void testLogin() {
 
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
-        Accounter.login(new UserData("login","passwd","hash","salt"),AMA);
+        AccountMessageAccess mock = mock(AccountMessageAccess.class);
+        Accounter.login(new UserData("login","passwd","hash","salt"),mock);
+        //Checking that Acounter realy sends data to AMS
+        verify(mock).putMessage(any(AccountMessage.class));
 
-        verify(AMA).putMessage(any(AccountMessage.class));
     }
     @Test
-    public void TestSuccess() {
+    public void testSuccess() {
 
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
-        Accounter.resourceAccessSuccess(new UserInput(),1, AMA);
+        AccountMessageAccess mock = mock(AccountMessageAccess.class);
 
-        verify(AMA).putMessage(any(AccountMessage.class));
+        assertEquals(Accounter.resourceAccessSuccess(new UserInput(),1, mock), ExitCode.EXIT_SUCCESSFULLY);
+        verify(mock).putMessage(any(AccountMessage.class));
     }
     @Test
-    public void TestRejected() {
+    public void testRejected() {
 
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
-        Accounter.accessRejected(new UserInput(),1, AMA);
+        AccountMessageAccess mock = mock(AccountMessageAccess.class);
+        assertEquals(Accounter.accessRejected(new UserInput(),1, mock), ExitCode.EXIT_SUCCESSFULLY);
 
-        verify(AMA).putMessage(any(AccountMessage.class));
+        verify(mock).putMessage(any(AccountMessage.class));
     }
 
     @Test
-    public void TestSuccessWrongRes() {
+    public void testSuccessWrongRes() {
 
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
-        UserInput UI = new UserInput();
-        UI.valueOfResourse = -1;
-        Accounter.resourceAccessSuccess(UI,1, AMA);
+        AccountMessageAccess mock = mock(AccountMessageAccess.class);
+        UserInput userInput = new UserInput();
+        userInput.valueOfResourse = -1;
+        assertEquals(Accounter.resourceAccessSuccess(userInput,1, mock), ExitCode.INCORRECT_ACTIVITY);
 
     }
     @Test
     public void TestRejectedWrongRes() {
 
-        AccountMessageAccess AMA = mock(AccountMessageAccess.class);
-        UserInput UI = new UserInput();
-        UI.valueOfResourse = -1;
-        Accounter.accessRejected(UI,1, AMA);
-    }
-    @Test
-    public void TestAM() {
-
-        AccountMessage AM = new AccountMessage();
+        AccountMessageAccess mock = mock(AccountMessageAccess.class);
+        UserInput userInput = new UserInput();
+        userInput.valueOfResourse = -1;
+        assertEquals(Accounter.accessRejected(userInput,1, mock), ExitCode.INCORRECT_ACTIVITY);
     }
 }

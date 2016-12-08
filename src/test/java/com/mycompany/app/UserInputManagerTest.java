@@ -12,128 +12,128 @@ import static org.junit.Assert.assertEquals;
  */
 public class UserInputManagerTest {
     @Test
-    public void TestLP() {
+    public void testLP() {
         String args[] = {"-login", "jdoe", "-pass", "XXX"};
 
-       UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+       UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.DO_NOT_EXIT);
+        assertEquals(uim.parse(ui), ExitCode.DO_NOT_EXIT);
 
     }
     @Test
-    public void TestNONE() {
+    public void testNONE() {
         String args[] = {};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.EXIT_SUCCESSFULLY);
+        assertEquals(uim.parse(ui), ExitCode.EXIT_SUCCESSFULLY);
 
     }
     @Test
-    public void TestMESS() {
+    public void testMESS() {
         String args[] = {"-ASD"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.EXIT_SUCCESSFULLY);
+        assertEquals(uim.parse(ui), ExitCode.EXIT_SUCCESSFULLY);
     }
     @Test
-    public void TestH() {
+    public void testH() {
         String args[] = {"-h"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.EXIT_SUCCESSFULLY);
+        assertEquals(uim.parse(ui), ExitCode.EXIT_SUCCESSFULLY);
     }
 
     @Test
-    public void TestL() {
+    public void testL() {
         String args[] = {"-login", "a"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.EXIT_SUCCESSFULLY);
+        assertEquals(uim.parse(ui), ExitCode.EXIT_SUCCESSFULLY);
 
     }
     @Test
-    public void TestP() {
+    public void testP() {
         String args[] = {"-pass", "a"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.EXIT_SUCCESSFULLY);
+        assertEquals(uim.parse(ui), ExitCode.EXIT_SUCCESSFULLY);
     }
     @Test
-    public void TestLPR() {
+    public void testLPR() {
         String args[] = {"-login", "jdoe", "-pass", "XXX", "-role", "READ"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.EXIT_SUCCESSFULLY);
+        assertEquals(uim.parse(ui), ExitCode.EXIT_SUCCESSFULLY);
     }
     @Test
-    public void TestLPRm() {
+    public void testLPRm() {
         String args[] = {"-login", "jdoe", "-pass", "XXX", "-role", "MESS"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.EXIT_SUCCESSFULLY);
+        assertEquals(uim.parse(ui), ExitCode.EXIT_SUCCESSFULLY);
     }
     @Test
-    public void TestLPRR() {
+    public void testLPRR() {
         String args[] = {"-login", "jdoe", "-pass", "XXX", "-role", "READ", "-res", "a"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.DO_NOT_EXIT);
+        assertEquals(uim.parse(ui), ExitCode.DO_NOT_EXIT);
     }
     @Test
-    public void TestLPRRA() {
+    public void testLPRRA() {
         String args[] = {"-login", "jdoe", "-pass", "XXX", "-role", "READ", "-res", "a", "-ds", "2016-01-12",
                 "-de", "2016-01-13",  "-val", "100"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.DO_NOT_EXIT);
+        assertEquals(uim.parse(ui), ExitCode.DO_NOT_EXIT);
     }
     @Test
-    public void TestLPRRAm() {
+    public void testLPRRAm() {
         String args[] = {"-login", "jdoe", "-pass", "XXX", "-role", "READ", "-res", "a", "-ds", "xxx-xx-x",
                 "-de", "2016-01-13",  "-val", "100"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.DO_NOT_EXIT);
+        assertEquals(uim.parse(ui), ExitCode.DO_NOT_EXIT);
     }
     @Test
-    public void TestLPRRAmm() {
+    public void testLPRRAmm() {
         String args[] = {"-login", "jdoe", "-pass", "XXX", "-role", "READ", "-res", "a", "-ds", "2016-01-12",
                 "-de", "2016-01-13",  "-val", "XXX"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.DO_NOT_EXIT);
+        assertEquals(uim.parse(ui), ExitCode.DO_NOT_EXIT);
     }
     @Test
-    public void TestLPRRAmmm() {
+    public void testLPRRAmmm() {
         String args[] = {"-login", "jdoe", "-pass", "XXX", "-role", "READ", "-res", "a", "-ds", "2016-01-12",
                 "-de", "2016-01-13",  "-val", "-1"};
 
-        UserInputManager UIM = new UserInputManager(args);
-        UserInput UI = new UserInput();
+        UserInputManager uim = new UserInputManager(args);
+        UserInput ui = new UserInput();
 
-        assertEquals(UIM.parse(UI), ExitCode.DO_NOT_EXIT);
+        assertEquals(uim.parse(ui), ExitCode.DO_NOT_EXIT);
     }
 }
