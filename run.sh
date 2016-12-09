@@ -1,4 +1,1 @@
-cd AAAProjects.core
-java -jar target/aaa-1.0-SNAPSHOT.jar $*
-cd ..
-#java -cp ${CP} com.triplea.Main $*
+java -jar AAAProjects.core/target/AAAProjects.core-1.0-SNAPSHOT.jar $*
