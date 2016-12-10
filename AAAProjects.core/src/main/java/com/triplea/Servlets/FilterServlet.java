@@ -1,4 +1,4 @@
-package com.triplea;
+package com.triplea.Servlets;
 /**
  * Created by Asder on 09.12.2016.
  */
@@ -16,7 +16,6 @@ public class FilterServlet extends HttpServlet {
 
     private boolean isURLRight(HttpServletRequest req){
         String url = req.getRequestURI();
-        //url.matches("^(\\/echo\\/((get)|(post))(?!\\/).*)");
         if(url.matches("^\\/echo\\/((((get)|(post))[^/\\s]*$)|$)"))
         {
             return true;

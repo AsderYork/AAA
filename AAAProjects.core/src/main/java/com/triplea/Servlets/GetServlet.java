@@ -1,4 +1,4 @@
-package com.triplea;
+package com.triplea.Servlets;
 
 /**
  * Created by Asder on 09.12.2016.
