@@ -1,4 +1,4 @@
-package com.triplea;
+package com.triplea.Servlets;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +20,6 @@ public class PostServlet  extends HttpServlet {
 
         String path = "http://localhost:8080/echo/get";
         path = path+"?id="+req.getParameter("id");
-
-        PrintWriter out = resp.getWriter();
 
        resp.sendRedirect(path);
     }
