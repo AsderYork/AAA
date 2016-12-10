@@ -1,10 +1,7 @@
 package com.triplea.domain;
 
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
-@NoArgsConstructor
 public class UserInput {
     public String name;
     public String password;

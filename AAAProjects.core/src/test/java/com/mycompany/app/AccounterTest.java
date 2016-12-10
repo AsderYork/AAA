@@ -24,7 +24,7 @@ public class AccounterTest {
     public void testLogin() {
 
         AccountMessageAccess mock = mock(AccountMessageAccess.class);
-        Accounter.login(new UserData("login","passwd","hash","salt",null),mock);
+        Accounter.login(new UserData("login","passwd","hash","salt"),mock);
         //Checking that Acounter realy sends data to AMS
         verify(mock).putMessage(any(AccountMessage.class));
 
