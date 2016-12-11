@@ -31,7 +31,7 @@ public class UserManagerTest {
         when(userDataAccess.getUserByLogin("Login") ).thenReturn(ud);
 
 
-        UserManager userManager = new UserManager(userDataAccess, ama);
+        UserManager userManager = new UserManager(ama, userDataAccess);
         ExitCode result =  ExitCode.WRONG_LOGIN;
         try {
             result = userManager.findUser(null, null);
@@ -50,7 +50,7 @@ public class UserManagerTest {
         when(uda.getUserByLogin("Login") ).thenReturn(ud);
 
 
-        UserManager um = new UserManager(uda, ama);
+        UserManager um = new UserManager(ama, uda);
         ExitCode result =  ExitCode.WRONG_LOGIN;
         try {
             result = um.findUser("Login", "A");
@@ -69,7 +69,7 @@ public class UserManagerTest {
         when(uda.getUserByLogin("Login") ).thenReturn(userData);
 
 
-        UserManager um = new UserManager(uda, ama);
+        UserManager um = new UserManager(ama, uda);
         ExitCode result =  ExitCode.WRONG_LOGIN;
         try {
             result = um.findUser("Login", "A");

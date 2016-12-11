@@ -2,24 +2,20 @@ package com.triplea.dao;
 
 import com.triplea.DBWorker;
 import com.triplea.domain.AccountMessage;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+@Log4j2
+@AllArgsConstructor
 public class AccountMessageAccess {
 
-    private static final Logger LOGGER = LogManager.getLogger("AccountMessageAccess");
+
     private DBWorker dbWorker;
-
-    public AccountMessageAccess() {
-        dbWorker = new DBWorker();
-    }
-
-    public AccountMessageAccess(DBWorker dBW)   {
-        dbWorker = dBW;
-    }
 
     public boolean putMessage(AccountMessage msg) {
         String stat = "INSERT INTO ACCOUNTED_DATA(Action, AccountDate," +
@@ -40,7 +36,7 @@ public class AccountMessageAccess {
             return true;
 
         } catch (SQLException e) {
-            LOGGER.error("Well, we failed in putting values in prepared" +
+            log.error("Well, we failed in putting values in prepared" +
                     " statement, or Executing it", e);
             return false;
         }

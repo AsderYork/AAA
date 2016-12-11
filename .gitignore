@@ -27,3 +27,4 @@ AAAProjects.web/target/
 #db and log. We always migrating. And leaves nothing behind
 *.db
 *.log
+AAAProjects.core/dependency-reduced-pom.xml

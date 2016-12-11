@@ -1,5 +1,6 @@
 package com.triplea;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -7,9 +8,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@Log4j2
 public class Hasher {
 
-    private static final Logger LOGGER = LogManager.getLogger("Hasher");
     private static String algorithmName;
 
     public static String hashPassword(String password, String salt, String algorithmName) throws NoSuchAlgorithmException {

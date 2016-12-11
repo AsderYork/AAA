@@ -1,6 +1,8 @@
 package com.triplea;
 
 import com.triplea.domain.UserInput;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,14 +11,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.BitSet;
 
-
+@Log4j2
+@RequiredArgsConstructor
 public class UserInputManager {
-    private static final Logger LOGGER = LogManager.getLogger("UserInputManager");
-    private String[] args = null;
+    final private String[] args;
     private Options options = new Options();
 
-    public UserInputManager(String[] args) {
-        this.args = args;
+
+    public ExitCode parse(UserInput userInput) {
         options.addOption("h", "help", false, "show help.");
         options.addOption("login", "login", true, "your login.");
         options.addOption("pass", "password", true, "your password.");
@@ -25,15 +27,13 @@ public class UserInputManager {
         options.addOption("ds", "datestart", true, "Using start date. [DD-MM-YYYY]");
         options.addOption("de", "dateend", true, "Using end date. [DD-MM-YYYY]");
         options.addOption("val", "value", true, "Value");
-    }
 
-    public ExitCode parse(UserInput userInput) {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd;
 
-        LOGGER.info("So we just received user input");
+        log.info("So we just received user input");
         for (String arg : args) {
-            LOGGER.info(arg);
+            log.info(arg);
         }
 
         try {
@@ -41,20 +41,20 @@ public class UserInputManager {
 
             if (!validationGroupsOfOption(cmd)) {
                 help();
-                LOGGER.info("But there's a problem with input. Just showing help");
+                log.info("But there's a problem with input. Just showing help");
                 return ExitCode.EXIT_SUCCESSFULLY;
             }
 
             if (cmd.hasOption("login") && (cmd.hasOption("pass"))) {
 
-                LOGGER.info("We've got pass/log. Btw it's first stage of input");
+                log.info("We've got pass/log. Btw it's first stage of input");
                 userInput.name = cmd.getOptionValue("login");
                 userInput.password = cmd.getOptionValue("pass");
                 userInput.levelOfInput = 1;
             }
             if (cmd.hasOption("res") && (cmd.hasOption("role"))) {
 
-                LOGGER.info("We've received a res/role combo. Looks like a second stage of input!");
+                log.info("We've received a res/role combo. Looks like a second stage of input!");
                 userInput.resource = cmd.getOptionValue("res");
                 userInput.role = roleParser(cmd.getOptionValue("role"));
                 userInput.levelOfInput = 2;
@@ -65,7 +65,7 @@ public class UserInputManager {
 
                 userInput.valueOfResourse = -1;//Deafult value in case of wrong input.Before date in case of exception
 
-                LOGGER.info("Can't belive it! ds/de/val! Third stage of input");
+                log.info("Can't belive it! ds/de/val! Third stage of input");
                 //Date Parsing
                 userInput.levelOfInput = 3;
                 userInput.startDateOfResourceRequest = dateParser(cmd.getOptionValue("ds"));
@@ -76,7 +76,7 @@ public class UserInputManager {
                 userInput.valueOfResourse = valueIsIntString(cmd.getOptionValue("val"));
                 if (userInput.valueOfResourse < 0) {
 
-                    LOGGER.info("The joy was premature. Val was negative. Let's just move it to -1 and go on");
+                    log.info("The joy was premature. Val was negative. Let's just move it to -1 and go on");
                     System.err.println("val cant be <0");
                     //return ExitCode.INCORRECT_ACTIVITY;
                 }
@@ -85,30 +85,30 @@ public class UserInputManager {
 
         } catch (DateTimeParseException dt) {
 
-            LOGGER.error("Date parsing failed. Happens from time to time", dt);
+            log.error("Date parsing failed. Happens from time to time", dt);
             System.err.println("Wrong date parameter");
             //From now on, we'll do nothing against incorrect input. Like not our business or something
             //return ExitCode.INCORRECT_ACTIVITY;
 
         } catch (IllegalArgumentException ill) {
 
-            LOGGER.error("Illegal argument", ill);
+            log.error("Illegal argument", ill);
             //return ExitCode.INCORRECT_ACTIVITY;
 
 
         } catch (ParseException pe) {
 
-            LOGGER.error("Can't even parse it properly. Let's just show help", pe);
+            log.error("Can't even parse it properly. Let's just show help", pe);
             help();
             return ExitCode.EXIT_SUCCESSFULLY;
 
         } catch (WrongRoleException wrt) {
 
-            LOGGER.error("The role wasn't what expected", wrt);
+            log.error("The role wasn't what expected", wrt);
             return ExitCode.WRONG_ROLE;
         }
 
-        LOGGER.info("We worked well. Everything is parsed");
+        log.info("We worked well. Everything is parsed");
         return ExitCode.DO_NOT_EXIT;
     }
 

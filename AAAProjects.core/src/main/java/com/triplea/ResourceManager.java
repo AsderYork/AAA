@@ -2,19 +2,15 @@ package com.triplea;
 
 import com.triplea.dao.ResourceDataAccess;
 import com.triplea.domain.ResourceData;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Log4j2
+@AllArgsConstructor
 public class ResourceManager {
-
-    private static final Logger LOGGER = LogManager.getLogger("ResourceManager");
-
-
     private ResourceDataAccess access;
-
-    public ResourceManager(ResourceDataAccess access)    {
-        this.access = access;
-    }
 
     private boolean checkFlag(int data, int flagOfInterest) {
         //If Data were incorrect, return false
@@ -49,13 +45,13 @@ public class ResourceManager {
 
     public boolean isResourceAccessible(int userID, String path, String role) {
         int intRole = 0;
-        LOGGER.info("So we've been asked to check accessibility of given user to given resource");
+        log.info("So we've been asked to check accessibility of given user to given resource");
         if ((role == null) || (path == null)) {
-            LOGGER.info("Roll/Pacth is null. This won't move us too far. Resource is inaccessible");
+            log.info("Roll/Pacth is null. This won't move us too far. Resource is inaccessible");
             return false;
         }
 
-        LOGGER.info("Translate role to int");
+        log.info("Translate role to int");
         switch (role) {
             case "READ": {
                 intRole = 1;
@@ -77,7 +73,7 @@ public class ResourceManager {
         }
 
 
-        LOGGER.info("Parse path and tree-checking it's parts");
+        log.info("Parse path and tree-checking it's parts");
         String delims = "[.]";
         String[] tokens = path.split(delims);
 
@@ -87,14 +83,14 @@ public class ResourceManager {
 
             if (isSubresourceAccessible(partPath, intRole, userID)) {
 
-                LOGGER.info("So we have found what we've been looking for. Great!");
+                log.info("So we have found what we've been looking for. Great!");
                 System.out.println("access Granted");
                 return true;
             }
             partPath += ".";
         }
 
-        LOGGER.info("Cant provide that resource to that user.");
+        log.info("Cant provide that resource to that user.");
         System.out.println("access Rejected");
         return false;
     }

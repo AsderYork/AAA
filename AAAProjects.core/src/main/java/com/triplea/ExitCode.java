@@ -1,5 +1,10 @@
 package com.triplea;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+
 public enum ExitCode {
     DO_NOT_EXIT(-1),
     EXIT_SUCCESSFULLY(0),
@@ -9,13 +14,6 @@ public enum ExitCode {
     RESOURCE_PERMISSION_DENIED(4),
     INCORRECT_ACTIVITY(5);
 
-    private int statusCode;
-
-    ExitCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
+   @Getter private int statusCode;
+    
 }
