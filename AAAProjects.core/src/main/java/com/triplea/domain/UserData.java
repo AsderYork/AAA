@@ -1,6 +1,6 @@
 package com.triplea.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class UserData {

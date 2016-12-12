@@ -14,24 +14,23 @@ import java.io.PrintWriter;
 @WebServlet("/echo/*")
 public class FilterServlet extends HttpServlet {
 
-    private boolean isURLRight(HttpServletRequest req){
+    private boolean isURLRight(HttpServletRequest req) {
         String url = req.getRequestURI();
-        if(url.matches("^\\/echo\\/((((get)|(post))[^/\\s]*$)|$)"))
-        {
+        if (url.matches("^\\/echo\\/((((get)|(post))[^/\\s]*$)|$)")) {
             return true;
         }
         return false;
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         PrintWriter out = resp.getWriter();
-        if(isURLRight(req)){
+        if (isURLRight(req)) {
             out.print("<h1>Tyup!</h1>");
-            out.print("<h1>Hello Servlet\n+"+req.getRequestURI()+"</h1>");
-        }
-        else  {
+            out.print("<h1>Hello Servlet\n+" + req.getRequestURI() + "</h1>");
+        } else {
             resp.sendError(404);
         }
 
@@ -42,11 +41,10 @@ public class FilterServlet extends HttpServlet {
             throws ServletException, IOException {
 
         PrintWriter out = resp.getWriter();
-        if(isURLRight(req)){
+        if (isURLRight(req)) {
             out.print("<h1>Tyup!</h1>");
-            out.print("<h1>Hello Servlet\n+"+req.getRequestURI()+"</h1>");
-        }
-        else  {
+            out.print("<h1>Hello Servlet\n+" + req.getRequestURI() + "</h1>");
+        } else {
             resp.sendError(404);
         }
     }

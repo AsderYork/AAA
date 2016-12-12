@@ -17,7 +17,7 @@ public class AccountMessageAccess {
         dbWorker = new DBWorker();
     }
 
-    public AccountMessageAccess(DBWorker dBW)   {
+    public AccountMessageAccess(DBWorker dBW) {
         dbWorker = dBW;
     }
 

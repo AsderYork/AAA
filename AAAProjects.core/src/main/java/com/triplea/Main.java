@@ -33,7 +33,6 @@ public class Main {
         ResourceManager rm = new ResourceManager(new ResourceDataAccess());
 
 
-
         UserInputManager consoleManager = new UserInputManager(args);
         LOGGER.info("And now we parsing userinput. It may finish the program, if input is incorrect, btw");
         checkExitCode(consoleManager.parse(input));
@@ -52,13 +51,13 @@ public class Main {
             LOGGER.info("Yup. We can provide that one!");
             if (input.levelOfInput > 2) {
                 LOGGER.info("We can even account that!");
-                checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID(),new AccountMessageAccess()));
+                checkExitCode(Accounter.resourceAccessSuccess(input, um.getLastUserID(), new AccountMessageAccess()));
             }
         } else {
             LOGGER.info("Can't provide that resource");
             if (input.levelOfInput > 2) {
                 LOGGER.info("At least we can write this down");
-                if (Accounter.accessRejected(input, um.getLastUserID(),new AccountMessageAccess()) == ExitCode.EXIT_SUCCESSFULLY) {
+                if (Accounter.accessRejected(input, um.getLastUserID(), new AccountMessageAccess()) == ExitCode.EXIT_SUCCESSFULLY) {
                     checkExitCode(ExitCode.RESOURCE_PERMISSION_DENIED);
                 }
                 LOGGER.info("Nope. We can't. Wrong date or something");

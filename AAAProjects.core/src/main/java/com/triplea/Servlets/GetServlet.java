@@ -21,10 +21,10 @@ public class GetServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String reqParameter = req.getParameter("id");
-        if(reqParameter != null)  {
+        if (reqParameter != null) {
             PrintWriter out = resp.getWriter();
 
-            out.print("<h1>"+reqParameter +"</h1>");
+            out.print("<h1>" + reqParameter + "</h1>");
         }
     }
 

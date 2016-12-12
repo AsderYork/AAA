@@ -12,7 +12,7 @@ public class ResourceManager {
 
     private ResourceDataAccess access;
 
-    public ResourceManager(ResourceDataAccess access)    {
+    public ResourceManager(ResourceDataAccess access) {
         this.access = access;
     }
 

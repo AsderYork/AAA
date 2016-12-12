@@ -18,7 +18,6 @@ public class Accounter {
     private static final Logger LOGGER = LogManager.getLogger("Accounter");
 
 
-
     public static void login(UserData data, AccountMessageAccess access) {
 
         LOGGER.info("Simple as that: we just creating AccountMessage" +
@@ -74,7 +73,7 @@ public class Accounter {
         if (input.valueOfResourse < 0) {
 
             LOGGER.info("We can't even do accounting, provided data is not enough."
-                    +  " This one remain silent!");
+                    + " This one remain silent!");
             return ExitCode.INCORRECT_ACTIVITY;
         }
 
