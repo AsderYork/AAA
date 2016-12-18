@@ -7,6 +7,7 @@
   <version>1.0-SNAPSHOT</version>
   <name>AAAProjects</name>
   <url>http://maven.apache.org</url>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -15,6 +16,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <modules>
     <module>AAAProjects.web</module>
     <module>AAAProjects.core</module>
