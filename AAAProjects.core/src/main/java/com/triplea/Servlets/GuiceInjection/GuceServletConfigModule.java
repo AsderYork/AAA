@@ -3,7 +3,6 @@ package com.triplea.Servlets.GuiceInjection;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.servlet.ServletModule;
 import com.triplea.Servlets.*;
-import com.triplea.Servlets.GuiceInjection.Log4JTypeListener;
 
 /**
  * Created by Asder on 11.12.2016.
