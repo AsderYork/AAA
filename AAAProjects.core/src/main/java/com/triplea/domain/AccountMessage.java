@@ -1,11 +1,12 @@
 package com.triplea.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
-import lombok.*;
-
 @AllArgsConstructor
-@NoArgsConstructor(force=true)
+@NoArgsConstructor(force = true)
 public class AccountMessage {
     public String action; //login/AccessGranted/accessRejected
     public String accountDate;
